@@ -137,13 +137,13 @@
     </div>
 
     <script>
-        // HIER DEINE DISCORD SERVER ID EINTRAGEN!
+        // DISCORD SERVER ID WURDE HIER EINGETRAGEN:
         const discordServerId = "1033415051601780766"; 
 
         const onlineCountElement = document.getElementById('discord-online-count');
 
         async function fetchDiscordStatus() {
-            if (!discordServerId || discordServerId === "1033415051601780766") {
+            if (!discordServerId || discordServerId === "DEINE_DISCORD_SERVER_ID_HIER") { // Fallback-Check bleibt zur Sicherheit
                 if(onlineCountElement) onlineCountElement.textContent = "Server ID nicht konfiguriert";
                 console.warn("Discord Server ID ist nicht konfiguriert.");
                 return;
@@ -156,7 +156,6 @@
             onlineCountElement.textContent = "lade..."; // Ladeanzeige
 
             try {
-                // Wir nutzen die WidgetBot API für die Online-Zahl
                 const response = await fetch(`https://api.widgetbot.io/api/servers/${discordServerId}/widget.json`);
                 if (!response.ok) {
                     throw new Error(`WidgetBot API Fehler: ${response.statusText} (Status: ${response.status})`);
