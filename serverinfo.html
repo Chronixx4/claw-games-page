@@ -5,9 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minecraft Server Infos 📊</title>
     <style>
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes subtleGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #a7d1f5 0%, #5c67f2 30%, #f5a7cb 70%, #f5a7a7 100%);
+            background: linear-gradient(135deg, #a7d1f5, #5c67f2, #f5a7cb, #f5a7a7, #a7d1f5, #5c67f2);
+            background-size: 300% 300%;
             color: #e0e0e0;
             margin: 0;
             padding: 20px;
@@ -16,6 +39,8 @@
             align-items: center;
             min-height: 100vh;
             box-sizing: border-box;
+            animation: subtleGradientShift 25s ease infinite;
+            overflow-x: hidden;
         }
         .container {
             background-color: rgba(30, 30, 30, 0.88);
@@ -23,19 +48,24 @@
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             width: 90%;
-            max-width: 750px; /* Etwas breiter für Logo etc. */
-            text-align: center; /* Zentriert für Logo und statische Info */
+            max-width: 750px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
         }
         #server-logo {
-            max-width: 80%; /* Maximale Breite des Logos */
-            height: auto;   /* Höhe automatisch anpassen */
-            max-height: 150px; /* Maximale Höhe, falls das Logo sehr hoch ist */
+            max-width: 80%;
+            height: auto;
+            max-height: 150px;
             margin-bottom: 20px;
-            border-radius: 8px; /* Optional: abgerundete Ecken für das Logo */
-            display: none; /* Wird per JS angezeigt, wenn Daten geladen werden/Fehler auftritt */
+            border-radius: 8px;
+            /* Logo wird jetzt durch das Skript angezeigt, keine CSS-Animation hier nötig, es sei denn als Fallback */
+            /* opacity: 0; animation: fadeIn 0.7s ease-in-out 0.8s forwards; */
         }
         .server-title-info {
             margin-bottom: 25px;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 0.9s forwards; /* Nach Container */
         }
         #static-server-name {
             color: #fdd8ff;
@@ -51,21 +81,25 @@
             background-color: rgba(0,0,0,0.2);
             padding: 5px 10px;
             border-radius: 5px;
-            display: inline-block; /* Damit Hintergrund nur um den Text ist */
+            display: inline-block;
         }
-        h1 { /* Die Überschrift für "Minecraft Server Status" bleibt bestehen */
+        h1 { /* Überschrift für "Minecraft Server Status" */
             color: #fdd8ff;
             text-align: center;
-            margin-bottom: 10px; /* Weniger Abstand, da Titel jetzt oben ist */
-            font-size: 1.8em; /* Etwas kleiner, da der Fokus auf dem Servernamen liegt */
+            margin-bottom: 10px;
+            font-size: 1.8em;
             text-shadow: 0 0 8px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.1s forwards; /* Nach Titel-Info */
         }
-        #server-status {
-            margin-top: 10px; /* Weniger Abstand nach oben */
+        #server-status { /* Die Box mit den Live-Daten */
+            margin-top: 10px;
             padding: 25px;
             border-radius: 10px;
             background-color: rgba(44, 44, 44, 0.9);
-            text-align: left; /* Inhalt der Statusbox linksbündig */
+            text-align: left;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.3s forwards; /* Nach Überschrift */
         }
         #server-status p {
             margin: 12px 0;
@@ -94,14 +128,15 @@
             padding: 12px 18px;
             border-radius: 8px;
             font-size: 1.05em;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease, transform 0.15s ease; /* Transform für Hover hinzugefügt */
         }
         #player-list li:hover {
             background-color: rgba(80, 80, 80, 0.9);
+            transform: translateX(5px); /* Kleiner Slide-Effekt beim Hovern */
         }
-        .loading, .error, .status-online, .status-offline { /* Gemeinsame Stile für Statuszeilen */
-            text-align: center; /* Meldungen in der Box zentrieren */
-            font-size: 1.15em !important; /* Wichtiger, um p-Style zu überschreiben */
+        .loading, .error, .status-online, .status-offline {
+            text-align: center;
+            font-size: 1.15em !important;
             padding: 10px;
         }
         .loading { font-style: italic; color: #c0c0c0; }
@@ -112,6 +147,8 @@
         .back-button {
             display: inline-block;
             background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
+            background-size: 150% 150%;
+            background-position: 50% 50%;
             color: #333;
             padding: 14px 28px;
             text-decoration: none;
@@ -119,23 +156,30 @@
             font-size: 17px;
             font-weight: bold;
             margin-top: 30px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
             border: none;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            /* Animation für den Button-Bereich */
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.5s forwards; /* Als letztes Element */
         }
         .back-button:hover {
             transform: translateY(-3px) scale(1.03);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background-position: 0% 50%;
         }
-        .center-button-container {
+        .center-button-container { /* Dieser Container wird jetzt für die Animation genutzt */
             text-align: center;
             width: 100%;
+             opacity: 0; /* Startet unsichtbar für Animation */
+            animation: fadeIn 0.7s ease-in-out 1.5s forwards; /* Animation mit .back-button */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="atm10_logo.png" alt="All the Mods 10 Server Logo" id="server-logo"> <div class="server-title-info">
+        <img src="atm10_logo.png" alt="All the Mods 10 Server Logo" id="server-logo">
+        <div class="server-title-info">
             <div id="static-server-name">Lade Servername...</div>
             <div id="static-server-ip">Lade IP...</div>
         </div>
@@ -144,8 +188,7 @@
         <div id="server-status">
             <p class="loading">Lade Serverdaten... ⏳</p>
         </div>
-        <div class="center-button-container">
-            <a href="index.html" class="back-button">⬅️ Zurück</a>
+        <div class="center-button-container"> <a href="index.html" class="back-button">⬅️ Zurück</a>
         </div>
     </div>
 

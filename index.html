@@ -3,94 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Community Seite 👋</title>
+    <title>Unsere Community & Minecraft Server 👋</title>
     <style>
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes subtleGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Farbverlauf für den gesamten Hintergrund */
-            background: linear-gradient(135deg, #a7d1f5 0%, #5c67f2 30%, #f5a7cb 70%, #f5a7a7 100%);
+            /* Angepasster Verlauf für bessere Animation + größere background-size */
+            background: linear-gradient(135deg, #a7d1f5, #5c67f2, #f5a7cb, #f5a7a7, #a7d1f5, #5c67f2);
+            background-size: 300% 300%; /* Wichtig für die Gradienten-Animation */
             color: #e0e0e0;
             margin: 0;
-            padding: 20px; /* Padding hinzugefügt, damit der Container nicht am Rand klebt */
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             text-align: center;
-            box-sizing: border-box; /* Stellt sicher, dass Padding die Gesamtgröße nicht sprengt */
+            box-sizing: border-box;
+            animation: subtleGradientShift 25s ease infinite; /* Hintergrund-Animation */
+            overflow-x: hidden; /* Verhindert Scrollbalken durch Animationen */
         }
         .container {
-            /* Dunkler, leicht transparenter Hintergrund für den Content-Bereich, um Lesbarkeit zu gewährleisten */
-            background-color: rgba(30, 30, 30, 0.85); 
+            background-color: rgba(30, 30, 30, 0.88);
             padding: 35px 45px;
-            border-radius: 15px; /* Etwas größere Rundung */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5); /* Stärkerer Schatten für mehr Tiefe */
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             width: 90%;
-            max-width: 550px; /* Etwas breiter */
+            max-width: 650px;
+            /* Animation für den Container */
+            opacity: 0; /* Startet unsichtbar */
+            animation: fadeInSlideUp 0.8s ease-out 0.3s forwards; /* 0.3s Verzögerung */
         }
         h1 {
-            /* Helle Akzentfarbe für die Überschrift, die gut mit den Verläufen harmoniert */
-            color: #fdd8ff; /* Ein sehr helles Pink/Lavendel */
-            margin-bottom: 30px;
-            font-size: 2.5em; /* Größere Überschrift */
-            text-shadow: 0 0 8px rgba(0,0,0,0.5); /* Leichter Textschatten */
+            color: #fdd8ff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+            /* Text-Animation */
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 0.8s forwards; /* Nach Container-Animation */
         }
-        p {
-            font-size: 1.1em;
+        .intro-paragraph {
+            font-size: 1.2em;
             line-height: 1.7;
-            margin-bottom: 30px;
-            color: #f0f0f0; /* Sehr helles Grau für bessere Lesbarkeit auf dunklem Container */
+            margin-bottom: 25px;
+            color: #f5f5f5;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.0s forwards; /* Etwas später */
+        }
+        .details-paragraph {
+            font-size: 1.05em;
+            line-height: 1.6;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            color: #e0e0e0;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.2s forwards; /* Noch später */
+        }
+        .details-paragraph strong {
+            color: #f5a7cb;
+        }
+        .button-section {
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.4s forwards; /* Buttons als letztes */
         }
         .button, .discord-link {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             color: #ffffff;
-            padding: 15px 30px; /* Mehr Padding */
+            padding: 15px 30px;
             text-decoration: none;
-            border-radius: 10px; /* Rundere Buttons */
+            border-radius: 10px;
             font-size: 18px;
-            font-weight: bold; /* Fettgedruckter Text */
-            margin-top: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease; /* background-position für Hover auf Gradient */
             border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Subtiler Schatten für Buttons */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .discord-link {
-            /* Blau-Pink Verlauf für den Discord Button */
             background: linear-gradient(45deg, #5c67f2, #c55be3);
-            margin-bottom: 25px;
+            background-size: 150% 150%; /* Für Hover-Effekt */
+            background-position: 50% 50%;
         }
         .discord-link:hover {
-            transform: translateY(-3px) scale(1.03); /* Stärkerer Hover-Effekt */
+            transform: translateY(-3px) scale(1.03);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background-position: 0% 50%; /* Lässt Gradienten auf Hover verschieben */
         }
         .discord-link img {
             width: 24px;
             margin-right: 12px;
         }
         .button { /* Minecraft Button */
-            /* Hellblau-Rosa Verlauf für den Minecraft Button */
             background: linear-gradient(45deg, #a7d1f5, #f5a7cb);
-            color: #1f283e; /* Dunklere Textfarbe für Kontrast auf hellem Verlauf */
+            background-size: 150% 150%;
+            background-position: 50% 50%;
+            color: #1f283e;
         }
         .button:hover {
             transform: translateY(-3px) scale(1.03);
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background-position: 100% 50%;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Willkommen! 🌈</h1>
-        <p>Tritt unserer Community bei und entdecke eine Welt voller Spaß!</p>
-        <a href="https://discord.gg/uPBasXs8gt" target="_blank" class="discord-link">
-            <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
-            Discord beitreten 💬
-        </a>
-        <br>
-        <a href="serverinfo.html" class="button">Server Infos ⛏️</a>
+        <h1>Willkommen auf unserer Community-Seite! 🌈</h1>
+        <p class="intro-paragraph">Schön, dass du hier bist! Entdecke unsere Welt und werde Teil einer fantastischen Gemeinschaft.</p>
+
+        <div class="details-paragraph">
+            <strong>Unser Minecraft-Abenteuer: All the Mods 10! 🎮</strong><br>
+            Hier dreht sich alles um unseren aufregenden "All the Mods 10" Minecraft-Server. Stell dich einer riesigen, vielfältigen Welt voller Magie 🔮, modernster Technologie ⚙️ und unzähligen Quests und Abenteuern. Errichte beeindruckende Bauwerke, erkunde geheimnisvolle Dungeons oder verbünde dich mit anderen Spielern, um die anspruchsvollsten Herausforderungen des Modpacks zu meistern. Deiner Kreativität sind keine Grenzen gesetzt! 🛠️✨
+        </div>
+
+        <div class="details-paragraph">
+            <strong>Der Treffpunkt: Unser Discord-Server! 💬</strong><br>
+            Unser Discord-Server ist das Herzstück unserer Community. Hier kannst du dich mit Mitspielern austauschen, Fragen stellen, Hilfe bekommen, über die neuesten Server-Updates und Events auf dem Laufenden bleiben oder einfach nur gemütlich plaudern. Verpasse nichts und knüpfe neue Freundschaften! Wir freuen uns auf dich! 😊
+        </div>
+
+        <div class="button-section">
+            <a href="https://discord.gg/uPBasXs8gt" target="_blank" class="discord-link">
+                <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
+                Discord beitreten
+            </a>
+            <a href="serverinfo.html" class="button">Live Server-Infos ⛏️</a>
+        </div>
     </div>
 </body>
 </html>
