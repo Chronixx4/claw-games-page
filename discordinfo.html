@@ -24,11 +24,11 @@
             background-size: 300% 300%;
             color: #e0e0e0;
             margin: 0;
-            padding: 20px;
+            padding: 20px; /* Padding für den Body, damit der Container nicht am Rand klebt */
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* Zentriert den Container vertikal, falls weniger Inhalt als Bildschirmhöhe */
             min-height: 100vh;
             text-align: center;
             box-sizing: border-box;
@@ -37,94 +37,53 @@
         }
         .container {
             background-color: rgba(30, 30, 30, 0.88);
-            padding: 35px 45px;
+            padding: 30px 35px; /* Etwas angepasstes Padding */
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             width: 90%;
-            max-width: 600px;
+            /* Maximale Breite anpassen, um das Widget (350px) gut aufzunehmen + etwas Rand */
+            max-width: 450px; /* Oder etwas breiter, falls gewünscht */
             opacity: 0;
             animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
+            display: flex; /* Flexbox für innere Zentrierung */
+            flex-direction: column; /* Elemente untereinander */
+            align-items: center; /* Horizontale Zentrierung der inneren Elemente */
         }
         h1 {
             color: #fdd8ff;
-            margin-bottom: 25px;
-            font-size: 2.4em;
+            margin-bottom: 15px; /* Weniger Abstand */
+            font-size: 2.2em; /* Etwas kleiner, da Widget im Fokus */
             text-shadow: 0 0 8px rgba(0,0,0,0.5);
             opacity: 0;
             animation: fadeIn 0.7s ease-in-out 0.8s forwards;
         }
-        .discord-intro-text { /* Umbenannt von .discord-info p für Klarheit */
-            font-size: 1.15em; /* Etwas angepasst */
-            line-height: 1.7;
-            margin: 20px 0;
+        .discord-intro-text {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 25px; /* Abstand zum Widget */
             color: #f0f0f0;
             opacity: 0;
             animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+            max-width: 100%; /* Stellt sicher, dass der Text umbricht und nicht breiter als der Container ist */
         }
 
-        /* NEU: Styling für die Online-Status Box */
-        .online-status-box {
-            background-color: rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px 25px;
-            margin: 25px auto; /* Zentriert und mit Abstand */
-            display: inline-flex; /* Lässt Box sich an Inhalt anpassen und zentriert Elemente darin */
-            align-items: center; /* Vertikale Zentrierung der Elemente in der Box */
-            gap: 10px; /* Abstand zwischen den Elementen */
+        /* Container für das Discord Widget iframe */
+        .discord-widget-wrapper {
+            width: 350px; /* Breite des iframes */
+            height: 500px; /* Höhe des iframes */
+            border-radius: 8px; /* Optional: Ecken für den iframe-Wrapper abrunden */
+            overflow: hidden; /* Stellt sicher, dass der iframe die Rundung beachtet */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Leichter Schatten für das Widget */
+            margin-bottom: 30px; /* Abstand zum Zurück-Button */
             opacity: 0;
-            animation: fadeIn 0.7s ease-in-out 1.1s forwards; /* Nach dem Intro-Text */
+            animation: fadeIn 0.7s ease-in-out 1.2s forwards; /* Erscheint nach dem Text */
         }
-        .online-status-box .status-icon {
-            width: 12px;
-            height: 12px;
-            background-color: #4CAF50; /* Grüner Punkt für "online" */
-            border-radius: 50%;
-            box-shadow: 0 0 8px #4CAF50; /* Leichter Leuchteffekt */
+        /* Der iframe selbst sollte keine zusätzlichen Ränder oder Abstände haben */
+        .discord-widget-wrapper iframe {
+            display: block; /* Um eventuelle extra Abstände unter dem iframe zu entfernen */
         }
-        .online-status-box .status-text {
-            font-size: 1.1em;
-            color: #e0e0e0;
-        }
-        .online-status-box .count-number {
-            font-size: 1.5em; /* Größere Zahl */
-            font-weight: bold;
-            color: #b9f6ca; /* Helles Mintgrün, passend zu "online" */
-            margin: 0 3px; /* Kleiner horizontaler Abstand */
-        }
-        /* Ende NEU */
 
-        .join-discord-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(45deg, #5c67f2, #c55be3);
-            background-size: 150% 150%;
-            background-position: 50% 50%;
-            color: #ffffff;
-            padding: 15px 30px;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: bold;
-            margin-top: 10px; /* Etwas weniger, da Status-Box jetzt mehr Raum einnimmt */
-            margin-bottom: 30px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            opacity: 0;
-            animation: fadeIn 0.7s ease-in-out 1.3s forwards; /* Angepasste Verzögerung */
-        }
-        .join-discord-button img {
-            width: 24px;
-            margin-right: 10px;
-        }
-        .join-discord-button:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            background-position: 0% 50%;
-        }
-        .nav-button {
+        .nav-button { /* Für den Zurück-Button */
             display: inline-block;
             background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
             background-size: 150% 150%;
@@ -139,7 +98,7 @@
             border: none;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             opacity: 0;
-            animation: fadeIn 0.7s ease-in-out 1.5s forwards; /* Angepasste Verzögerung */
+            animation: fadeIn 0.7s ease-in-out 1.4s forwards;
         }
         .nav-button:hover {
             transform: translateY(-3px) scale(1.03);
@@ -151,68 +110,16 @@
 <body>
     <div class="container">
         <h1>Unsere Discord Community 🎙️</h1>
-        <p class="discord-intro-text">Tritt unserer lebendigen Community auf Discord bei, um dich mit anderen Spielern zu vernetzen, Fragen zu stellen, an Events teilzunehmen oder einfach nur zu chatten!</p>
+        <p class="discord-intro-text">
+            Hier ist eine Live-Vorschau unseres Servers! Du siehst, wer online ist, welche Sprachkanäle gerade genutzt werden und kannst direkt beitreten.
+        </p>
         
-        <div class="online-status-box">
-            <span class="status-icon"></span>
-            <span class="status-text">Aktuell sind</span>
-            <span id="discord-online-count" class="count-number">...</span>
-            <span class="status-text">Mitglieder online!</span>
+        <div class="discord-widget-wrapper">
+            <iframe src="https://discord.com/widget?id=1033415051601780766&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
 
-        <a href="https://discord.gg/uPBasXs8gt" target="_blank" class="join-discord-button">
-            <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
-            Jetzt Discord beitreten!
-        </a>
-        <br>
         <a href="index.html" class="nav-button">⬅️ Zurück zur Startseite</a>
     </div>
 
-    <script>
-        const discordServerId = "1033415051601780766"; 
-        const onlineCountElement = document.getElementById('discord-online-count'); // Zielt auf das <span> mit der Zahl
-
-        async function fetchDiscordStatus() {
-            if (!onlineCountElement) {
-                console.warn("Element für Online-Zähler nicht gefunden.");
-                return;
-            }
-
-            onlineCountElement.textContent = "lädt"; // Ladeanzeige für die Zahl
-
-            try {
-                const response = await fetch(`https://discord.com/api/guilds/${discordServerId}/widget.json`);
-                
-                if (!response.ok) {
-                    let errorMsg = `Discord API Fehler: ${response.statusText} (Status: ${response.status})`;
-                    try {
-                        const errorData = await response.json();
-                        if (errorData && errorData.message) {
-                            errorMsg += ` - ${errorData.message}`;
-                        }
-                    } catch (e) { /* Konnte JSON-Fehler nicht lesen */ }
-                    throw new Error(errorMsg);
-                }
-                
-                const data = await response.json();
-
-                if (data && data.presence_count !== undefined) {
-                    onlineCountElement.textContent = data.presence_count;
-                } else {
-                    onlineCountElement.textContent = "N/A";
-                    console.warn("Konnte Online-Zahl (presence_count) nicht aus API-Antwort lesen:", data);
-                }
-            } catch (error) {
-                console.error("Fehler beim Abrufen des Discord Status:", error);
-                onlineCountElement.textContent = "X"; // Fehlerindikator für die Zahl
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchDiscordStatus();
-            // Optional: Intervall für automatische Aktualisierung der Discord Online-Zahl
-            // setInterval(fetchDiscordStatus, 60000); // Alle 60 Sekunden
-        });
-    </script>
-</body>
+    </body>
 </html>
