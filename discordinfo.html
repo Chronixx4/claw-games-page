@@ -24,11 +24,11 @@
             background-size: 300% 300%;
             color: #e0e0e0;
             margin: 0;
-            padding: 20px; /* Padding für den Body, damit der Container nicht am Rand klebt */
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Zentriert den Container vertikal, falls weniger Inhalt als Bildschirmhöhe */
+            justify-content: center;
             min-height: 100vh;
             text-align: center;
             box-sizing: border-box;
@@ -37,22 +37,21 @@
         }
         .container {
             background-color: rgba(30, 30, 30, 0.88);
-            padding: 30px 35px; /* Etwas angepasstes Padding */
+            padding: 30px 35px;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             width: 90%;
-            /* Maximale Breite anpassen, um das Widget (350px) gut aufzunehmen + etwas Rand */
-            max-width: 450px; /* Oder etwas breiter, falls gewünscht */
+            max-width: 450px; 
             opacity: 0;
             animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
-            display: flex; /* Flexbox für innere Zentrierung */
-            flex-direction: column; /* Elemente untereinander */
-            align-items: center; /* Horizontale Zentrierung der inneren Elemente */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
             color: #fdd8ff;
-            margin-bottom: 15px; /* Weniger Abstand */
-            font-size: 2.2em; /* Etwas kleiner, da Widget im Fokus */
+            margin-bottom: 15px;
+            font-size: 2.2em;
             text-shadow: 0 0 8px rgba(0,0,0,0.5);
             opacity: 0;
             animation: fadeIn 0.7s ease-in-out 0.8s forwards;
@@ -60,27 +59,56 @@
         .discord-intro-text {
             font-size: 1.1em;
             line-height: 1.6;
-            margin-bottom: 25px; /* Abstand zum Widget */
+            margin-bottom: 20px; /* Etwas weniger Abstand, da Button jetzt kommt */
             color: #f0f0f0;
             opacity: 0;
             animation: fadeIn 0.7s ease-in-out 1.0s forwards;
-            max-width: 100%; /* Stellt sicher, dass der Text umbricht und nicht breiter als der Container ist */
+            max-width: 100%;
         }
 
-        /* Container für das Discord Widget iframe */
-        .discord-widget-wrapper {
-            width: 350px; /* Breite des iframes */
-            height: 500px; /* Höhe des iframes */
-            border-radius: 8px; /* Optional: Ecken für den iframe-Wrapper abrunden */
-            overflow: hidden; /* Stellt sicher, dass der iframe die Rundung beachtet */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* Leichter Schatten für das Widget */
-            margin-bottom: 30px; /* Abstand zum Zurück-Button */
+        /* Button zum direkten Beitreten */
+        .join-discord-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #5c67f2, #c55be3); /* Blauer Verlauf, wie er vorher war */
+            background-size: 150% 150%;
+            background-position: 50% 50%;
+            color: #ffffff;
+            padding: 14px 28px; /* Etwas angepasst */
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.05em; /* Etwas angepasst */
+            font-weight: bold;
+            margin-bottom: 25px; /* Abstand zum Widget */
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             opacity: 0;
-            animation: fadeIn 0.7s ease-in-out 1.2s forwards; /* Erscheint nach dem Text */
+            animation: fadeIn 0.7s ease-in-out 1.2s forwards; /* Animation für den Button */
         }
-        /* Der iframe selbst sollte keine zusätzlichen Ränder oder Abstände haben */
+        .join-discord-button img {
+            width: 22px; /* Etwas kleiner */
+            margin-right: 10px;
+        }
+        .join-discord-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background-position: 0% 50%;
+        }
+
+        .discord-widget-wrapper {
+            width: 350px;
+            height: 500px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.4s forwards; /* Erscheint nach dem Join-Button */
+        }
         .discord-widget-wrapper iframe {
-            display: block; /* Um eventuelle extra Abstände unter dem iframe zu entfernen */
+            display: block;
         }
 
         .nav-button { /* Für den Zurück-Button */
@@ -98,7 +126,7 @@
             border: none;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             opacity: 0;
-            animation: fadeIn 0.7s ease-in-out 1.4s forwards;
+            animation: fadeIn 0.7s ease-in-out 1.6s forwards; /* Erscheint als letztes */
         }
         .nav-button:hover {
             transform: translateY(-3px) scale(1.03);
@@ -111,8 +139,13 @@
     <div class="container">
         <h1>Unsere Discord Community 🎙️</h1>
         <p class="discord-intro-text">
-            Hier ist eine Live-Vorschau unseres Servers! Du siehst, wer online ist, welche Sprachkanäle gerade genutzt werden und kannst direkt beitreten.
+            Hier ist eine Live-Vorschau unseres Servers und die Möglichkeit, direkt beizutreten!
         </p>
+
+        <a href="https://discord.gg/uPBasXs8gt" target="_blank" class="join-discord-button">
+            <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
+            Jetzt Discord beitreten!
+        </a>
         
         <div class="discord-widget-wrapper">
             <iframe src="https://discord.com/widget?id=1033415051601780766&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
@@ -120,6 +153,5 @@
 
         <a href="index.html" class="nav-button">⬅️ Zurück zur Startseite</a>
     </div>
-
-    </body>
+</body>
 </html>
