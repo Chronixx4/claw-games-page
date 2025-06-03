@@ -3,30 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>claw-games</title>
-    <link rel="stylesheet" href="./style.css">
+    <title>Meine Community Seite 👋</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Moderner Font-Stack */
+            background-color: #121212; /* Sehr dunkles Grau, fast Schwarz */
+            color: #e0e0e0; /* Helles Grau für Text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: #1e1e1e; /* Dunkles Grau für den Container */
+            padding: 35px 45px;
+            border-radius: 12px; /* Etwas rundere Ecken */
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4); /* Angepasster Schatten für Dark Mode */
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #bb86fc; /* Akzentfarbe Lila (Material Design inspiriert) */
+            margin-bottom: 25px;
+        }
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .button, .discord-link {
+            display: inline-flex; /* Für bessere Ausrichtung mit Icon */
+            align-items: center; /* Vertikale Zentrierung von Text und Icon */
+            justify-content: center;
+            color: #ffffff;
+            padding: 14px 28px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 15px;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+            border: none; /* Keine Ränder für flaches Design */
+        }
+        .discord-link {
+            background-color: #5865F2; /* Discord Blau */
+            margin-bottom: 20px; /* Etwas mehr Abstand */
+        }
+        .discord-link:hover {
+            background-color: #4a54c7;
+            transform: translateY(-2px); /* Kleiner Hover-Effekt */
+        }
+        .discord-link img {
+            width: 22px; /* Etwas kleiner für besseres Verhältnis */
+            margin-right: 12px;
+        }
+        .button { /* Minecraft Button */
+            background-color: #03dac6; /* Akzentfarbe Türkis (Material Design inspiriert) */
+            color: #121212; /* Dunkler Text für Kontrast auf hellem Button */
+        }
+        .button:hover {
+            background-color: #01ab9a;
+            transform: translateY(-2px); /* Kleiner Hover-Effekt */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Willkommen auf meiner Seite! 👋</h1>
-        <p>Hier findest du alles Wichtige zu unserer Community.</p>
-        
-        <a href="https://discord.gg/rfA4rpAP" target="_blank" class="button discord-link">Tritt unserem Discord bei! 💬</a>
-        <a href="#" class="button minecraft-link" onclick="alert('Verbinde mit: allthemods10.servegame.com'); return false;">Minecraft Server ⛏️<br><small>(IP: allthemods10.servegame.com)</small></a>
-        
-        <div id="minecraft-status-wrapper" style="display: flex; align-items: center; justify-content: center; min-height: 50px; margin-top: 15px; margin-bottom: 15px;"> 
-            <div id="server-status-text" style="margin-right: 10px;"> Lade Serverdaten... 🔄 
-            </div>
-            </div>
-        
-        <div id="player-list-container" class="player-list-container">
-            </div>
-
-        <a href="info.html" class="button info-link" style="background-color: #f0ad4e; margin-top: 10px;">Mehr Server-Details & ATM10 Infos! ℹ️</a> 
-
-        <p style="margin-top: 20px;">Wir freuen uns auf dich! 😊</p>
+        <h1>Willkommen auf meiner Seite! 🎉</h1>
+        <p>Tritt unserer Community bei und sei immer auf dem Laufenden!</p>
+        <a href="DEIN_DISCORD_INVITE_LINK_HIER" target="_blank" class="discord-link">
+            <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
+            Unserem Discord beitreten 💬
+        </a>
+        <br>
+        <a href="serverinfo.html" class="button">Minecraft Server Infos ⛏️</a>
     </div>
-
-    <script src="./script.js"></script>
 </body>
 </html>

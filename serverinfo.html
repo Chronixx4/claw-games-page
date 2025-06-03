@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server Infos 📊</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px 40px; /* Mehr Padding oben/unten */
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            width: 90%;
+            max-width: 650px; /* Etwas breiter für mehr Infos */
+            text-align: left; /* Links ausgerichtet für bessere Lesbarkeit der Infos */
+        }
+        h1 {
+            color: #03dac6; /* Akzent Türkis */
+            text-align: center; /* Überschrift zentriert */
+            margin-bottom: 25px;
+        }
+        #server-status {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #333; /* Dunklerer Rand */
+            border-radius: 8px;
+            background-color: #2c2c2c; /* Etwas hellerer Dunkelgrauton für den Infoblock */
+        }
+        #server-status p {
+            margin: 10px 0;
+            font-size: 1.05em; /* Etwas größer */
+            line-height: 1.7;
+        }
+        #server-status strong {
+            color: #bb86fc; /* Lila Akzent für Hervorhebungen */
+        }
+        #player-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+        #player-list h3 {
+            color: #e0e0e0;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        #player-list li {
+            background-color: #3a3a3a; /* Dunkler Hintergrund für Listenelemente */
+            color: #e0e0e0;
+            margin: 6px 0;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 1em;
+        }
+        .loading {
+            font-style: italic;
+            color: #aaa;
+        }
+        .error {
+            color: #cf6679; /* Standard Material Design Fehlerfarbe für Dark Mode */
+            font-weight: bold;
+        }
+        .status-online {
+            color: #66bb6a; /* Helleres Grün für Online-Status */
+            font-weight: bold;
+        }
+        .status-offline {
+            color: #cf6679; /* Fehlerrot für Offline-Status */
+            font-weight: bold;
+        }
+        .back-button {
+            display: inline-block;
+            background-color: #373737; /* Dunkelgrauer Button */
+            color: #e0e0e0;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 30px;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
+            border: 1px solid #4a4a4a; /* Subtiler Rand */
+        }
+        .back-button:hover {
+            background-color: #4a4a4a;
+            transform: translateY(-2px);
+        }
+        .center-button-container { /* Eigener Container für Zentrierung */
+            text-align: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Minecraft Server Status 🕹️</h1>
+        <div id="server-status">
+            <p class="loading">Lade Serverdaten... ⏳</p>
+        </div>
+        <div class="center-button-container"> <a href="index.html" class="back-button">⬅️ Zurück zur Startseite</a>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
