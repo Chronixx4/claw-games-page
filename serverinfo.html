@@ -7,7 +7,6 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Gleicher Farbverlauf für den gesamten Hintergrund */
             background: linear-gradient(135deg, #a7d1f5 0%, #5c67f2 30%, #f5a7cb 70%, #f5a7a7 100%);
             color: #e0e0e0;
             margin: 0;
@@ -15,39 +14,65 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh; /* Stellt sicher, dass der Verlauf die ganze Höhe einnimmt */
+            min-height: 100vh;
             box-sizing: border-box;
         }
         .container {
-            background-color: rgba(30, 30, 30, 0.88); /* Etwas stärkere Deckkraft für bessere Lesbarkeit des Texts */
+            background-color: rgba(30, 30, 30, 0.88);
             padding: 30px 40px;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             width: 90%;
-            max-width: 700px; /* Etwas breiter für Serverinfos */
-            text-align: left;
+            max-width: 750px; /* Etwas breiter für Logo etc. */
+            text-align: center; /* Zentriert für Logo und statische Info */
         }
-        h1 {
-            color: #fdd8ff; /* Gleiche helle Akzentfarbe */
+        #server-logo {
+            max-width: 80%; /* Maximale Breite des Logos */
+            height: auto;   /* Höhe automatisch anpassen */
+            max-height: 150px; /* Maximale Höhe, falls das Logo sehr hoch ist */
+            margin-bottom: 20px;
+            border-radius: 8px; /* Optional: abgerundete Ecken für das Logo */
+            display: none; /* Wird per JS angezeigt, wenn Daten geladen werden/Fehler auftritt */
+        }
+        .server-title-info {
+            margin-bottom: 25px;
+        }
+        #static-server-name {
+            color: #fdd8ff;
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+        }
+        #static-server-ip {
+            color: #e0e0e0;
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            background-color: rgba(0,0,0,0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block; /* Damit Hintergrund nur um den Text ist */
+        }
+        h1 { /* Die Überschrift für "Minecraft Server Status" bleibt bestehen */
+            color: #fdd8ff;
             text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.3em; /* Angepasste Größe */
+            margin-bottom: 10px; /* Weniger Abstand, da Titel jetzt oben ist */
+            font-size: 1.8em; /* Etwas kleiner, da der Fokus auf dem Servernamen liegt */
             text-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
         #server-status {
-            margin-top: 20px;
-            padding: 25px; /* Mehr Padding */
-            border: none; /* Rand entfernt, da der Kasten schon abhebt */
-            border-radius: 10px; /* Rundere Ecken */
-            background-color: rgba(44, 44, 44, 0.9); /* Dunklerer, transparenter Hintergrund für den Infoblock */
+            margin-top: 10px; /* Weniger Abstand nach oben */
+            padding: 25px;
+            border-radius: 10px;
+            background-color: rgba(44, 44, 44, 0.9);
+            text-align: left; /* Inhalt der Statusbox linksbündig */
         }
         #server-status p {
-            margin: 12px 0; /* Mehr Abstand */
-            font-size: 1.1em; /* Etwas größerer Text */
+            margin: 12px 0;
+            font-size: 1.1em;
             line-height: 1.7;
         }
         #server-status strong {
-             /* Helles Pink für Hervorhebungen, passend zur Palette */
             color: #fccbf3;
         }
         #player-list {
@@ -59,42 +84,35 @@
             color: #e8e8e8;
             margin-bottom: 12px;
             font-size: 1.2em;
-            border-bottom: 2px solid #f5a7cb; /* Pinker Unterstrich */
+            border-bottom: 2px solid #f5a7cb;
             padding-bottom: 5px;
         }
         #player-list li {
-            background-color: rgba(60, 60, 60, 0.8); /* Leicht transparenter Hintergrund für Listenelemente */
+            background-color: rgba(60, 60, 60, 0.8);
             color: #e0e0e0;
             margin: 8px 0;
-            padding: 12px 18px; /* Mehr Padding */
+            padding: 12px 18px;
             border-radius: 8px;
-            font-size: 1.05em; /* Etwas größer */
+            font-size: 1.05em;
             transition: background-color 0.2s ease;
         }
         #player-list li:hover {
             background-color: rgba(80, 80, 80, 0.9);
         }
-        .loading {
-            font-style: italic;
-            color: #c0c0c0; /* Helleres Grau */
+        .loading, .error, .status-online, .status-offline { /* Gemeinsame Stile für Statuszeilen */
+            text-align: center; /* Meldungen in der Box zentrieren */
+            font-size: 1.15em !important; /* Wichtiger, um p-Style zu überschreiben */
+            padding: 10px;
         }
-        .error {
-            color: #ff8a80; /* Helleres Rot für Fehler im Dark Mode mit Verläufen */
-            font-weight: bold;
-        }
-        .status-online {
-            color: #b9f6ca; /* Helles Mintgrün */
-            font-weight: bold;
-        }
-        .status-offline {
-            color: #ff8a80; /* Gleiches helles Rot */
-            font-weight: bold;
-        }
+        .loading { font-style: italic; color: #c0c0c0; }
+        .error { color: #ff8a80; font-weight: bold; }
+        .status-online { color: #b9f6ca; font-weight: bold; }
+        .status-offline { color: #ff8a80; font-weight: bold; }
+
         .back-button {
             display: inline-block;
-            /* Pink-Rosa Verlauf für den Zurück-Button */
             background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
-            color: #333; /* Dunkler Text für Kontrast */
+            color: #333;
             padding: 14px 28px;
             text-decoration: none;
             border-radius: 10px;
@@ -117,6 +135,11 @@
 </head>
 <body>
     <div class="container">
+        <img src="atm10_logo.png" alt="All the Mods 10 Server Logo" id="server-logo"> <div class="server-title-info">
+            <div id="static-server-name">Lade Servername...</div>
+            <div id="static-server-ip">Lade IP...</div>
+        </div>
+
         <h1>Minecraft Server Status 🕹️</h1>
         <div id="server-status">
             <p class="loading">Lade Serverdaten... ⏳</p>
