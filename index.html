@@ -6,81 +6,91 @@
     <title>Meine Community Seite 👋</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Moderner Font-Stack */
-            background-color: #121212; /* Sehr dunkles Grau, fast Schwarz */
-            color: #e0e0e0; /* Helles Grau für Text */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Farbverlauf für den gesamten Hintergrund */
+            background: linear-gradient(135deg, #a7d1f5 0%, #5c67f2 30%, #f5a7cb 70%, #f5a7a7 100%);
+            color: #e0e0e0;
             margin: 0;
-            padding: 0;
+            padding: 20px; /* Padding hinzugefügt, damit der Container nicht am Rand klebt */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
             text-align: center;
+            box-sizing: border-box; /* Stellt sicher, dass Padding die Gesamtgröße nicht sprengt */
         }
         .container {
-            background-color: #1e1e1e; /* Dunkles Grau für den Container */
+            /* Dunkler, leicht transparenter Hintergrund für den Content-Bereich, um Lesbarkeit zu gewährleisten */
+            background-color: rgba(30, 30, 30, 0.85); 
             padding: 35px 45px;
-            border-radius: 12px; /* Etwas rundere Ecken */
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4); /* Angepasster Schatten für Dark Mode */
+            border-radius: 15px; /* Etwas größere Rundung */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); /* Stärkerer Schatten für mehr Tiefe */
             width: 90%;
-            max-width: 500px;
+            max-width: 550px; /* Etwas breiter */
         }
         h1 {
-            color: #bb86fc; /* Akzentfarbe Lila (Material Design inspiriert) */
-            margin-bottom: 25px;
+            /* Helle Akzentfarbe für die Überschrift, die gut mit den Verläufen harmoniert */
+            color: #fdd8ff; /* Ein sehr helles Pink/Lavendel */
+            margin-bottom: 30px;
+            font-size: 2.5em; /* Größere Überschrift */
+            text-shadow: 0 0 8px rgba(0,0,0,0.5); /* Leichter Textschatten */
         }
         p {
             font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 25px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            color: #f0f0f0; /* Sehr helles Grau für bessere Lesbarkeit auf dunklem Container */
         }
         .button, .discord-link {
-            display: inline-flex; /* Für bessere Ausrichtung mit Icon */
-            align-items: center; /* Vertikale Zentrierung von Text und Icon */
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
             color: #ffffff;
-            padding: 14px 28px;
+            padding: 15px 30px; /* Mehr Padding */
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px; /* Rundere Buttons */
             font-size: 18px;
-            font-weight: 500;
-            margin-top: 15px;
-            transition: background-color 0.2s ease-in-out, transform 0.1s ease;
-            border: none; /* Keine Ränder für flaches Design */
+            font-weight: bold; /* Fettgedruckter Text */
+            margin-top: 20px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Subtiler Schatten für Buttons */
         }
         .discord-link {
-            background-color: #5865F2; /* Discord Blau */
-            margin-bottom: 20px; /* Etwas mehr Abstand */
+            /* Blau-Pink Verlauf für den Discord Button */
+            background: linear-gradient(45deg, #5c67f2, #c55be3);
+            margin-bottom: 25px;
         }
         .discord-link:hover {
-            background-color: #4a54c7;
-            transform: translateY(-2px); /* Kleiner Hover-Effekt */
+            transform: translateY(-3px) scale(1.03); /* Stärkerer Hover-Effekt */
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         .discord-link img {
-            width: 22px; /* Etwas kleiner für besseres Verhältnis */
+            width: 24px;
             margin-right: 12px;
         }
         .button { /* Minecraft Button */
-            background-color: #03dac6; /* Akzentfarbe Türkis (Material Design inspiriert) */
-            color: #121212; /* Dunkler Text für Kontrast auf hellem Button */
+            /* Hellblau-Rosa Verlauf für den Minecraft Button */
+            background: linear-gradient(45deg, #a7d1f5, #f5a7cb);
+            color: #1f283e; /* Dunklere Textfarbe für Kontrast auf hellem Verlauf */
         }
         .button:hover {
-            background-color: #01ab9a;
-            transform: translateY(-2px); /* Kleiner Hover-Effekt */
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Willkommen auf meiner Seite! 🎉</h1>
-        <p>Tritt unserer Community bei und sei immer auf dem Laufenden!</p>
+        <h1>Willkommen! 🌈</h1>
+        <p>Tritt unserer Community bei und entdecke eine Welt voller Spaß!</p>
         <a href="DEIN_DISCORD_INVITE_LINK_HIER" target="_blank" class="discord-link">
             <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
-            Unserem Discord beitreten 💬
+            Discord beitreten 💬
         </a>
         <br>
-        <a href="serverinfo.html" class="button">Minecraft Server Infos ⛏️</a>
+        <a href="serverinfo.html" class="button">Server Infos ⛏️</a>
     </div>
 </body>
 </html>
