@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Community Infos 📢</title>
+    <style>
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        @keyframes subtleGradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #a7d1f5, #5c67f2, #f5a7cb, #f5a7a7, #a7d1f5, #5c67f2);
+            background-size: 300% 300%;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            box-sizing: border-box;
+            animation: subtleGradientShift 25s ease infinite;
+            overflow-x: hidden;
+        }
+        .container {
+            background-color: rgba(30, 30, 30, 0.88);
+            padding: 35px 45px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 90%;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
+        }
+        h1 {
+            color: #fdd8ff;
+            margin-bottom: 25px;
+            font-size: 2.4em;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 0.8s forwards;
+        }
+        .discord-info p {
+            font-size: 1.2em;
+            line-height: 1.7;
+            margin: 15px 0;
+            color: #f0f0f0;
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+        }
+        #discord-online-count {
+            font-weight: bold;
+            color: #a7d1f5; /* Hellblau passend zur Palette */
+            font-size: 1.3em;
+        }
+        .join-discord-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #5c67f2, #c55be3); /* Blauer Verlauf */
+            background-size: 150% 150%;
+            background-position: 50% 50%;
+            color: #ffffff;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1.1em; /* Angepasste Schriftgröße */
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.2s forwards;
+        }
+        .join-discord-button img {
+            width: 24px;
+            margin-right: 10px;
+        }
+        .join-discord-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background-position: 0% 50%;
+        }
+        .nav-button { /* Für den Zurück-Button */
+            display: inline-block;
+            background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
+            background-size: 150% 150%;
+            background-position: 50% 50%;
+            color: #333;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            opacity: 0;
+            animation: fadeIn 0.7s ease-in-out 1.4s forwards;
+        }
+        .nav-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background-position: 0% 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Unsere Discord Community 🎙️</h1>
+        <div class="discord-info">
+            <p>Tritt unserer lebendigen Community auf Discord bei, um dich mit anderen Spielern zu vernetzen, Fragen zu stellen, an Events teilzunehmen oder einfach nur zu chatten!</p>
+            <p>Aktuell sind <span id="discord-online-count">...</span> Mitglieder online!</p>
+        </div>
+
+        <a href="https://discord.gg/uPBasXs8gt" target="_blank" class="join-discord-button">
+            <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
+            Jetzt Discord beitreten!
+        </a>
+        <br>
+        <a href="index.html" class="nav-button">⬅️ Zurück zur Startseite</a>
+    </div>
+
+    <script>
+        // HIER DEINE DISCORD SERVER ID EINTRAGEN!
+        const discordServerId = "1033415051601780766"; 
+
+        const onlineCountElement = document.getElementById('discord-online-count');
+
+        async function fetchDiscordStatus() {
+            if (!discordServerId || discordServerId === "1033415051601780766") {
+                if(onlineCountElement) onlineCountElement.textContent = "Server ID nicht konfiguriert";
+                console.warn("Discord Server ID ist nicht konfiguriert.");
+                return;
+            }
+            if (!onlineCountElement) {
+                console.warn("Element für Online-Zähler nicht gefunden.");
+                return;
+            }
+
+            onlineCountElement.textContent = "lade..."; // Ladeanzeige
+
+            try {
+                // Wir nutzen die WidgetBot API für die Online-Zahl
+                const response = await fetch(`https://api.widgetbot.io/api/servers/${discordServerId}/widget.json`);
+                if (!response.ok) {
+                    throw new Error(`WidgetBot API Fehler: ${response.statusText} (Status: ${response.status})`);
+                }
+                const data = await response.json();
+
+                if (data && data.presence_count !== undefined) {
+                    onlineCountElement.textContent = data.presence_count;
+                } else {
+                    onlineCountElement.textContent = "N/A";
+                    console.warn("Konnte Online-Zahl nicht aus API-Antwort lesen:", data);
+                }
+            } catch (error) {
+                console.error("Fehler beim Abrufen des Discord Status:", error);
+                onlineCountElement.textContent = "Fehler";
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDiscordStatus();
+            // Optional: Intervall für automatische Aktualisierung der Discord Online-Zahl
+            // setInterval(fetchDiscordStatus, 60000); // Alle 60 Sekunden
+        });
+    </script>
+</body>
+</html>
