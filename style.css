@@ -1,0 +1,414 @@
+/* =============================================== */
+/* GEMEINSAME STILE & KEYFRAMES          */
+/* =============================================== */
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes subtleGradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #a7d1f5, #5c67f2, #f5a7cb, #f5a7a7, #a7d1f5, #5c67f2);
+    background-size: 300% 300%;
+    color: #e0e0e0;
+    margin: 0;
+    padding: 20px; /* Padding für den Body, damit der Container nicht am Rand klebt */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Zentriert den Container vertikal, falls weniger Inhalt als Bildschirmhöhe */
+    min-height: 100vh;
+    text-align: center;
+    box-sizing: border-box;
+    animation: subtleGradientShift 25s ease infinite;
+    overflow-x: hidden;
+}
+
+/* Basis-Styling für Haupt-Inhaltscontainer */
+.page-content-container {
+    background-color: rgba(30, 30, 30, 0.88);
+    padding: 30px 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    width: 90%;
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Basis-Styling für Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 5px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    background-size: 150% 150%;
+    background-position: 50% 50%;
+}
+.btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.btn img {
+    width: 24px;
+    margin-right: 12px;
+}
+
+
+/* =============================================== */
+/* STILE FÜR index.html               */
+/* =============================================== */
+
+.index-container { /* Erbt von .page-content-container */
+    max-width: 650px;
+}
+
+.index-container h1 { /* h1 spezifisch für index-container */
+    color: #fdd8ff;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.8s forwards; /* Angepasste Verzögerung relativ zum Container */
+}
+
+.index-container .intro-paragraph {
+    font-size: 1.2em;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    color: #f5f5f5;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+}
+
+.index-container .details-paragraph {
+    font-size: 1.05em;
+    line-height: 1.6;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #e0e0e0;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.2s forwards;
+}
+.index-container .details-paragraph strong {
+    color: #f5a7cb;
+}
+
+.index-container .button-section {
+    margin-top: 30px;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.4s forwards;
+}
+
+.index-container .discord-link-btn { /* Spezifische Klasse für Discord Link auf Index */
+    background: linear-gradient(45deg, #5c67f2, #c55be3);
+}
+.index-container .discord-link-btn:hover {
+    background-position: 0% 50%;
+}
+.index-container .discord-link-btn img { /* Ggf. spezifische Icon-Größe */
+     width: 24px; margin-right: 12px;
+}
+
+
+.index-container .serverinfo-btn { /* Spezifische Klasse für Serverinfo Button auf Index */
+    background: linear-gradient(45deg, #a7d1f5, #f5a7cb);
+    color: #1f283e;
+}
+.index-container .serverinfo-btn:hover {
+    background-position: 100% 50%;
+}
+
+.index-container .map-btn { /* Spezifische Klasse für Map Button auf Index */
+    background: linear-gradient(45deg, #81f5ac, #28a745);
+    color: #ffffff;
+}
+.index-container .map-btn:hover {
+     background-position: 100% 50%;
+}
+
+
+/* =============================================== */
+/* STILE FÜR serverinfo.html            */
+/* =============================================== */
+
+.serverinfo-page-container { /* Erbt von .page-content-container */
+    max-width: 750px;
+}
+
+.serverinfo-page-container #server-logo {
+    max-width: 80%;
+    height: auto;
+    max-height: 150px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    display: none; /* Wird per JS auf 'block' gesetzt */
+}
+
+.serverinfo-page-container .server-title-info {
+    margin-bottom: 25px;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.6s forwards; /* Eigene Animations-Timings */
+}
+
+.serverinfo-page-container #static-server-name {
+    color: #fdd8ff;
+    font-size: 2.2em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+}
+
+.serverinfo-page-container #static-server-ip {
+    color: #e0e0e0;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    background-color: rgba(0,0,0,0.2);
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.serverinfo-page-container h1 { /* Überschrift "Minecraft Server Status" */
+    color: #fdd8ff;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.8s forwards;
+}
+
+.serverinfo-page-container #server-status {
+    margin-top: 10px;
+    padding: 25px;
+    border-radius: 10px;
+    background-color: rgba(44, 44, 44, 0.9);
+    text-align: left;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+    width: 100%; /* Nimmt volle Breite des Containers ein */
+    box-sizing: border-box;
+}
+.serverinfo-page-container #server-status p {
+    margin: 12px 0;
+    font-size: 1.1em;
+    line-height: 1.7;
+}
+.serverinfo-page-container #server-status strong {
+    color: #fccbf3;
+}
+
+.serverinfo-page-container #player-list { /* Gilt für ul mit id player-list */
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+.serverinfo-page-container .serverinfo-player-list-h3 { /* h3 innerhalb von #server-status */
+    color: #e8e8e8;
+    margin-bottom: 12px;
+    font-size: 1.2em;
+    border-bottom: 2px solid #f5a7cb;
+    padding-bottom: 5px;
+}
+.serverinfo-page-container #player-list li {
+    background-color: rgba(60, 60, 60, 0.8);
+    color: #e0e0e0;
+    margin: 8px 0;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 1.05em;
+    transition: background-color 0.2s ease, transform 0.15s ease;
+}
+.serverinfo-page-container #player-list li:hover {
+    background-color: rgba(80, 80, 80, 0.9);
+    transform: translateX(5px);
+}
+
+.serverinfo-page-container .serverinfo-loading, 
+.serverinfo-page-container .serverinfo-error, 
+.serverinfo-page-container .serverinfo-status-online, 
+.serverinfo-page-container .serverinfo-status-offline {
+    text-align: center;
+    font-size: 1.15em !important;
+    padding: 10px;
+}
+.serverinfo-page-container .serverinfo-loading { font-style: italic; color: #c0c0c0; }
+.serverinfo-page-container .serverinfo-error { color: #ff8a80; font-weight: bold; }
+.serverinfo-page-container .serverinfo-status-online { color: #b9f6ca; font-weight: bold; }
+.serverinfo-page-container .serverinfo-status-offline { color: #ff8a80; font-weight: bold; }
+
+.serverinfo-page-container .center-button-container {
+    text-align: center;
+    width: 100%;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.2s forwards;
+}
+
+.serverinfo-page-container .back-btn { /* Navigationsbutton auf dieser Seite */
+    background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
+    color: #333;
+    font-size: 17px; /* von serverinfo.html */
+    padding: 14px 28px; /* von serverinfo.html */
+}
+.serverinfo-page-container .back-btn:hover{
+    background-position: 0% 50%;
+}
+
+
+/* =============================================== */
+/* STILE FÜR livemap.html              */
+/* =============================================== */
+
+/* .livemap-page-container ist der Body-Wrapper, kein Inhaltscontainer im selben Stil */
+/* Stattdessen .livemap-title-container für den oberen Block */
+.livemap-title-container {
+    width: 90%;
+    max-width: 900px;
+    background-color: rgba(30, 30, 30, 0.88);
+    padding: 20px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    text-align: center;
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
+    margin-bottom: 20px;
+}
+
+.livemap-title-container h1 {
+    color: #fdd8ff;
+    margin-bottom: 15px;
+    font-size: 2.3em;
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.8s forwards;
+}
+
+.livemap-title-container .nav-btn { /* Navigationsbutton */
+    background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
+    color: #333;
+    font-size: 16px; /* von livemap.html */
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+}
+.livemap-title-container .nav-btn:hover {
+    background-position: 0% 50%;
+}
+
+
+.livemap-iframe-container {
+    width: 90%;
+    max-width: 1200px;
+    height: 75vh;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out 0.6s forwards;
+}
+.livemap-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+
+/* =============================================== */
+/* STILE FÜR discordinfo.html            */
+/* =============================================== */
+
+.discordinfo-container { /* Erbt von .page-content-container */
+    max-width: 450px; 
+}
+
+.discordinfo-container h1 {
+    color: #fdd8ff;
+    margin-bottom: 15px; /* Angepasst von discordinfo.html */
+    font-size: 2.2em; /* Angepasst von discordinfo.html */
+    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.8s forwards;
+}
+
+.discordinfo-container .discord-intro-text {
+    font-size: 1.1em; /* Angepasst von discordinfo.html */
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #f0f0f0;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+    max-width: 100%;
+}
+
+.discordinfo-container .join-discord-btn { /* Button zum direkten Beitreten */
+    background: linear-gradient(45deg, #5c67f2, #c55be3);
+    padding: 14px 28px;
+    font-size: 1.05em;
+    margin-bottom: 25px;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.2s forwards;
+}
+.discordinfo-container .join-discord-btn img {
+    width: 22px;
+    margin-right: 10px;
+}
+.discordinfo-container .join-discord-btn:hover {
+    background-position: 0% 50%;
+}
+
+
+.discordinfo-container .discord-widget-wrapper {
+    width: 350px;
+    height: 500px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.4s forwards;
+}
+.discordinfo-container .discord-widget-wrapper iframe {
+    display: block;
+}
+
+.discordinfo-container .nav-btn { /* Navigationsbutton */
+    background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
+    color: #333;
+    font-size: 1em; /* von discordinfo.html */
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.6s forwards;
+}
+.discordinfo-container .nav-btn:hover {
+    background-position: 0% 50%;
+}
