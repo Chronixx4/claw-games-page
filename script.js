@@ -1,4 +1,4 @@
-// SERVER IP IST BEREITS: allthemods10.servegame.com
+// SERVER IP IST BEREITS: allthemods10.servegame.co
 const serverIp = "allthemods10.servegame.com";
 
 const statusDiv = document.getElementById('server-status');
