@@ -298,31 +298,32 @@ body {
 /* .livemap-page-container ist der Body-Wrapper, kein Inhaltscontainer im selben Stil */
 /* Stattdessen .livemap-title-container für den oberen Block */
 .livemap-title-container {
-    width: 90%;
-    max-width: 900px;
-    background-color: rgba(30, 30, 30, 0.88);
-    padding: 20px 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    width: 95%; 
+    max-width: 1000px; /* oder 900px, wie du es hattest */
+    background-color: rgba(30, 30, 30, 0.85); 
+    padding: 10px 20px; 
+    border-radius: 12px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4); 
     text-align: center;
     opacity: 0;
     animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
-    margin-bottom: 20px;
+    margin-bottom: 10px; 
 }
 
 .livemap-title-container h1 {
     color: #fdd8ff;
-    margin-bottom: 15px;
-    font-size: 2.3em;
-    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    margin-bottom: 8px;  
+    font-size: 1.6em;    
+    text-shadow: 0 0 6px rgba(0,0,0,0.4); 
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
 
-.livemap-title-container .nav-btn { /* Navigationsbutton */
+.livemap-title-container .nav-btn { /* Erbt von .btn */
     background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
     color: #333;
-    font-size: 16px; /* von livemap.html */
+    font-size: 0.85em;   
+    padding: 8px 18px;   
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.0s forwards;
 }
@@ -330,22 +331,37 @@ body {
     background-position: 0% 50%;
 }
 
-.livemap-iframe-container {
-    width: 800px !important; /* Erzwinge eine Breite */
-    max-width: 800px !important; /* Stelle sicher, dass max-width dies nicht einschränkt */
-    height: 600px !important; /* Testweise auch feste Höhe */
-    margin-bottom: 20px;
-    border-radius: 10px;
+
+/* Karten-Container - JETZT MIT DEN FLEXIBLEN WERTEN */
+.livemap-iframe-container { 
+    width: 98%;            /* Fast die volle Breite des Elternelements */
+    max-width: 100%;       /* Nimmt die verfügbare Breite */
+    height: calc(100vh - 220px); /* Höhe: Volle Bildschirmhöhe minus ca. Platz für Header + etwas Rand */
+                                 /* !!! Passe die 130px hier ggf. an !!! */
+    margin-bottom: 10px;   /* Etwas Abstand nach unten */
+    border-radius: 8px;    
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    opacity: 1 !important; /* Erzwinge Sichtbarkeit für den Test */
-    /* animation: fadeInSlideUp 0.8s ease-out 0.6s forwards; /* Animation testweise aus */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+    opacity: 0; /* Für die Animation */
+    animation: fadeInSlideUp 0.8s ease-out 0.6s forwards; /* Animation wieder aktiv */
+    margin-left: auto; /* Stellt sicher, dass es zentriert ist, falls parent Flex-Center hat */
+    margin-right: auto;
 }
 
-.livemap-iframe-container iframe {
-    width: 100% !important; /* Soll volle Breite des (jetzt festen) Containers nehmen */
-    height: 100% !important;/* Soll volle Höhe des (jetzt festen) Containers nehmen */
+.livemap-iframe-container iframe { 
+    width: 100%; 
+    height: 100%;
     border: none;
+}
+
+/* Der Seiten-Wrapper (Elternteil des iframe-Containers) */
+.livemap-page-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Zentriert seine Kinder, inkl. .livemap-iframe-container */
+    padding: 10px; /* Reduziertes Padding für mehr Platz für die Karte */
+    box-sizing: border-box;
 }
 
 /* =============================================== */
