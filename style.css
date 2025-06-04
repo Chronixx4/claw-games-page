@@ -172,7 +172,12 @@ body {
     max-height: 150px;
     margin-bottom: 20px;
     border-radius: 8px;
-    display: none; /* Wird per JS auf 'block' gesetzt */
+    /* display: none; JavaScript kümmert sich darum, es auf 'block' zu setzen, wenn es angezeigt wird */
+    
+    /* HINZUGEFÜGT: Damit ein Block-Element zentriert wird */
+    display: block; /* Stellen wir hier schon sicher, JS bestätigt das oder macht es sichtbar */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .serverinfo-page-container .server-title-info {
