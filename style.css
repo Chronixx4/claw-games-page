@@ -1,90 +1,4 @@
 /* =============================================== */
-/* GEMEINSAME STILE & KEYFRAMES          */
-/* =============================================== */
-
-@keyframes fadeInSlideUp {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-}
-
-@keyframes subtleGradientShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #a7d1f5, #5c67f2, #f5a7cb, #f5a7a7, #a7d1f5, #5c67f2);
-    background-size: 300% 300%;
-    color: #e0e0e0;
-    margin: 0;
-    padding: 20px; /* Padding für den Body, damit der Container nicht am Rand klebt */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; /* Zentriert den Container vertikal, falls weniger Inhalt als Bildschirmhöhe */
-    min-height: 100vh;
-    text-align: center;
-    box-sizing: border-box;
-    animation: subtleGradientShift 25s ease infinite;
-    overflow-x: hidden;
-}
-
-/* Basis-Styling für Haupt-Inhaltscontainer */
-.page-content-container {
-    background-color: rgba(30, 30, 30, 0.88);
-    padding: 30px 35px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    width: 90%;
-    opacity: 0;
-    animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Basis-Styling für Buttons */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    padding: 15px 30px;
-    text-decoration: none;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    margin: 10px 5px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.5s ease;
-    border: none;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    background-size: 150% 150%;
-    background-position: 50% 50%;
-}
-.btn:hover {
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-.btn img {
-    width: 24px;
-    margin-right: 12px;
-}
-
-
-/* =============================================== */
 /* STILE FÜR index.html                            */
 /* =============================================== */
 
@@ -178,122 +92,361 @@ body {
 .index-container .map-btn:hover {
      background-position: 100% 50%; /* Spezifisches Hover für diesen Button-Gradienten */
 }
+Was wurde hauptsächlich geändert/hinzugefügt:
+
+.index-container .button-section:
+
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+gap: 15px;
+.index-container .button-section .btn:
+
+Eine neue Regel wurde hinzugefügt, die auf alle Elemente mit der Klasse btn innerhalb des .button-section im .index-container abzielt.
+flex-grow: 1;
+flex-basis: 200px; (Diesen Wert kannst du anpassen, um die "Grundbreite" der Buttons zu steuern, bevor sie wachsen oder umbrechen).
+margin: 0; (Da wir gap auf dem Elternelement verwenden).
+min-width: 180px;
+Wichtig für dein HTML (index.html):
+
+Damit diese neuen CSS-Regeln für die Flexbox-Items greifen, sollten deine Buttons im HTML die Basisklasse btn und ihre spezifische Klasse haben. Also so, wie wir es beim Erstellen der style.css besprochen hatten:
+
+HTML
+
+<div class="button-section">
+    <a href="discordinfo.html" class="btn discord-link-btn"> 
+        <img src="https://www.svgrepo.com/show/353655/discord-icon.svg" alt="Discord Logo">
+        Infos zur Discord-Community
+    </a>
+    <a href="serverinfo.html" class="btn serverinfo-btn">Live Server-Infos ⛏️</a>
+    <a href="livemap.html" class="btn map-btn">Live Server-Karte 🗺️</a>
+</div>
+Wenn du diese CSS-Anpassungen in deine style.css übernimmst und sicherstellst, dass die Buttons im HTML die btn-Klasse haben, sollten sie sich jetzt ordentlicher und flexibler anordnen. 👍
+
+
+
+
+
+
+style
+CSS
+kann man hier noch mal einmal denn ganzen farbstyle überarbeiten ?
+
+
+
+Gedankengang anzeigen
+Okay, eine komplette Überarbeitung des Farbstils! Das kann der Webseite einen ganz neuen Look geben. 🎨
+
+Da du mir die Wahl überlässt, schlage ich einen Stil vor, der einen deutlichen Kontrast zum aktuellen bunten Farbverlauf bietet und oft als sehr modern und sauber empfunden wird:
+
+Vorschlag: "Minimalistisch Monochrom mit einem leuchtenden Akzent"
+
+Hintergrund (body): Ein sehr helles Grau (z.B. #f4f7f6) oder reines Weiß. Das schafft eine ruhige und offene Atmosphäre. Die aktuelle Farbverlauf-Animation im Hintergrund würde dann entfallen.
+Inhalts-Container (.page-content-container und ähnliche): Weiß oder ein nur ganz leicht abgetöntes Grau, das sich durch subtile Schatten vom Hintergrund abhebt. Keine dunklen, transparenten Hintergründe mehr.
+Texte: Hauptsächlich dunkles Grau (z.B. #333333) für beste Lesbarkeit auf hellem Grund.
+Akzentfarbe: Wir wählen EINE kräftige Farbe aus deiner bisherigen Palette, z.B. das Blau (#5c67f2) oder das Pink (#f5a7cb), und setzen diese gezielt für wichtige Elemente ein:
+Buttons (z.B. vollflächig in der Akzentfarbe oder als Umrandung)
+Überschriften (eventuell)
+Wichtige Hervorhebungen oder Icons.
+Buttons: Könnten z.B. einen soliden Hintergrund in der Akzentfarbe mit weißem Text haben, oder ein "Outline"-Design (transparenter Hintergrund, farbiger Rand und Text in Akzentfarbe). Die aktuellen Farbverläufe auf den Buttons würden dann durch diesen klareren Stil ersetzt.
+Wie würde sich das anfühlen?
+
+Sehr sauber und aufgeräumt: Der Fokus liegt stärker auf dem Inhalt.
+Modern und elegant.
+Ein starker Kontrast zum bisherigen "Dark Mode" mit den vielen Farbverläufen.
+Was hältst du von dieser Richtung? Sollen wir das Blau (#5c67f2) oder das Pink (#f5a7cb) als Hauptakzentfarbe nehmen, oder hast du vielleicht eine ganz andere Lieblingsfarbe im Sinn?
+
+Wenn dir diese Idee zusagt, würde ich deine aktuelle style.css-Datei nehmen und alle Farb-, Hintergrund- und Button-Stile entsprechend überarbeiten, um diesen neuen Look umzusetzen. Die Layout-Struktur und die Fade-In-Animationen können wir größtenteils beibehalten.
+
+Oder hast du vielleicht doch eine andere Vorstellung, z.B. ein sehr dunkles "Cyberpunk"-Thema mit Neon-Akzenten, oder ein erdiges Naturthema? Lass es mich wissen! 😊
+
+
+
+
+
+
+ja mach mal im cyberpunk style und mach mir die datei fertig
+
+
+
+Gedankengang anzeigen
+Okay, Cyberpunk-Style! 🌃👾 Das ist ein cooler Kontrast zum bisherigen Design und kann richtig was hermachen mit dunklen Tönen und Neon-Akzenten. Ich werde deine style.css-Datei entsprechend überarbeiten.
+
+Das sind die Kernmerkmale des Cyberpunk-Styles, den wir umsetzen werden:
+
+Hintergrund: Sehr dunkel, fast schwarz oder ein tiefes Nachtblau.
+Container: Dunkle Flächen, die sich vom Hintergrund abheben, oft mit leuchtenden Rändern oder Akzenten in Neonfarben.
+Farben: Als Hauptakzente verwenden wir ein helles Cyan (ein leuchtendes Blaugrün) und ein kräftiges Magenta (Pink/Lila).
+Text: Helle Schrift (Weiß oder helles Grau) für guten Kontrast.
+Buttons: Dunkel mit leuchtenden Rändern und Text in Akzentfarben.
+Animationen: Die bestehenden Einblend-Animationen behalten wir bei. Die langsame Farbverlauf-Animation des Hintergrunds wird durch einen statischen, dunklen Hintergrund ersetzt.
+Ich nehme jetzt deine zuletzt hochgeladene style.css-Datei und passe alle relevanten Farb-, Hintergrund-, Rand- und Schatteneigenschaften an. Die Layout-Struktur bleibt dabei weitestgehend erhalten.
+
+Hier ist der Code für deine überarbeitete style.css-Datei im Cyberpunk-Style:
+
+CSS
+
+/* =============================================== */
+/* GEMEINSAME STILE & KEYFRAMES (Cyberpunk)      */
+/* =============================================== */
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* subtleGradientShift Animation wird nicht mehr für den Body verwendet */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0a0c10; /* Sehr dunkles Blau/Schwarz */
+    color: #e0e0e0; /* Helle Standardtextfarbe */
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+/* Basis-Styling für Haupt-Inhaltscontainer (Cyberpunk) */
+.page-content-container {
+    background-color: rgba(20, 24, 34, 0.85); /* Dunkelblau-Grau, leicht transparent */
+    padding: 30px 35px;
+    border-radius: 8px; /* Etwas weniger Rundung für schärferen Look */
+    border: 1px solid #00d8ff; /* Cyan-Rand */
+    box-shadow: 0 0 15px rgba(0, 216, 255, 0.3), 0 0 25px rgba(0, 216, 255, 0.2); /* Cyan-Glow */
+    width: 90%;
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Basis-Styling für Buttons (Cyberpunk) */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #00d8ff; /* Cyan-Text */
+    background-color: #141822; /* Dunkler Button-Hintergrund */
+    padding: 12px 25px; /* Etwas kompakteres Padding */
+    text-decoration: none;
+    border-radius: 6px; /* Schärfere Ecken */
+    font-size: 17px; /* Leicht angepasst */
+    font-weight: bold;
+    margin: 10px 5px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+    border: 1px solid #00d8ff; /* Cyan-Rand */
+    box-shadow: 0 0 5px rgba(0, 216, 255, 0.4); /* Subtiler Cyan-Glow */
+}
+.btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    background-color: #00d8ff; /* Cyan-Hintergrund auf Hover */
+    color: #0a0c10; /* Dunkler Text auf Hover */
+    box-shadow: 0 0 15px rgba(0, 216, 255, 0.7), 0 0 25px rgba(0, 216, 255, 0.5); /* Stärkerer Glow */
+}
+.btn img {
+    width: 20px; /* Icons etwas kleiner */
+    margin-right: 10px;
+    filter: brightness(0) invert(1) sepia(1) hue-rotate(180deg) saturate(5); /* Versucht Icons einzufärben (experimentell) */
+}
 
 
 /* =============================================== */
-/* STILE FÜR serverinfo.html            */
+/* STILE FÜR index.html (Cyberpunk)              */
 /* =============================================== */
 
-.serverinfo-page-container { /* Erbt von .page-content-container */
+.index-container {
+    max-width: 650px;
+    /* Erbt .page-content-container Stile (dunkel mit Cyan-Rand/Glow) */
+}
+
+.index-container h1 {
+    color: #00d8ff; /* Cyan */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 0 0 8px rgba(0, 216, 255, 0.7); /* Cyan-Text-Glow */
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.8s forwards;
+}
+
+.index-container .intro-paragraph {
+    font-size: 1.2em;
+    line-height: 1.7;
+    margin-bottom: 25px;
+    color: #f0f0f0; /* Helles Weiß/Grau */
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+}
+
+.index-container .details-paragraph {
+    font-size: 1.05em;
+    line-height: 1.6;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #cccccc; /* Etwas dunkleres Grau für Fließtext */
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.2s forwards;
+}
+.index-container .details-paragraph strong {
+    color: #ff00c8; /* Magenta für Hervorhebungen */
+}
+
+.index-container .button-section {
+    margin-top: 30px;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.4s forwards;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.index-container .button-section .btn { /* Erbt von .btn und den Flex-Item-Styles */
+    flex-grow: 1;
+    flex-basis: 200px;
+    margin: 0; 
+    min-width: 180px;
+}
+
+/* Spezifische Button-Akzente (optional, da .btn schon gestylt ist) */
+/* Man könnte hier z.B. die Akzentfarbe für bestimmte Buttons variieren */
+.index-container .discord-link-btn {
+    /* Erbt .btn Cyberpunk-Stil, ggf. Akzentfarbe anpassen, falls gewünscht */
+    /* border-color: #ff00c8; color: #ff00c8; */ /* Beispiel für Magenta-Akzent */
+}
+.index-container .discord-link-btn:hover {
+    /* background-color: #ff00c8; color: #0a0c10; */ /* Beispiel für Magenta-Akzent Hover */
+}
+
+/* .serverinfo-btn und .map-btn erben den Standard .btn Cyberpunk-Stil */
+
+
+/* =============================================== */
+/* STILE FÜR serverinfo.html (Cyberpunk)         */
+/* =============================================== */
+
+.serverinfo-page-container {
     max-width: 750px;
+    /* Erbt .page-content-container Stile */
 }
 
 .serverinfo-page-container #server-logo {
     max-width: 80%;
     height: auto;
     max-height: 150px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px auto; /* margin-left/right auto für Zentrierung, da display:block */
+    display: block;
     border-radius: 8px;
-    /* display: none; JavaScript kümmert sich darum, es auf 'block' zu setzen, wenn es angezeigt wird */
-    
-    /* HINZUGEFÜGT: Damit ein Block-Element zentriert wird */
-    display: block; /* Stellen wir hier schon sicher, JS bestätigt das oder macht es sichtbar */
-    margin-left: auto;
-    margin-right: auto;
+    /* Kein display:none; mehr, da es von JS gesteuert wird oder immer sichtbar sein soll */
 }
 
 .serverinfo-page-container .server-title-info {
     margin-bottom: 25px;
     opacity: 0;
-    animation: fadeIn 0.7s ease-in-out 0.6s forwards; /* Eigene Animations-Timings */
+    animation: fadeIn 0.7s ease-in-out 0.6s forwards;
 }
 
 .serverinfo-page-container #static-server-name {
-    color: #fdd8ff;
+    color: #00d8ff; /* Cyan */
     font-size: 2.2em;
     font-weight: bold;
     margin-bottom: 5px;
-    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    text-shadow: 0 0 7px rgba(0, 216, 255, 0.6);
 }
 
 .serverinfo-page-container #static-server-ip {
     color: #e0e0e0;
     font-size: 1.3em;
     margin-bottom: 20px;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.3); /* Dunklerer Hintergrund für IP */
     padding: 5px 10px;
     border-radius: 5px;
     display: inline-block;
+    border: 1px solid rgba(0, 216, 255, 0.3); /* Subtiler Cyan-Rand */
 }
 
 .serverinfo-page-container h1 { /* Überschrift "Minecraft Server Status" */
-    color: #fdd8ff;
+    color: #00d8ff; /* Cyan */
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 15px; /* Mehr Abstand zur Statusbox */
     font-size: 1.8em;
-    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    text-shadow: 0 0 6px rgba(0, 216, 255, 0.5);
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
 
 .serverinfo-page-container #server-status {
     margin-top: 10px;
-    padding: 25px;
-    border-radius: 10px;
-    background-color: rgba(44, 44, 44, 0.9);
+    padding: 20px; /* Etwas weniger Padding */
+    border-radius: 6px;
+    background-color: rgba(10, 12, 16, 0.7); /* Sehr dunkler, transparenter Hintergrund */
+    border: 1px solid rgba(0, 216, 255, 0.2); /* Kaum sichtbarer Rand */
     text-align: left;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.0s forwards;
-    width: 100%; /* Nimmt volle Breite des Containers ein */
+    width: 100%;
     box-sizing: border-box;
 }
 .serverinfo-page-container #server-status p {
-    margin: 12px 0;
-    font-size: 1.1em;
-    line-height: 1.7;
+    margin: 10px 0;
+    font-size: 1.05em; /* Etwas kleiner für kompaktere Optik */
+    line-height: 1.6;
 }
 .serverinfo-page-container #server-status strong {
-    color: #fccbf3;
+    color: #ff00c8; /* Magenta */
 }
 
-.serverinfo-page-container #player-list { /* Gilt für ul mit id player-list */
+.serverinfo-page-container #player-list {
     list-style-type: none;
     padding: 0;
-    margin-top: 20px;
+    margin-top: 15px;
 }
-.serverinfo-page-container .serverinfo-player-list-h3 { /* h3 innerhalb von #server-status */
-    color: #e8e8e8;
-    margin-bottom: 12px;
-    font-size: 1.2em;
-    border-bottom: 2px solid #f5a7cb;
+.serverinfo-page-container .serverinfo-player-list-h3 {
+    color: #00d8ff; /* Cyan */
+    margin-bottom: 10px;
+    font-size: 1.15em;
+    border-bottom: 1px solid #00d8ff; /* Cyan-Linie */
     padding-bottom: 5px;
 }
 .serverinfo-page-container #player-list li {
-    background-color: rgba(60, 60, 60, 0.8);
-    color: #e0e0e0;
-    margin: 8px 0;
-    padding: 12px 18px;
-    border-radius: 8px;
-    font-size: 1.05em;
+    background-color: rgba(20, 24, 34, 0.6); /* Dunkelblau-Grau, leicht transparent */
+    color: #c0c0c0; /* Helleres Grau für Spielernamen */
+    margin: 6px 0;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 1em;
     transition: background-color 0.2s ease, transform 0.15s ease;
+    border-left: 3px solid #00d8ff; /* Cyan-Akzent links */
 }
 .serverinfo-page-container #player-list li:hover {
-    background-color: rgba(80, 80, 80, 0.9);
-    transform: translateX(5px);
+    background-color: rgba(0, 216, 255, 0.1); /* Cyan-Highlight auf Hover */
+    transform: translateX(3px);
+    color: #00d8ff;
 }
 
-.serverinfo-page-container .serverinfo-loading, 
-.serverinfo-page-container .serverinfo-error, 
-.serverinfo-page-container .serverinfo-status-online, 
-.serverinfo-page-container .serverinfo-status-offline {
-    text-align: center;
-    font-size: 1.15em !important;
-    padding: 10px;
-}
-.serverinfo-page-container .serverinfo-loading { font-style: italic; color: #c0c0c0; }
-.serverinfo-page-container .serverinfo-error { color: #ff8a80; font-weight: bold; }
-.serverinfo-page-container .serverinfo-status-online { color: #b9f6ca; font-weight: bold; }
-.serverinfo-page-container .serverinfo-status-offline { color: #ff8a80; font-weight: bold; }
+.serverinfo-page-container .serverinfo-loading { font-style: italic; color: #777; }
+.serverinfo-page-container .serverinfo-error { color: #ff4d4d; font-weight: bold; text-shadow: 0 0 5px #ff0000;} /* Roter Glow für Fehler */
+.serverinfo-page-container .serverinfo-status-online { color: #39ff14; font-weight: bold; text-shadow: 0 0 5px #39ff14;} /* Limettengrüner Glow */
+.serverinfo-page-container .serverinfo-status-offline { color: #ff8c00; font-weight: bold; text-shadow: 0 0 5px #ff8c00;} /* Oranger Glow */
 
 .serverinfo-page-container .center-button-container {
     text-align: center;
@@ -301,156 +454,134 @@ body {
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.2s forwards;
 }
-
-.serverinfo-page-container .back-btn { /* Navigationsbutton auf dieser Seite */
-    background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
-    color: #333;
-    font-size: 17px; /* von serverinfo.html */
-    padding: 14px 28px; /* von serverinfo.html */
+.serverinfo-page-container .back-btn { /* Erbt .btn Cyberpunk-Stil */
+    /* Ggf. andere Akzentfarbe, wenn gewünscht */
+    /* border-color: #ff00c8; color: #ff00c8; */
 }
 .serverinfo-page-container .back-btn:hover{
-    background-position: 0% 50%;
+    /* background-color: #ff00c8; color: #0a0c10; */
 }
 
 
 /* =============================================== */
-/* STILE FÜR livemap.html              */
+/* STILE FÜR livemap.html (Cyberpunk)            */
 /* =============================================== */
 
-/* .livemap-page-container ist der Body-Wrapper, kein Inhaltscontainer im selben Stil */
-/* Stattdessen .livemap-title-container für den oberen Block */
 .livemap-title-container {
-    width: 95%; 
-    max-width: 1000px; /* oder 900px, wie du es hattest */
-    background-color: rgba(30, 30, 30, 0.85); 
-    padding: 10px 20px; 
-    border-radius: 12px; 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4); 
+    width: 95%;
+    max-width: 1000px;
+    background-color: rgba(20, 24, 34, 0.85); /* Dunkelblau-Grau */
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid #00d8ff; /* Cyan-Rand */
+    box-shadow: 0 0 10px rgba(0, 216, 255, 0.3); /* Cyan-Glow */
     text-align: center;
     opacity: 0;
     animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
 }
 
 .livemap-title-container h1 {
-    color: #fdd8ff;
+    color: #00d8ff; /* Cyan */
     margin-bottom: 8px;  
     font-size: 1.6em;    
-    text-shadow: 0 0 6px rgba(0,0,0,0.4); 
+    text-shadow: 0 0 6px rgba(0, 216, 255, 0.5); 
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
 
-.livemap-title-container .nav-btn { /* Erbt von .btn */
-    background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
-    color: #333;
-    font-size: 0.85em;   
-    padding: 8px 18px;   
-    opacity: 0;
-    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
-}
-.livemap-title-container .nav-btn:hover {
-    background-position: 0% 50%;
+.livemap-title-container .nav-btn { /* Erbt .btn Cyberpunk-Stil */
+    /* Spezifische Anpassungen, falls Abweichung vom .btn Stil gewünscht */
+    padding: 8px 18px;
+    font-size: 0.85em;
 }
 
-
-/* Karten-Container - JETZT MIT DEN FLEXIBLEN WERTEN */
 .livemap-iframe-container { 
-    width: 98%;            /* Fast die volle Breite des Elternelements */
-    max-width: 100%;       /* Nimmt die verfügbare Breite */
-    height: calc(100vh - 220px); /* Höhe: Volle Bildschirmhöhe minus ca. Platz für Header + etwas Rand */
-                                 /* !!! Passe die 130px hier ggf. an !!! */
-    margin-bottom: 10px;   /* Etwas Abstand nach unten */
-    border-radius: 8px;    
+    width: 98%;
+    max-width: 100%;
+    height: calc(100vh - 130px); /* Wert ggf. anpassen, je nach Höhe des neuen .livemap-title-container */
+    margin-bottom: 10px;   
+    border-radius: 6px;    
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-    opacity: 0; /* Für die Animation */
-    animation: fadeInSlideUp 0.8s ease-out 0.6s forwards; /* Animation wieder aktiv */
-    margin-left: auto; /* Stellt sicher, dass es zentriert ist, falls parent Flex-Center hat */
+    border: 1px solid #00d8ff; /* Cyan-Rand um die Karte */
+    box-shadow: 0 0 15px rgba(0, 216, 255, 0.3); /* Cyan-Glow um die Karte */
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out 0.6s forwards;
+    margin-left: auto;
     margin-right: auto;
 }
-
 .livemap-iframe-container iframe { 
     width: 100%; 
     height: 100%;
     border: none;
 }
 
-/* Der Seiten-Wrapper (Elternteil des iframe-Containers) */
-.livemap-page-container {
+.livemap-page-container { /* Wrapper auf livemap.html */
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Zentriert seine Kinder, inkl. .livemap-iframe-container */
-    padding: 10px; /* Reduziertes Padding für mehr Platz für die Karte */
+    align-items: center;
+    padding: 10px; /* Reduziertes Padding */
     box-sizing: border-box;
 }
 
+
 /* =============================================== */
-/* STILE FÜR discordinfo.html            */
+/* STILE FÜR discordinfo.html (Cyberpunk)          */
 /* =============================================== */
 
-.discordinfo-container { /* Erbt von .page-content-container */
-    max-width: 450px; 
+.discordinfo-container {
+    max-width: 600px; /* Etwas breiter für den Widget */
+    /* Erbt .page-content-container Stile */
 }
 
 .discordinfo-container h1 {
-    color: #fdd8ff;
-    margin-bottom: 15px; /* Angepasst von discordinfo.html */
-    font-size: 2.2em; /* Angepasst von discordinfo.html */
-    text-shadow: 0 0 8px rgba(0,0,0,0.5);
+    color: #00d8ff; /* Cyan */
+    margin-bottom: 20px; /* Mehr Abstand zum Text */
+    font-size: 2.2em;
+    text-shadow: 0 0 8px rgba(0, 216, 255, 0.6);
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
 
 .discordinfo-container .discord-intro-text {
-    font-size: 1.1em; /* Angepasst von discordinfo.html */
+    font-size: 1.1em;
     line-height: 1.6;
     margin-bottom: 20px;
-    color: #f0f0f0;
+    color: #cccccc;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.0s forwards;
     max-width: 100%;
 }
 
-.discordinfo-container .join-discord-btn { /* Button zum direkten Beitreten */
-    background: linear-gradient(45deg, #5c67f2, #c55be3);
-    padding: 14px 28px;
-    font-size: 1.05em;
+.discordinfo-container .join-discord-btn { /* Erbt .btn Cyberpunk-Stil */
     margin-bottom: 25px;
-    opacity: 0;
-    animation: fadeIn 0.7s ease-in-out 1.2s forwards;
+    /* Ggf. andere Akzentfarbe für diesen Haupt-CTA */
+    /* background-color: #ff00c8; color: #0a0c10; border-color: #ff00c8; */
+}
+.discordinfo-container .join-discord-btn:hover {
+    /* background-color: #0a0c10; color: #ff00c8; */ /* Hover für Magenta-Beispiel */
 }
 .discordinfo-container .join-discord-btn img {
     width: 22px;
     margin-right: 10px;
 }
-.discordinfo-container .join-discord-btn:hover {
-    background-position: 0% 50%;
-}
-
 
 .discordinfo-container .discord-widget-wrapper {
-    width: 350px;
-    height: 500px;
-    border-radius: 8px;
+    width: 350px; /* Breite des Discord Widgets */
+    height: 500px; /* Höhe des Discord Widgets */
+    border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border: 1px solid rgba(0, 216, 255, 0.5); /* Subtiler Cyan-Rand um das Widget */
+    box-shadow: 0 0 10px rgba(0, 216, 255, 0.2); /* Leichter Glow */
     margin-bottom: 30px;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.4s forwards;
 }
 .discordinfo-container .discord-widget-wrapper iframe {
-    display: block;
+    display: block; /* Stellt sicher, dass es keine Lücken gibt */
 }
 
-.discordinfo-container .nav-btn { /* Navigationsbutton */
-    background: linear-gradient(45deg, #f5a7cb, #f5a7a7);
-    color: #333;
-    font-size: 1em; /* von discordinfo.html */
-    opacity: 0;
-    animation: fadeIn 0.7s ease-in-out 1.6s forwards;
-}
-.discordinfo-container .nav-btn:hover {
-    background-position: 0% 50%;
+.discordinfo-container .nav-btn { /* Erbt .btn Cyberpunk-Stil */
+    /* Für Konsistenz */
 }
