@@ -332,8 +332,8 @@ body {
 
 
 .livemap-iframe-container {
-    width: 90%;
-    max-width: 1200px;
+    width: 100%;
+    max-width: 800px;
     height: 75vh;
     margin-bottom: 20px;
     border-radius: 10px;
