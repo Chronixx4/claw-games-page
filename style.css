@@ -85,7 +85,7 @@ body {
 
 
 /* =============================================== */
-/* STILE FÜR index.html               */
+/* STILE FÜR index.html                            */
 /* =============================================== */
 
 .index-container { /* Erbt von .page-content-container */
@@ -124,20 +124,42 @@ body {
     color: #f5a7cb;
 }
 
+/* ANGEPASST: .button-section mit Flexbox */
 .index-container .button-section {
     margin-top: 30px;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.4s forwards;
+    
+    /* Flexbox für die Ausrichtung der Buttons */
+    display: flex;
+    justify-content: center; /* Zentriert die Button-Gruppe */
+    flex-wrap: wrap;         /* Erlaubt Umbruch in die nächste Zeile */
+    gap: 15px;               /* Abstand zwischen den Buttons */
 }
+
+/* NEU/ANGEPASST: Stile für die Buttons als Flex-Items */
+/* Diese Regel zielt auf alle Elemente mit der Klasse .btn INNERHALB der .button-section des .index-container */
+.index-container .button-section .btn {
+    flex-grow: 1;           /* Erlaubt Buttons zu wachsen und Platz zu füllen */
+    flex-basis: 200px;      /* "Ideale" Basisbreite, passe diesen Wert bei Bedarf an (z.B. 180px oder 220px) */
+    margin: 0;              /* Entfernt individuelles Margin der .btn Klasse, da 'gap' verwendet wird */
+    min-width: 180px;       /* Verhindert, dass Buttons zu schmal werden */
+    /* justify-content: center; erbt es von der .btn Basisklasse für den Inhalt des Buttons */
+}
+
+/* Spezifische Button-Stile bleiben erhalten für Farben etc. */
+/* Sie sollten im HTML auch die Klasse .btn haben, z.B. class="btn discord-link-btn" */
 
 .index-container .discord-link-btn { /* Spezifische Klasse für Discord Link auf Index */
     background: linear-gradient(45deg, #5c67f2, #c55be3);
+    /* Das .btn img Styling aus der Basisklasse .btn wird hier angewendet, wenn das Icon im HTML ist */
 }
 .index-container .discord-link-btn:hover {
-    background-position: 0% 50%;
+    background-position: 0% 50%; /* Spezifisches Hover für diesen Button-Gradienten */
 }
-.index-container .discord-link-btn img { /* Ggf. spezifische Icon-Größe */
-     width: 24px; margin-right: 12px;
+.index-container .discord-link-btn img { /* Ggf. spezifische Icon-Größe, falls nicht von .btn geerbt */
+     width: 24px; 
+     margin-right: 12px;
 }
 
 
@@ -146,7 +168,7 @@ body {
     color: #1f283e;
 }
 .index-container .serverinfo-btn:hover {
-    background-position: 100% 50%;
+    background-position: 100% 50%; /* Spezifisches Hover für diesen Button-Gradienten */
 }
 
 .index-container .map-btn { /* Spezifische Klasse für Map Button auf Index */
@@ -154,7 +176,7 @@ body {
     color: #ffffff;
 }
 .index-container .map-btn:hover {
-     background-position: 100% 50%;
+     background-position: 100% 50%; /* Spezifisches Hover für diesen Button-Gradienten */
 }
 
 
