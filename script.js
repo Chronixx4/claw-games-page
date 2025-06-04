@@ -14,59 +14,47 @@ async function fetchServerStatus() {
         return;
     }
 
-    // Beim ersten Laden wird der Text bereits im HTML oder initial im JS gesetzt.
-    // Nur wenn schon Inhalt da ist, kurz "Aktualisiere..." zeigen.
     if (statusDiv.innerHTML !== '<p class="loading">Lade Serverdaten... ⏳</p>' && 
-        !statusDiv.innerHTML.includes('<p class="serverinfo-loading">')) { // Verhindert Überschreiben der initialen Ladeanzeige
-        // Optional: Kurz eine Ladeanzeige für die Status-Box, wenn es sich um eine Aktualisierung handelt
+        !statusDiv.innerHTML.includes('<p class="serverinfo-loading">')) {
         // statusDiv.innerHTML = '<p class="serverinfo-loading">Aktualisiere Serverdaten... ⏳</p>';
     }
 
-
     try {
         const response = await fetch(`https://api.mcsrvstat.us/3/${serverIp}`);
-
         if (!response.ok) {
             throw new Error(`API-Netzwerkfehler: ${response.statusText} (Status: ${response.status})`);
         }
-
         const data = await response.json();
 
-        // Logo anzeigen, falls es noch nicht sichtbar ist
         if (serverLogoElement && serverLogoElement.style.display === 'none') {
             serverLogoElement.style.display = 'block';
         }
 
-        // Statischen Servernamen und IP oben füllen (auch wenn Server offline ist, mit Fallback)
         if (serverNameElement) {
             if (data.online && data.motd && data.motd.clean && data.motd.clean.length > 0) {
                 serverNameElement.textContent = data.motd.clean.join('\n');
             } else {
-                serverNameElement.textContent = "All the Mods 10 Server"; // Fallback
+                serverNameElement.textContent = "All the Mods 10 Server";
             }
         }
         if (serverIpElement) {
-            serverIpElement.textContent = data.hostname || serverIp; // Hostname von API oder die konfigurierte IP
+            serverIpElement.textContent = data.hostname || serverIp;
         }
-
 
         if (data.online) {
             let playerListHtml = '';
-            // ANPASSUNG HIER: Prüfen, ob data.players.list existiert und Elemente hat
             if (data.players && data.players.list && data.players.list.length > 0) {
-                playerListHtml = '<h3 class="serverinfo-player-list-h3">Spieler Online:</h3><ul id="player-list" class="serverinfo-player-list-ul">'; // Klassennamen für CSS hinzugefügt
-                data.players.list.forEach(player => { // player ist hier potenziell ein Objekt
+                playerListHtml = '<h3 class="serverinfo-player-list-h3">Spieler Online:</h3><ul id="player-list" class="serverinfo-player-list-ul">';
+                data.players.list.forEach(player => {
                     let playerNameString = '';
                     if (typeof player === 'string') {
                         playerNameString = player;
                     } else if (player && typeof player.name === 'string') {
-                        playerNameString = player.name; // Greife auf die 'name'-Eigenschaft zu
+                        playerNameString = player.name;
                     } else {
-                        playerNameString = 'Unbekannter Spieler'; // Fallback
+                        playerNameString = 'Unbekannter Spieler';
                         console.warn("Ungültiges Spielerobjekt in Liste:", player);
                     }
-                    
-                    // Stelle sicher, dass playerNameString ein String ist, bevor replace aufgerufen wird
                     const safePlayerName = playerNameString.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     playerListHtml += `<li>${safePlayerName}</li>`;
                 });
@@ -108,14 +96,11 @@ async function fetchServerStatus() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Statische Elemente initial befüllen, falls gewünscht, oder auf API-Antwort warten
-    if (serverNameElement) serverNameElement.textContent = "All the Mods 10 Server"; // Initialer Name
-    if (serverIpElement) serverIpElement.textContent = serverIp; // Initiale IP
-    if (serverLogoElement) serverLogoElement.style.display = 'block'; // Logo immer anzeigen, wenn vorhanden
-
+    if (serverNameElement) serverNameElement.textContent = "All the Mods 10 Server";
+    if (serverIpElement) serverIpElement.textContent = serverIp;
+    if (serverLogoElement) serverLogoElement.style.display = 'block';
 
     if (document.getElementById('server-status')) {
-        // Initiale Ladeanzeige in der Statusbox setzen
         document.getElementById('server-status').innerHTML = '<p class="serverinfo-loading">Lade Serverdaten... ⏳</p>';
         fetchServerStatus(); 
         setInterval(fetchServerStatus, 60000); 
@@ -124,3 +109,4 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("Das Element 'server-status' wurde nicht gefunden. Auto-Aktualisierung für Serverinfo nicht gestartet.");
     }
 });
+// KEINE EXTRA KLAMMER HIER AM ENDE
