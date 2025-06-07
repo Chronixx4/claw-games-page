@@ -463,14 +463,14 @@ body {
 
 
 /* =============================================== */
-/* STILE FÜR NAVIGATION BAR (Angepasst an Rest)    */
+/* STILE FÜR NAVIGATION BAR (Minecraft-Style)      */
 /* =============================================== */
 
 .navbar {
-    background-color: rgba(20, 24, 34, 0.85); /* Hintergrund wie der Haupt-Container */
-    border: 1px solid #00d8ff; /* Cyan-Rand wie der Haupt-Container */
-    box-shadow: 0 0 15px rgba(0, 216, 255, 0.3), 0 0 25px rgba(0, 216, 255, 0.2); /* Cyan-Glow wie der Haupt-Container */
-    border-radius: 8px; /* Gleicher Radius wie Haupt-Container */
+    background-color: #3b3b3b; /* Dunkleres Grau, blockig wie Container */
+    border: 2px solid #5a5a5a; /* Grauer, blockiger Rand */
+    border-radius: 4px; /* Scharfe Kanten wie Container */
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4); /* Pixeliger Schatten wie Container */
     padding: 10px 20px;
     margin-bottom: 20px; /* Abstand nach unten zum Inhalt */
     display: flex;
@@ -478,7 +478,7 @@ body {
     flex-wrap: wrap; /* Umbruch auf kleineren Bildschirmen */
     gap: 15px; /* Abstand zwischen den Links */
     opacity: 0;
-    animation: fadeInSlideUp 0.8s ease-out 0.1s forwards; /* Frühere Animation */
+    animation: fadeInSlideUp 0.8s ease-out 0.1s forwards; /* Animation beibehalten */
     width: 90%; /* Wie die Container */
     max-width: 650px; /* Maximalbreite wie der index-container für Konsistenz */
     box-sizing: border-box;
@@ -488,50 +488,33 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #00d8ff; /* Cyan-Text */
-    background-color: #141822; /* Dunkler Button-Hintergrund */
+    color: #e0e0e0; /* Heller Text */
+    background-color: #4a4a4a; /* Dunkler Button-Hintergrund */
     padding: 8px 15px; /* Etwas kleineres Padding als Haupt-Buttons */
     text-decoration: none;
-    border-radius: 6px; /* Schärfere Ecken wie Haupt-Buttons */
-    font-size: 0.9em; /* Etwas kleinere Schrift */
+    border-radius: 4px; /* Scharfe Kanten wie Haupt-Buttons */
+    font-size: 0.95em; /* Etwas kleinere Schrift */
     font-weight: bold;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-    border: 1px solid #00d8ff; /* Cyan-Rand */
-    box-shadow: 0 0 5px rgba(0, 216, 255, 0.4); /* Subtiler Cyan-Glow */
+    transition: none; /* Keine sanften Übergänge mehr */
+    border: 2px solid #5a5a5a; /* Grauer Rand */
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4); /* Pixeliger Schatten */
 }
 
 .navbar .nav-item:hover {
-    transform: translateY(-2px) scale(1.02); /* Gleicher Hover-Effekt wie Haupt-Buttons */
-    background-color: #00d8ff; /* Cyan-Hintergrund auf Hover */
-    color: #0a0c10; /* Dunkler Text auf Hover */
-    box-shadow: 0 0 10px rgba(0, 216, 255, 0.7), 0 0 15px rgba(0, 216, 255, 0.5); /* Stärkerer Glow */
+    transform: none; /* Keine Bewegung auf Hover */
+    background-color: #5a5a5a; /* Nur leicht dunkler auf Hover */
+    color: #ffffff;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6); /* Stärkerer Schatten auf Hover */
 }
 
 .navbar .nav-item img {
-    width: 16px; /* Kleinere Icons in der Navigationsleiste */
+    width: 18px; /* Kleinere Icons in der Navigationsleiste */
     margin-right: 8px;
-    /* Nutze den gleichen Filter wie bei den Haupt-Buttons für Konsistenz */
-    filter: brightness(0) invert(0.8) sepia(1) hue-rotate(130deg) saturate(5);
-}
-
-/* Die Anpassung der page-content-container, um den nav-bar überlappen zu lassen, ist nicht mehr nötig,
-   da die navbar jetzt VOR dem page-content-container positioniert ist */
-
-/* Anpassung der Navigations-Buttons am Ende der Seiten, damit sie nicht doppelt wirken */
-.btn.nav-btn, .btn.back-btn {
-    margin-top: 30px; /* Abstand nach oben */
-    /* Behalten ihre bestehenden Stile */
-}
-
-/* Anpassung für livemap.html, da der Titel-Container dort anders ist */
-.livemap-title-container {
-    /* Wenn die Navbar jetzt VOR diesem Container ist, muss ihr margin-top angepasst werden,
-       oder der body padding-top bekommen, um Platz zu schaffen */
-    margin-top: 20px; /* Oder den Abstand der Navbar unten anpassen */
+    filter: none; /* Keine Filter mehr auf Icons */
 }
 
 /* Eventuelle Anpassung für den body, damit der Inhalt nicht von der Navbar überdeckt wird */
 body {
     padding-top: 70px; /* Platz für die Navbar schaffen, Wert ggf. anpassen */
-    position: relative; /* Wichtig, falls Navbar 'position: fixed' bekommen soll */
+    position: relative;
 }
