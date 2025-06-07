@@ -713,18 +713,22 @@ body {
     /* Navbar Anpassungen */
     .navbar {
         flex-direction: column; /* Buttons untereinander auf Smartphones */
-        gap: 8px;
-        padding: 10px;
+        gap: 6px; /* Abstand zwischen den Buttons noch etwas verringern */
+        padding: 8px; /* Weniger Padding für die gesamte Navbar */
+        max-width: 98%; /* Sie soll fast die volle Breite einnehmen */
     }
     .navbar .nav-item {
         width: 100%; /* Nav-Items volle Breite */
         justify-content: center; /* Text zentrieren */
         margin: 0; /* Margins entfernen */
-        font-size: 0.9em;
-        padding: 8px 10px;
+        font-size: 0.8em; /* Schriftgröße noch etwas verkleinern */
+        padding: 6px 8px; /* Padding der einzelnen Buttons verringern */
+        min-height: 30px; /* Mindesthöhe für einfaches Antippen */
+        box-sizing: border-box; /* Padding wird in die Breite eingerechnet */
     }
     .navbar .nav-item img {
-        margin-right: 8px; /* Icon behält seinen Abstand */
+       width: 12px; /* Icons noch etwas kleiner */
+        margin-right: 5px;
     }
 
     /* Überschriften noch weiter verkleinern */
@@ -757,12 +761,16 @@ body {
 
     /* Button-Section auf Startseite untereinander */
     .index-container .button-section {
-        flex-direction: column;
-        gap: 10px;
+        flex-direction: column; /* Buttons untereinander */
+        gap: 10px; /* Abstand zwischen Buttons */
     }
     .index-container .button-section .btn {
-        width: 100%;
-        max-width: 300px; /* Maximalbreite für einzelne Buttons */
+        width: 100%; /* Buttons nehmen die volle Breite des Containers ein */
+        max-width: 250px; /* Begrenze die maximale Breite auf eine angenehme Größe */
+        margin-left: auto; /* Zentrieren der Buttons */
+        margin-right: auto;
+        padding: 12px 20px; /* Passendes Padding, um sie klickbar zu halten */
+        font-size: 0.9em; /* Schriftgröße anpassen */
     }
 
     /* iFrame Container für Karte und Stats */
@@ -781,5 +789,27 @@ body {
     .serverinfo-page-container #player-list li {
         padding: 8px 10px; /* Weniger Padding */
         font-size: 0.9em;
+    }
+    
+}
+
+/* Optional: Anpassungen für Bildschirme zwischen 600px und 900px */
+@media (max-width: 900px) and (min-width: 601px) {
+    .navbar .nav-item {
+        font-size: 0.88em; /* Etwas größere Schrift als auf sehr kleinen Mobilgeräten */
+        padding: 8px 15px;
+    }
+    .navbar .nav-item img {
+        width: 16px;
+    }
+
+    .index-container .button-section {
+        gap: 15px;
+        /* Können nebeneinander bleiben, wenn Platz ist, oder du kannst hier flex-direction: column; erzwingen */
+    }
+    .index-container .button-section .btn {
+        flex-grow: 1; /* Können flexibel wachsen */
+        flex-basis: 200px; /* Basisbreite beibehalten */
+        font-size: 0.95em;
     }
 }
