@@ -372,3 +372,91 @@ body {
 
 .discordinfo-container .nav-btn { /* Erbt .btn Minecraft-ish-Stil */
 }
+
+
+/* =============================================== */
+/* STILE FÜR updates.html (Minecraft-ish)          */
+/* =============================================== */
+
+.updates-container {
+    max-width: 800px;
+}
+
+.updates-container h1 {
+    color: #ffffff; /* Weiß */
+    margin-bottom: 20px;
+    font-size: 2.2em;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.8s forwards;
+}
+
+.updates-container .updates-intro-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #cccccc;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+}
+
+.update-section {
+    background-color: #4a4a4a; /* Etwas heller als der Hauptcontainer */
+    border: 2px solid #5a5a5a;
+    border-radius: 4px;
+    box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    margin-bottom: 25px;
+    text-align: left;
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out forwards;
+    animation-delay: 1.2s; /* Verzögerung für die ersten Updates */
+}
+
+/* Anpassung der Verzögerung für nachfolgende Update-Sektionen (optional) */
+.update-section:nth-of-type(2) { animation-delay: 1.4s; }
+.update-section:nth-of-type(3) { animation-delay: 1.6s; }
+.update-section:nth-of-type(4) { animation-delay: 1.8s; } /* Bei mehr Updates */
+
+
+.update-section .update-title {
+    color: #90ee90; /* Minecraft-Grün */
+    font-size: 1.6em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid #7a7a7a;
+    padding-bottom: 5px;
+}
+
+.update-section .update-date {
+    font-size: 0.9em;
+    color: #b0b0b0;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.update-section .update-list {
+    list-style-type: none; /* Standard-Listenpunkte entfernen */
+    padding: 0;
+    margin: 0;
+}
+
+.update-section .update-list li {
+    background-color: #3b3b3b; /* Dunklerer Hintergrund für Listeneinträge */
+    border-left: 3px solid #90ee90; /* Grüner Streifen */
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-size: 1em;
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.update-section .update-list li:last-child {
+    margin-bottom: 0; /* Kein Abstand nach dem letzten Element */
+}
+
+.updates-container .nav-btn {
+    margin-top: 25px;
+}
