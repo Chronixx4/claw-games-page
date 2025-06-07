@@ -1,7 +1,8 @@
 /* =============================================== */
-/* GEMEINSAME STILE & KEYFRAMES (Cyberpunk)      */
+/* GEMEINSAME STILE & KEYFRAMES (Minecraft-ish)  */
 /* =============================================== */
 
+/* Animationen beibehalten, aber ggf. anpassen, wenn sie zu "smooth" wirken */
 @keyframes fadeInSlideUp {
     from { /* Startzustand der Animation */
         opacity: 0; /* Element ist komplett unsichtbar */
@@ -22,22 +23,10 @@
     }
 }
 
-/* subtleGradientShift Animation wird nicht mehr für den Body verwendet */
-
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    
-    /* NEU: Animierter dunkler Cyberpunk-Farbverlauf */
-    background: linear-gradient(270deg, 
-        #050608, /* Sehr dunkles fast-Schwarz */
-        #0a0c10, /* Dein aktuelles Dunkelblau/Schwarz */
-        #10121c, /* Ein etwas helleres tiefes Blau */
-        #0a0c10, /* Dein aktuelles Dunkelblau/Schwarz */
-        #050608  /* Sehr dunkles fast-Schwarz zum Loopen */
-    );
-    background-size: 400% 400%; /* Wichtig: Macht den Verlauf größer als den Bildschirm für sanfte Bewegung */
-    
-    color: #e0e0e0; /* Helle Standardtextfarbe bleibt */
+    font-family: 'Consolas', 'Monaco', monospace; /* Eine blockigere, tech-ähnliche Schriftart */
+    background: #2a2a2a; /* Dunkler, statischer Hintergrund */
+    color: #e0e0e0;
     margin: 0;
     padding: 20px;
     display: flex;
@@ -47,20 +36,17 @@ body {
     min-height: 100vh;
     text-align: center;
     box-sizing: border-box;
-    
-    /* Animation für den Hintergrund - Name der Keyframe-Animation ggf. anpassen, falls du sie umbenannt hattest */
-    animation: subtleGradientShift 35s ease infinite; /* Langsamere Geschwindigkeit für subtilen Effekt */
-    
+    animation: none; /* Keine Hintergrund-Animation */
     overflow-x: hidden;
 }
 
-/* Basis-Styling für Haupt-Inhaltscontainer (Cyberpunk) */
+/* Basis-Styling für Haupt-Inhaltscontainer (Minecraft-ish) */
 .page-content-container {
-    background-color: rgba(20, 24, 34, 0.85); /* Dunkelblau-Grau, leicht transparent */
+    background-color: #3b3b3b; /* Dunkleres Grau, blockig */
     padding: 30px 35px;
-    border-radius: 8px; /* Etwas weniger Rundung für schärferen Look */
-    border: 1px solid #00d8ff; /* Cyan-Rand */
-    box-shadow: 0 0 15px rgba(0, 216, 255, 0.3), 0 0 25px rgba(0, 216, 255, 0.2); /* Cyan-Glow */
+    border-radius: 4px; /* Scharfe Kanten */
+    border: 2px solid #5a5a5a; /* Grauer, blockiger Rand */
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4); /* Pixeliger Schatten */
     width: 90%;
     opacity: 0;
     animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
@@ -69,41 +55,38 @@ body {
     align-items: center;
 }
 
-/* Basis-Styling für Buttons (Cyberpunk) */
+/* Basis-Styling für Buttons (Minecraft-ish) */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #00d8ff; /* Cyan-Text */
-    background-color: #141822; /* Dunkler Button-Hintergrund */
-    padding: 12px 25px; /* Etwas kompakteres Padding */
+    color: #e0e0e0; /* Heller Text */
+    background-color: #4a4a4a; /* Dunkler Button-Hintergrund */
+    padding: 12px 25px;
     text-decoration: none;
-    border-radius: 6px; /* Schärfere Ecken */
-    font-size: 17px; /* Leicht angepasst */
+    border-radius: 4px; /* Scharfe Kanten */
+    font-size: 17px;
     font-weight: bold;
-    margin: 10px 5px; /* Wird ggf. von .button-section mit gap überschrieben */
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
-    border: 1px solid #00d8ff; /* Cyan-Rand */
-    box-shadow: 0 0 5px rgba(0, 216, 255, 0.4); /* Subtiler Cyan-Glow */
-    background-size: 150% 150%; /* Für Hover-Effekte mit Gradienten, falls doch verwendet */
-    background-position: 50% 50%;
+    margin: 10px 5px;
+    transition: none; /* Keine sanften Übergänge */
+    border: 2px solid #5a5a5a; /* Grauer Rand */
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4); /* Pixeliger Schatten */
 }
 .btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    background-color: #00d8ff; /* Cyan-Hintergrund auf Hover */
-    color: #0a0c10; /* Dunkler Text auf Hover */
-    box-shadow: 0 0 15px rgba(0, 216, 255, 0.7), 0 0 25px rgba(0, 216, 255, 0.5); /* Stärkerer Glow */
+    transform: none; /* Keine sanfte Bewegung */
+    background-color: #5a5a5a; /* Nur leicht dunkler auf Hover */
+    color: #ffffff;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6); /* Stärkerer Schatten auf Hover */
 }
 .btn img {
-    width: 20px; /* Icons etwas kleiner */
+    width: 20px;
     margin-right: 10px;
-    /* Experimenteller Filter für Icons, ggf. anpassen oder entfernen, falls es nicht gut aussieht */
-    filter: brightness(0) invert(0.8) sepia(1) hue-rotate(130deg) saturate(5); 
+    filter: none; /* Entferne den Cyberpunk-Filter */
 }
 
 
 /* =============================================== */
-/* STILE FÜR index.html (Cyberpunk)              */
+/* STILE FÜR index.html (Minecraft-ish)              */
 /* =============================================== */
 
 .index-container {
@@ -111,10 +94,10 @@ body {
 }
 
 .index-container h1 {
-    color: #00d8ff; /* Cyan */
+    color: #ffffff; /* Weiß */
     margin-bottom: 20px;
     font-size: 2.5em;
-    text-shadow: 0 0 8px rgba(0, 216, 255, 0.7); /* Cyan-Text-Glow */
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6); /* Blockiger Schatten für Text */
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
@@ -123,7 +106,7 @@ body {
     font-size: 1.2em;
     line-height: 1.7;
     margin-bottom: 25px;
-    color: #f0f0f0; /* Helles Weiß/Grau */
+    color: #f0f0f0;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.0s forwards;
 }
@@ -134,12 +117,12 @@ body {
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: left;
-    color: #cccccc; /* Etwas dunkleres Grau für Fließtext */
+    color: #cccccc;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.2s forwards;
 }
 .index-container .details-paragraph strong {
-    color: #ff00c8; /* Magenta für Hervorhebungen */
+    color: #90ee90; /* Ein Grün, das an Minecraft erinnert */
 }
 
 .index-container .button-section {
@@ -159,15 +142,8 @@ body {
     min-width: 180px;
 }
 
-/* Spezifische Button-Stile für index.html erben .btn und werden hier nicht weiter verändert,
-   es sei denn, du möchtest unterschiedliche Akzentfarben für die Buttons. */
-.index-container .discord-link-btn {}
-.index-container .serverinfo-btn {}
-.index-container .map-btn {}
-
-
 /* =============================================== */
-/* STILE FÜR serverinfo.html (Cyberpunk)         */
+/* STILE FÜR serverinfo.html (Minecraft-ish)         */
 /* =============================================== */
 
 .serverinfo-page-container {
@@ -180,9 +156,8 @@ body {
     max-height: 150px;
     margin: 0 auto 20px auto;
     display: block;
-    border-radius: 8px;
-    /* Filter für Cyberpunk-Look, experimentell, ggf. anpassen oder entfernen */
-    /* filter: grayscale(50%) contrast(150%) brightness(90%); */
+    border-radius: 4px; /* Scharfe Ecken */
+    filter: none; /* Entferne den Cyberpunk-Filter */
 }
 
 .serverinfo-page-container .server-title-info {
@@ -192,30 +167,30 @@ body {
 }
 
 .serverinfo-page-container #static-server-name {
-    color: #00d8ff;
+    color: #ffffff;
     font-size: 2.2em;
     font-weight: bold;
     margin-bottom: 5px;
-    text-shadow: 0 0 7px rgba(0, 216, 255, 0.6);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6);
 }
 
 .serverinfo-page-container #static-server-ip {
     color: #e0e0e0;
     font-size: 1.3em;
     margin-bottom: 20px;
-    background-color: rgba(0,0,0,0.4); 
+    background-color: rgba(0,0,0,0.6); /* Dunkler, blockiger Hintergrund */
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 4px;
     display: inline-block;
-    border: 1px solid rgba(0, 216, 255, 0.4);
+    border: 1px solid #7a7a7a; /* Grauer Rand */
 }
 
 .serverinfo-page-container h1 { 
-    color: #00d8ff;
+    color: #ffffff;
     text-align: center;
     margin-bottom: 15px;
     font-size: 1.8em;
-    text-shadow: 0 0 6px rgba(0, 216, 255, 0.5);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
@@ -223,9 +198,9 @@ body {
 .serverinfo-page-container #server-status {
     margin-top: 10px;
     padding: 20px;
-    border-radius: 6px;
-    background-color: rgba(10, 12, 16, 0.8); /* Sehr dunkel, aber leicht vom Container abgehoben */
-    border: 1px solid rgba(0, 216, 255, 0.3); 
+    border-radius: 4px;
+    background-color: #3b3b3b; /* Dunkler, blockiger Hintergrund */
+    border: 2px solid #5a5a5a; 
     text-align: left;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.0s forwards;
@@ -236,10 +211,10 @@ body {
     margin: 10px 0;
     font-size: 1.05em;
     line-height: 1.6;
-    color: #cccccc; /* Etwas gedämpfter für normale Infos */
+    color: #cccccc;
 }
 .serverinfo-page-container #server-status strong {
-    color: #ff00c8; /* Magenta für Hervorhebungen */
+    color: #90ee90; /* Grün für Hervorhebungen */
 }
 
 .serverinfo-page-container #player-list {
@@ -248,32 +223,32 @@ body {
     margin-top: 15px;
 }
 .serverinfo-page-container .serverinfo-player-list-h3 {
-    color: #00d8ff;
+    color: #ffffff;
     margin-bottom: 10px;
     font-size: 1.15em;
-    border-bottom: 1px solid #00d8ff;
+    border-bottom: 1px solid #7a7a7a; /* Grauer Trenner */
     padding-bottom: 5px;
 }
 .serverinfo-page-container #player-list li {
-    background-color: rgba(20, 24, 34, 0.7); 
-    color: #b0b0b0; /* Gedämpfter für Spielernamen */
+    background-color: #4a4a4a; /* Dunklerer Hintergrund für Listenelemente */
+    color: #b0b0b0;
     margin: 6px 0;
     padding: 10px 15px;
     border-radius: 4px;
     font-size: 1em;
-    transition: background-color 0.2s ease, transform 0.15s ease, color 0.2s ease;
-    border-left: 3px solid #00d8ff;
+    transition: none; /* Keine sanften Übergänge */
+    border-left: 3px solid #90ee90; /* Grüner Streifen */
 }
 .serverinfo-page-container #player-list li:hover {
-    background-color: rgba(0, 216, 255, 0.15); 
-    transform: translateX(3px);
-    color: #00d8ff;
+    background-color: #5a5a5a; /* Nur leicht dunkler auf Hover */
+    transform: none; /* Keine Bewegung */
+    color: #ffffff;
 }
 
-.serverinfo-page-container .serverinfo-loading { font-style: italic; color: #666; }
-.serverinfo-page-container .serverinfo-error { color: #ff4d4d; font-weight: bold; text-shadow: 0 0 6px #ff0000;}
-.serverinfo-page-container .serverinfo-status-online { color: #39ff14; font-weight: bold; text-shadow: 0 0 6px #39ff14;}
-.serverinfo-page-container .serverinfo-status-offline { color: #ff8c00; font-weight: bold; text-shadow: 0 0 6px #ff8c00;}
+.serverinfo-page-container .serverinfo-loading { font-style: italic; color: #aaaaaa; }
+.serverinfo-page-container .serverinfo-error { color: #ff4d4d; font-weight: bold; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);}
+.serverinfo-page-container .serverinfo-status-online { color: #39ff14; font-weight: bold; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);}
+.serverinfo-page-container .serverinfo-status-offline { color: #ff8c00; font-weight: bold; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4);}
 
 .serverinfo-page-container .center-button-container {
     text-align: center;
@@ -281,24 +256,19 @@ body {
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.2s forwards;
 }
-.serverinfo-page-container .back-btn { /* Erbt .btn Cyberpunk-Stil */
-    /* border-color: #ff00c8; color: #ff00c8; */ /* Beispiel für Magenta-Akzent für diesen Button */
-}
-/* .serverinfo-page-container .back-btn:hover{ background-color: #ff00c8; color: #0a0c10; } */
-
 
 /* =============================================== */
-/* STILE FÜR livemap.html (Cyberpunk)            */
+/* STILE FÜR livemap.html (Minecraft-ish)            */
 /* =============================================== */
 
 .livemap-title-container {
     width: 95%;
     max-width: 1000px;
-    background-color: rgba(20, 24, 34, 0.9); 
+    background-color: #3b3b3b;
     padding: 10px 20px;
-    border-radius: 8px;
-    border: 1px solid #00d8ff;
-    box-shadow: 0 0 10px rgba(0, 216, 255, 0.3);
+    border-radius: 4px;
+    border: 2px solid #5a5a5a;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
     text-align: center;
     opacity: 0;
     animation: fadeInSlideUp 0.8s ease-out 0.3s forwards;
@@ -306,10 +276,10 @@ body {
 }
 
 .livemap-title-container h1 {
-    color: #00d8ff; 
+    color: #ffffff; 
     margin-bottom: 8px;  
     font-size: 1.6em;    
-    text-shadow: 0 0 6px rgba(0, 216, 255, 0.5); 
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5); 
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
@@ -317,7 +287,6 @@ body {
 .livemap-title-container .nav-btn { 
     padding: 8px 18px;
     font-size: 0.85em;
-    /* Erbt .btn Cyberpunk-Stil */
 }
 
 .livemap-iframe-container { 
@@ -325,10 +294,10 @@ body {
     max-width: 100%;
     height: calc(100vh - 130px); /* Wert ggf. anpassen */
     margin-bottom: 10px;   
-    border-radius: 6px;    
+    border-radius: 4px;    
     overflow: hidden;
-    border: 1px solid #00d8ff;
-    box-shadow: 0 0 15px rgba(0, 216, 255, 0.3);
+    border: 2px solid #5a5a5a;
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
     opacity: 0;
     animation: fadeInSlideUp 0.8s ease-out 0.6s forwards;
     margin-left: auto;
@@ -351,7 +320,7 @@ body {
 
 
 /* =============================================== */
-/* STILE FÜR discordinfo.html (Cyberpunk)          */
+/* STILE FÜR discordinfo.html (Minecraft-ish)          */
 /* =============================================== */
 
 .discordinfo-container {
@@ -359,10 +328,10 @@ body {
 }
 
 .discordinfo-container h1 {
-    color: #00d8ff; 
+    color: #ffffff; 
     margin-bottom: 20px; 
     font-size: 2.2em;
-    text-shadow: 0 0 8px rgba(0, 216, 255, 0.6);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6);
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 0.8s forwards;
 }
@@ -379,10 +348,7 @@ body {
 
 .discordinfo-container .join-discord-btn {
     margin-bottom: 25px;
-    /* Dieser Button könnte einen stärkeren Akzent bekommen, z.B. Magenta */
-    /* background-color: #ff00c8; border-color: #ff00c8; color: #0a0c10; */
 }
-/* .discordinfo-container .join-discord-btn:hover { background-color: #141822; color: #ff00c8; } */
 
 .discordinfo-container .join-discord-btn img {
     width: 22px;
@@ -392,10 +358,10 @@ body {
 .discordinfo-container .discord-widget-wrapper {
     width: 350px; 
     height: 500px; 
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
-    border: 1px solid rgba(0, 216, 255, 0.5); 
-    box-shadow: 0 0 10px rgba(0, 216, 255, 0.2); 
+    border: 2px solid #5a5a5a; 
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2); 
     margin-bottom: 30px;
     opacity: 0;
     animation: fadeIn 0.7s ease-in-out 1.4s forwards;
@@ -404,5 +370,5 @@ body {
     display: block;
 }
 
-.discordinfo-container .nav-btn { /* Erbt .btn Cyberpunk-Stil */
+.discordinfo-container .nav-btn { /* Erbt .btn Minecraft-ish-Stil */
 }
