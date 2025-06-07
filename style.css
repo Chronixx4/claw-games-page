@@ -460,3 +460,69 @@ body {
 .updates-container .nav-btn {
     margin-top: 25px;
 }
+
+
+/* =============================================== */
+/* STILE FÜR NAVIGATION BAR (Minecraft-ish)        */
+/* =============================================== */
+
+.navbar {
+    background-color: #3b3b3b; /* Dunklerer Hintergrund wie Container */
+    border: 2px solid #5a5a5a; /* Grauer Rand */
+    border-radius: 4px; /* Scharfe Kanten */
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.4); /* Blockiger Schatten */
+    padding: 10px 20px;
+    margin-bottom: 20px; /* Abstand nach unten */
+    display: flex;
+    justify-content: center; /* Zentriert die Links */
+    flex-wrap: wrap; /* Umbruch auf kleineren Bildschirmen */
+    gap: 15px; /* Abstand zwischen den Links */
+    opacity: 0;
+    animation: fadeInSlideUp 0.8s ease-out 0.1s forwards; /* Frühere Animation */
+    width: 90%; /* Wie die Container */
+    max-width: 800px; /* Max-Breite anpassen, je nach Layout */
+    box-sizing: border-box;
+}
+
+.navbar .nav-item {
+    color: #e0e0e0; /* Heller Text */
+    text-decoration: none;
+    background-color: #4a4a4a; /* Button-Hintergrund */
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: 1px solid #5a5a5a;
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+    transition: none; /* Keine sanften Übergänge */
+    font-weight: bold;
+    font-size: 0.95em;
+    display: flex; /* Für Icon und Text */
+    align-items: center;
+}
+
+.navbar .nav-item:hover {
+    background-color: #5a5a5a; /* Hover-Effekt */
+    color: #ffffff;
+    box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.navbar .nav-item img {
+    width: 18px; /* Kleinere Icons in der Navigationsleiste */
+    margin-right: 8px;
+    filter: none; /* Icons nicht filtern */
+}
+
+/* Anpassung der page-content-container, um den nav-bar überlappen zu lassen */
+.page-content-container {
+    margin-top: 0; /* Ggf. nach Bedarf anpassen */
+}
+
+/* Anpassung der Navigations-Buttons am Ende der Seiten, damit sie nicht doppelt wirken */
+.btn.nav-btn, .btn.back-btn {
+    margin-top: 30px; /* Abstand nach oben */
+    /* Du kannst hier auch die Farbe leicht anpassen, wenn du sie vom Haupt-Nav unterscheiden willst */
+}
+
+/* Anpassung für livemap.html, da der Titel-Container dort anders ist */
+.livemap-title-container {
+    margin-bottom: 20px; /* Erhöhe den Abstand zur Navigationsleiste, wenn sie davor ist */
+}
