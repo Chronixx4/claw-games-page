@@ -518,3 +518,92 @@ body {
     padding-top: 70px; /* Platz für die Navbar schaffen, Wert ggf. anpassen */
     position: relative;
 }
+
+
+/* =============================================== */
+/* STILE FÜR gallery.html (Minecraft-Style)        */
+/* =============================================== */
+
+.gallery-container {
+    max-width: 1000px; /* Breiter für die Galerie-Ansicht */
+}
+
+.gallery-container h1 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 2.2em;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 0.8s forwards;
+}
+
+.gallery-container .gallery-intro-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    color: #cccccc;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-in-out 1.0s forwards;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive Spalten */
+    gap: 25px; /* Abstand zwischen den Galerie-Items */
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-in-out 1.2s forwards;
+}
+
+.gallery-item {
+    background-color: #4a4a4a; /* Hintergrund wie andere Minecraft-Elemente */
+    border: 2px solid #5a5a5a; /* Border wie andere Minecraft-Elemente */
+    border-radius: 4px; /* Scharfe Kanten */
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3); /* Pixeliger Schatten */
+    overflow: hidden; /* Bilder nicht über den Rand ragen lassen */
+    transition: transform 0.2s ease; /* Leichter Hover-Effekt */
+    text-align: left; /* Text linksbündig im Item */
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px) scale(1.02); /* Leichter "Pop"-Effekt beim Hover */
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px; /* Feste Höhe für Bilder, damit sie gleich groß sind */
+    object-fit: cover; /* Bilder zuschneiden, um die Höhe zu füllen */
+    display: block;
+    border-bottom: 2px solid #5a5a5a; /* Trennlinie unter dem Bild */
+}
+
+.gallery-item .item-info {
+    padding: 15px;
+}
+
+.gallery-item h3 {
+    color: #90ee90; /* Minecraft-Grün für Titel */
+    font-size: 1.4em;
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.4);
+}
+
+.gallery-item p {
+    color: #cccccc;
+    font-size: 0.95em;
+    line-height: 1.4;
+    margin-bottom: 5px;
+}
+
+.gallery-item .builder-name {
+    font-weight: bold;
+    color: #ffffff; /* Heller für Spielernamen */
+}
+
+.gallery-item .item-description {
+    font-style: italic;
+    font-size: 0.85em;
+    margin-top: 10px;
+}
