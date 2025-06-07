@@ -607,3 +607,179 @@ body {
     font-size: 0.85em;
     margin-top: 10px;
 }
+
+
+/* =============================================== */
+/* RESPONSIVES DESIGN OPTIMIERUNGEN              */
+/* =============================================== */
+
+/* Kleinere Bildschirme (Tablets, größere Smartphones im Querformat) */
+@media (max-width: 900px) {
+    .page-content-container,
+    .navbar,
+    .livemap-title-container,
+    .gallery-container,
+    .stats-container,
+    .discordinfo-container,
+    .updates-container {
+        width: 95%; /* Etwas breiter auf kleineren Bildschirmen */
+        padding: 25px 20px; /* Padding anpassen */
+    }
+
+    body {
+        padding: 15px; /* Weniger globaler Padding */
+        padding-top: 60px; /* Navbar Padding anpassen, wenn nötig */
+    }
+
+    /* Navbar Anpassungen */
+    .navbar {
+        gap: 10px; /* Weniger Abstand zwischen Nav-Items */
+        padding: 8px 15px;
+        max-width: 95%; /* Navbar ebenfalls breiter */
+    }
+    .navbar .nav-item {
+        font-size: 0.85em; /* Kleinere Schrift für Nav-Items */
+        padding: 6px 12px;
+        flex-grow: 1; /* Können sich strecken, um den Platz zu füllen */
+        min-width: unset; /* Minimale Breite zurücksetzen */
+    }
+    .navbar .nav-item img {
+        width: 14px; /* Kleinere Icons in der Nav-Bar */
+        margin-right: 5px;
+    }
+
+    /* Überschriften verkleinern */
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.5em;
+    }
+    .index-container h1 {
+        font-size: 2.2em;
+    }
+    .serverinfo-page-container #static-server-name {
+        font-size: 2em;
+    }
+    .livemap-title-container h1 {
+        font-size: 1.4em;
+    }
+    .discordinfo-container h1 {
+        font-size: 1.8em;
+    }
+    .updates-container h1, .gallery-container h1, .stats-container h1 {
+        font-size: 1.8em;
+    }
+
+    /* Textgröße anpassen */
+    p, li, .btn {
+        font-size: 0.95em;
+    }
+
+    /* Buttons am Ende der Seite */
+    .btn.nav-btn, .btn.back-btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+
+    /* Galerie-Raster anpassen */
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Kleinere Minimale Breite für Galerie-Items */
+        gap: 20px;
+    }
+    .gallery-item img {
+        height: 180px; /* Etwas kleinere Bildhöhe */
+    }
+}
+
+/* Sehr kleine Bildschirme (Smartphones im Hochformat) */
+@media (max-width: 600px) {
+    .page-content-container,
+    .navbar,
+    .livemap-title-container,
+    .gallery-container,
+    .stats-container,
+    .discordinfo-container,
+    .updates-container {
+        width: 98%; /* Fast volle Breite auf sehr kleinen Bildschirmen */
+        padding: 20px 15px;
+    }
+
+    body {
+        padding: 10px; /* Noch weniger globaler Padding */
+        padding-top: 50px; /* Navbar Padding anpassen */
+    }
+
+    /* Navbar Anpassungen */
+    .navbar {
+        flex-direction: column; /* Buttons untereinander auf Smartphones */
+        gap: 8px;
+        padding: 10px;
+    }
+    .navbar .nav-item {
+        width: 100%; /* Nav-Items volle Breite */
+        justify-content: center; /* Text zentrieren */
+        margin: 0; /* Margins entfernen */
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+    .navbar .nav-item img {
+        margin-right: 8px; /* Icon behält seinen Abstand */
+    }
+
+    /* Überschriften noch weiter verkleinern */
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.3em;
+    }
+    .index-container h1 {
+        font-size: 2em;
+    }
+    .serverinfo-page-container #static-server-name {
+        font-size: 1.8em;
+    }
+    .livemap-title-container h1 {
+        font-size: 1.2em;
+    }
+    .discordinfo-container h1 {
+        font-size: 1.6em;
+    }
+    .updates-container h1, .gallery-container h1, .stats-container h1 {
+        font-size: 1.6em;
+    }
+
+    /* Fließtext auf kleinen Geräten */
+    p, li, .btn {
+        font-size: 0.9em;
+    }
+
+    /* Button-Section auf Startseite untereinander */
+    .index-container .button-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .index-container .button-section .btn {
+        width: 100%;
+        max-width: 300px; /* Maximalbreite für einzelne Buttons */
+    }
+
+    /* iFrame Container für Karte und Stats */
+    .livemap-iframe-container,
+    .stats-iframe-container {
+        height: 400px; /* Feste Höhe für Iframes auf kleinen Geräten */
+    }
+
+    /* Discord Widget */
+    .discordinfo-container .discord-widget-wrapper {
+        width: 95%; /* Etwas flexibler */
+        height: 400px; /* Etwas kleiner */
+    }
+
+    /* Spielerliste in Serverinfo */
+    .serverinfo-page-container #player-list li {
+        padding: 8px 10px; /* Weniger Padding */
+        font-size: 0.9em;
+    }
+}
