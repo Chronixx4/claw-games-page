@@ -14,7 +14,7 @@ async function fetchServerStatus() {
         return;
     }
 
-    if (statusDiv.innerHTML !== '<p class="loading">Lade Serverdaten... ⏳</p>' && 
+    if (statusDiv.innerHTML !== '<p class="loading">Lade Serverdaten... ⏳</p>' &&
         !statusDiv.innerHTML.includes('<p class="serverinfo-loading">')) {
         // statusDiv.innerHTML = '<p class="serverinfo-loading">Aktualisiere Serverdaten... ⏳</p>';
     }
@@ -85,7 +85,7 @@ async function fetchServerStatus() {
         }
     } catch (error) {
         console.error("Fehler beim Abrufen oder Verarbeiten der Serverdaten:", error);
-        const safeErrorMessage = error.message ? error.message.replace(/</g, "&lt;").replace(/>/g, "&gt;") : "Unbekannter Fehler";
+        const safeErrorMessage = error.message ? error.message.replace(/</g, "„&lt;“").replace(/>/g, "„&gt;“") : "Unbekannter Fehler";
         if (statusDiv) {
             statusDiv.innerHTML = `
                 <p class="serverinfo-error">Fehler beim Laden der Serverdaten. 😭</p>
@@ -102,11 +102,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (document.getElementById('server-status')) {
         document.getElementById('server-status').innerHTML = '<p class="serverinfo-loading">Lade Serverdaten... ⏳</p>';
-        fetchServerStatus(); 
-        setInterval(fetchServerStatus, 60000); 
+        fetchServerStatus();
+        setInterval(fetchServerStatus, 60000);
         console.log("Automatische Aktualisierung (mit mcsrvstat.us) für Serverinfo alle 60 Sekunden gestartet. 🕒");
     } else {
         console.warn("Das Element 'server-status' wurde nicht gefunden. Auto-Aktualisierung für Serverinfo nicht gestartet.");
     }
 });
-// KEINE EXTRA KLAMMER HIER AM ENDE
+
+// ===============================================
+// JAVASCRIPT FÜR BILDVERGRÖSSERUNG (GALLERY)
+// ===============================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Holen des Modals, des Bildes im Modal und des Schließen-Buttons
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('img01');
+    const captionText = document.getElementById('caption');
+    const closeBtn = document.getElementsByClassName('close-button')[0];
+
+    // Alle anklickbaren Galeriebilder auswählen
+    const galleryImages = document.querySelectorAll('.gallery-image-clickable');
+
+    // Event Listener für jedes Galeriebild hinzufügen
+    galleryImages.forEach(img => {
+        img.addEventListener('click', function() {
+            // Modal anzeigen
+            modal.style.display = 'flex'; // 'flex' statt 'block' für Zentrierung
+            // Bild im Modal auf das angeklickte Bild setzen (data-large-src bevorzugen)
+            modalImg.src = this.getAttribute('data-large-src') || this.src;
+            // Bildunterschrift setzen (hier den Text des Erstellers nutzen)
+            const builderNameElement = this.nextElementSibling?.querySelector('.builder-name');
+            if (builderNameElement) {
+                captionText.innerHTML = `Erbaut von: ${builderNameElement.textContent}`;
+            } else {
+                captionText.innerHTML = this.alt; // Fallback zum alt-Text
+            }
+        });
+    });
+
+    // Event Listener für den Schließen-Button
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    // Event Listener, um das Modal zu schließen, wenn außerhalb des Bildes geklickt wird
+    modal.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Optional: Schließen mit ESC-Taste
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'flex') {
+            modal.style.display = 'none';
+        }
+    });
+});

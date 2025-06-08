@@ -13,7 +13,8 @@
         <a href="livemap.html" class="nav-item">🗺️ Server Karte</a>
         <a href="discordinfo.html" class="nav-item">💬 Discord</a>
         <a href="updates.html" class="nav-item">📝 Updates</a>
-        <a href="gallery.html" class="nav-item">🖼️ Galerie</a> </nav>
+        <a href="gallery.html" class="nav-item">🖼️ Galerie</a>
+    </nav>
 
     <div class="page-content-container gallery-container">
         <h1>Unsere Community Galerie ✨</h1>
@@ -23,36 +24,30 @@
 
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="Screenshots/Screenshot%202025-05-31%20180708.png" alt="test">
+                <img src="Screenshots/Screenshot%202025-05-31%20180708.png" data-large-src="Screenshots/Screenshot%202025-05-31%20180708.png" alt="test" class="gallery-image-clickable">
                 <div class="item-info">
-                    <h3>ist nur ein test</h3>
                     <p>Erbaut von: <span class="builder-name">Chronixx</span></p>
-                    <p class="item-description">wollte mal was testen</p>
                 </div>
             </div>
 
             <div class="gallery-item">
-                <img src="https://via.placeholder.com/400x250/222222/FFFFFF?text=Automatisierte_Farm" alt="Eine vollautomatisierte Farm">
+                <img src="https://via.placeholder.com/400x250/222222/FFFFFF?text=Automatisierte_Farm" data-large-src="https://via.placeholder.com/800x500/222222/FFFFFF?text=Automatisierte_Farm_GROSS" alt="Eine vollautomatisierte Farm" class="gallery-image-clickable">
                 <div class="item-info">
-                    <h3>Automatisierte Weizenfarm 🌾⚙️</h3>
                     <p>Erbaut von: <span class="builder-name">TechMeister</span></p>
-                    <p class="item-description">Nie wieder von Hand farmen! Diese Create-Farm läuft rund um die Uhr und versorgt uns mit allem Nötigen.</p>
                 </div>
             </div>
 
-            <img src="https://via.placeholder.com/400x250/222222/FFFFFF?text=Mystic_Garden" alt="Magischer Garten">
-            <div class="item-info">
-                <h3>Verzauberter Mystischer Garten 🔮🌿</h3>
-                <p>Erbaut von: <span class="builder-name">Blumenfee</span></p>
-                <p class="item-description">Ein ruhiger Ort, um seltene Pflanzen und magische Blüten zu sammeln.</p>
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/400x250/222222/FFFFFF?text=Mystic_Garden" data-large-src="https://via.placeholder.com/800x500/222222/FFFFFF?text=Mystic_Garden_GROSS" alt="Magischer Garten" class="gallery-image-clickable">
+                <div class="item-info">
+                    <p>Erbaut von: <span class="builder-name">Blumenfee</span></p>
+                </div>
             </div>
             
             <div class="gallery-item">
-                <img src="https://via.placeholder.com/400x250/222222/FFFFFF?text=Nether_Festung" alt="Nether Festung Erkundung">
+                <img src="https://via.placeholder.com/400x250/222222/FFFFFF?text=Nether_Festung" data-large-src="https://via.placeholder.com/800x500/222222/FFFFFF?text=Nether_Festung_GROSS" alt="Nether Festung Erkundung" class="gallery-image-clickable">
                 <div class="item-info">
-                    <h3>Nether-Festung Entdeckung 🔥</h3>
                     <p>Erkunder: <span class="builder-name">ExplorerMax</span></p>
-                    <p class="item-description">Erster Vorstoß in eine riesige Nether-Festung! Spannend, was wir alles finden werden.</p>
                 </div>
             </div>
 
@@ -60,5 +55,14 @@
 
         <a href="index.html" class="btn nav-btn">⬅️ Zurück zur Startseite</a>
     </div>
+
+    <!-- Das Modal für die Bildvergrößerung -->
+    <div id="imageModal" class="modal">
+        <span class="close-button">&times;</span>
+        <img class="modal-content" id="img01">
+        <div id="caption" class="modal-caption"></div>
+    </div>
+
+    <script src="script.js" defer></script>
 </body>
 </html>

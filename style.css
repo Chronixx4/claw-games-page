@@ -813,3 +813,99 @@ body {
         font-size: 0.95em;
     }
 }
+
+
+/* =============================================== */
+/* STILE FÜR BILDVERGRÖSSERUNG (MODAL)           */
+/* =============================================== */
+
+/* Das Modal (Hintergrund) */
+.modal {
+    display: none; /* Standardmäßig ausgeblendet */
+    position: fixed; /* Bleibt an Ort und Stelle */
+    z-index: 100; /* Ganz oben */
+    left: 0;
+    top: 0;
+    width: 100%; /* Volle Breite */
+    height: 100%; /* Volle Höhe */
+    overflow: auto; /* Aktiviert Scrollen, wenn nötig */
+    background-color: rgba(0,0,0,0.9); /* Schwarzer Hintergrund mit Transparenz */
+    animation: fadeIn 0.3s ease-out; /* Animation beim Einblenden */
+    justify-content: center; /* Zentriert Inhalt horizontal */
+    align-items: center; /* Zentriert Inhalt vertikal */
+    flex-direction: column; /* Bild und Bildunterschrift untereinander */
+    backdrop-filter: blur(5px); /* Leichter Blur-Effekt für den Hintergrund */
+}
+
+/* Modal Inhalt (Bild) */
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    border: 3px solid #5a5a5a; /* Minecraft-ähnlicher Rahmen */
+    border-radius: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease-out; /* Zoom-Effekt beim Öffnen */
+}
+
+/* Animation für das Bild-Zoom */
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Der Schließen-Button */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.6); /* Schatten für den Button */
+    z-index: 101; /* Über dem Bild */
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Bildunterschrift */
+.modal-caption {
+    margin-top: 15px;
+    display: block;
+    width: 80%;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    font-size: 17px;
+}
+
+/* Responsive Anpassungen für Modal */
+@media only screen and (max-width: 700px) {
+    .modal-content {
+        width: 100%;
+        max-height: 80%; /* Weniger Höhe auf kleinen Bildschirmen */
+    }
+    .close-button {
+        top: 15px;
+        right: 15px;
+        font-size: 30px;
+    }
+    .modal-caption {
+        font-size: 15px;
+        width: 90%;
+    }
+}
