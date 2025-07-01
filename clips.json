@@ -33,5 +33,12 @@
         "webm": "",
         "date": "2025-06-29",
         "game": "REPO"
+    },
+    {
+        "id": "clip-6",
+        "mp4": "https://www.dropbox.com/scl/fi/kwwi93evruz8aqqetsbzo/HELLDIVERS-2-2025-06-17-20-59-17.mp4?rlkey=1h71a9ckjdbu7biuc4nfxrlp6&st=ujfz9ekx&raw=1",
+        "webm": "",
+        "date": "2025-06-17",
+        "game": "Helldivers 2"
     }
 ]
