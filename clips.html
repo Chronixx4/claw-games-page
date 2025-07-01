@@ -443,16 +443,22 @@
                     return;
                 }
                 const rawUrl = toRawDropbox(url);
-                const clipDiv = document.createElement('div');
-                clipDiv.className = 'clip-item';
-                clipDiv.innerHTML = `
-                    <div>
-                        <video src="${rawUrl}" controls preload="none" poster="" style="width:100%;height:100%;"></video>
-                    </div>
-                    <span class="clip-game-badge">${game}</span>
-                    <span class="clip-date">${new Date().toLocaleDateString()}</span>
-                `;
-                gallery.prepend(clipDiv);
+                // Neuen Clip als Objekt anlegen
+                const newClip = {
+                    id: "clip-" + (allClipsData.length + 1),
+                    mp4: rawUrl,
+                    webm: "",
+                    date: new Date().toISOString().slice(0, 10),
+                    game: game
+                };
+                // Clip am Anfang der Daten einfügen
+                allClipsData.unshift(newClip);
+                // Galerie neu anzeigen (nur die ersten Clips)
+                displayedClipsCount = 0;
+                const filteredClips = getFilteredClips();
+                appendClipItems(filteredClips.slice(0, clipsPerLoad));
+                displayedClipsCount = Math.min(clipsPerLoad, filteredClips.length);
+
                 msg.textContent = "Clip hinzugefügt!";
                 msg.style.color = "var(--ficsit-green)";
                 msg.style.display = "block";
