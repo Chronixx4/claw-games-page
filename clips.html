@@ -31,7 +31,7 @@
             <section class="clip-gallery-card server-info-card">
                 <h2>Momente, die wir nicht vergessen! ✨</h2>
                 <p>Von epischen Siegen bis zu den lustigsten Fails – hier siehst du die Highlights unserer Gaming-Sessions.</p>
-                <button id="sortByDateButton" class="load-more-button" style="margin: 0 auto 20px auto; display: block; font-size: 1em; padding: 8px 18px; min-width: unset; width: auto; max-width: 220px;">Nach Datum sortieren</button>
+                <button id="sortByDateButton" class="load-more-button" style="margin: 0 auto 18px auto; display: block; font-size: 0.92em; padding: 5px 12px; min-width: unset; width: auto; max-width: 120px;">Sortieren: Neu</button>
                 <div class="clip-grid" id="clipGrid">
                     </div>
                 <div id="clipsLoaderContainer" style="text-align: center; padding: 20px;">
@@ -202,11 +202,11 @@
             if (sortByDateButton) {
                 sortByDateButton.addEventListener('click', function() {
                     isSortedDesc = !isSortedDesc;
-                    sortByDateButton.textContent = isSortedDesc ? 'Nach Datum sortieren (neueste zuerst)' : 'Nach Datum sortieren (älteste zuerst)';
+                    sortByDateButton.textContent = isSortedDesc ? 'Sortieren: Neu' : 'Sortieren: Alt';
                     sortClipsByDate(isSortedDesc);
                 });
                 // Initialer Button-Text
-                sortByDateButton.textContent = 'Nach Datum sortieren (neueste zuerst)';
+                sortByDateButton.textContent = 'Sortieren: Neu';
             }
         });
     </script>
