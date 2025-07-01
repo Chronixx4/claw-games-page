@@ -50,6 +50,19 @@
                     <p id="endOfClips" style="display: none; color: #999;">Keine weiteren Clips verfügbar.</p>
                 </div>
             </section>
+
+            <section class="clip-upload-card">
+                <h2>Clip per Link einfügen</h2>
+                <div class="upload-hint">
+                    Füge einen öffentlichen Link zu deinem Clip ein (z.B. Google Drive, YouTube, Vimeo).<br>
+                    <b>Hinweis:</b> Google-Drive-Links müssen öffentlich freigegeben sein!
+                </div>
+                <form id="clip-link-form" onsubmit="return false;">
+                    <input type="url" id="clip-link" placeholder="https://..." style="width:80%;max-width:400px;">
+                    <button type="button" onclick="showClipPreview()">Vorschau</button>
+                </form>
+                <div id="clip-link-preview" class="clip-preview" style="margin-top:20px;"></div>
+            </section>
         </div>
     </main>
     <footer>
@@ -302,6 +315,83 @@
                 });
             }
         });
+
+        function getGoogleDriveEmbedUrl(url) {
+            // Unterstützt Links wie https://drive.google.com/file/d/FILEID/view?usp=sharing
+            const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)\//);
+            if (match) {
+                return "https://drive.google.com/file/d/" + match[1] + "/preview";
+            }
+            // Unterstützt Links wie https://drive.google.com/open?id=FILEID
+            const match2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+            if (match2) {
+                return "https://drive.google.com/file/d/" + match2[1] + "/preview";
+            }
+            return null;
+        }
+
+        function getYouTubeEmbedUrl(url) {
+            // Unterstützt verschiedene YouTube-Links
+            const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([a-zA-Z0-9_-]{11})/);
+            if (yt) {
+                return "https://www.youtube.com/embed/" + yt[1];
+            }
+            return null;
+        }
+
+        function getVimeoEmbedUrl(url) {
+            const vm = url.match(/vimeo\.com\/(\d+)/);
+            if (vm) {
+                return "https://player.vimeo.com/video/" + vm[1];
+            }
+            return null;
+        }
+
+        function showClipPreview() {
+            const url = document.getElementById('clip-link').value.trim();
+            const preview = document.getElementById('clip-link-preview');
+            let embedUrl = null;
+            let html = "";
+
+            if (!url) {
+                preview.innerHTML = "";
+                return;
+            }
+
+            // Google Drive
+            embedUrl = getGoogleDriveEmbedUrl(url);
+            if (embedUrl) {
+                html = `<iframe src="${embedUrl}" width="480" height="270" allow="autoplay" allowfullscreen style="border-radius:10px;border:none;width:100%;max-width:480px;aspect-ratio:16/9;"></iframe>`;
+                preview.innerHTML = html;
+                return;
+            }
+
+            // YouTube
+            embedUrl = getYouTubeEmbedUrl(url);
+            if (embedUrl) {
+                html = `<iframe src="${embedUrl}" width="480" height="270" allow="autoplay" allowfullscreen style="border-radius:10px;border:none;width:100%;max-width:480px;aspect-ratio:16/9;"></iframe>`;
+                preview.innerHTML = html;
+                return;
+            }
+
+            // Vimeo
+            embedUrl = getVimeoEmbedUrl(url);
+            if (embedUrl) {
+                html = `<iframe src="${embedUrl}" width="480" height="270" allow="autoplay" allowfullscreen style="border-radius:10px;border:none;width:100%;max-width:480px;aspect-ratio:16/9;"></iframe>`;
+                preview.innerHTML = html;
+                return;
+            }
+
+            // Direktes Video (mp4, webm, etc.)
+            if (url.match(/\.(mp4|webm|ogg)$/i)) {
+                html = `<video src="${url}" controls style="width:100%;max-width:480px;border-radius:10px;"></video>`;
+                preview.innerHTML = html;
+                return;
+            }
+
+            // Unbekannter Link
+            preview.innerHTML = "<div style='color:#FFD700'>Dieser Link kann nicht direkt eingebettet werden.</div>";
+        }
     </script>
 </body>
 </html>
