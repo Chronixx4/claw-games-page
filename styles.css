@@ -865,25 +865,30 @@ button[type="submit"] {
 /* ============================== */
 
 .clip-gallery-card .clip-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--spacing-sm);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+    justify-items: center;
+    align-items: start;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .clip-gallery-card .clip-item {
-    flex: 0 1 calc(33.333% - var(--spacing-sm)); /* 3 Clips pro Reihe */
+    width: 100%;
     max-width: 350px;
-    min-width: 280px;
-    
+    min-width: 0;
+    box-sizing: border-box;
     transition: transform var(--transition-speed) var(--transition-timing), box-shadow var(--transition-speed) var(--transition-timing);
     cursor: pointer;
     position: relative;
     z-index: 1;
+    background: none;
+    margin: 0;
 }
 
 .clip-gallery-card .clip-item:hover {
-    transform: scale(1.15);
+    transform: scale(1.08);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     z-index: 10;
 }
