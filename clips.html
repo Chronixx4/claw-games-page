@@ -289,6 +289,12 @@
                 clipDateSearchInput.addEventListener('input', function(e) {
                     triggerClipDateSearch();
                 });
+                clipDateSearchInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        triggerClipDateSearch();
+                    }
+                });
             }
             if (clipDateSearchButton) {
                 clipDateSearchButton.addEventListener('click', function() {
