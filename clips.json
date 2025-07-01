@@ -15,41 +15,6 @@
     },
     {
         "id": "clip-3",
-        "mp4": "clips/lustiger_fail.mp4",
-        "webm": "clips/lustiger_fail.webm",
-        "date": "2025-06-15",
-        "game": "REPO"
-    },
-    {
-        "id": "clip-4",
-        "mp4": "clips/anderes_video_aelter.mp4",
-        "webm": "clips/anderes_video_aelter.webm",
-        "date": "2025-06-10",
-        "game": "REPO"
-    },
-    {
-        "id": "clip-5",
-        "mp4": "clips/gaming_clip_5.mp4",
-        "webm": "clips/gaming_clip_5.webm",
-        "date": "2025-06-08",
-        "game": "REPO"
-    },
-    {
-        "id": "clip-6",
-        "mp4": "clips/gaming_clip_6.mp4",
-        "webm": "clips/gaming_clip_6.webm",
-        "date": "2025-06-02",
-        "game": "REPO"
-    },
-    {
-        "id": "clip-7",
-        "mp4": "clips/gaming_clip_7.mp4",
-        "webm": "clips/gaming_clip_7.webm",
-        "date": "2025-05-28",
-        "game": "REPO"
-    },
-    {
-        "id": "clip-8",
         "mp4": "https://www.dropbox.com/scl/fi/7j3f057trovylx3xwbxjm/m2-res_1080p.mp4?rlkey=sthizfl7z991s9ia56xol6sg8&st=45e3xq67&raw=1",
         "webm": "",
         "date": "2025-07-01",
