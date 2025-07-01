@@ -785,31 +785,134 @@ footer {
 }
 
 /* ================== */
-/* VII. Animationen */
+/* VII. Animationen   */
 /* ================== */
 
-@keyframes fadeInScale {
-    from {
+/* Modernes sanftes Fade-In mit leichter Bewegung */
+@keyframes fadeInUpModern {
+    0% {
         opacity: 0;
-        transform: scale(0.95);
+        transform: translateY(32px) scale(0.98);
+        filter: blur(2px);
     }
-    to {
+    60% {
         opacity: 1;
-        transform: scale(1);
+        transform: translateY(-4px) scale(1.01);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
-@keyframes slideInUp {
-    from {
+/* Modernes sanftes Fade-In für Buttons */
+@keyframes fadeInButtonModern {
+    0% {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(16px) scale(0.97);
+        filter: blur(1px);
     }
-    to {
+    80% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(-2px) scale(1.02);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
     }
 }
 
+/* Modernes sanftes Fade-In für Listen */
+@keyframes fadeInListModern {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+        filter: blur(1px);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0) scale(1.01);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+/* Cards, Main Sections, News, Welcome, Info */
+.server-info-card,
+.welcome-card,
+.news-feed-card,
+.news-item,
+.discord-widget-container,
+.clip-gallery-card {
+    animation: fadeInUpModern 0.9s cubic-bezier(.4,0,.2,1) both;
+    /* Optional: animation-delay kann per JS oder nth-child gesetzt werden */
+}
+
+/* Buttons und Call-to-Action */
+nav ul li a,
+.game-button,
+.cta,
+.load-more-button {
+    animation: fadeInButtonModern 0.7s cubic-bezier(.4,0,.2,1) both;
+    /* Optional: animation-delay kann per JS oder nth-child gesetzt werden */
+}
+
+/* Listenpunkte (z.B. Server-Info) */
+.server-info-card ul li,
+.news-feed-card ul li {
+    animation: fadeInListModern 0.6s cubic-bezier(.4,0,.2,1) both;
+}
+
+/* Verzögerungen für Listenpunkte (max 6) */
+.server-info-card ul li:nth-child(1),
+.news-feed-card ul li:nth-child(1) { animation-delay: 0.15s; }
+.server-info-card ul li:nth-child(2),
+.news-feed-card ul li:nth-child(2) { animation-delay: 0.3s; }
+.server-info-card ul li:nth-child(3),
+.news-feed-card ul li:nth-child(3) { animation-delay: 0.45s; }
+.server-info-card ul li:nth-child(4),
+.news-feed-card ul li:nth-child(4) { animation-delay: 0.6s; }
+.server-info-card ul li:nth-child(5),
+.news-feed-card ul li:nth-child(5) { animation-delay: 0.75s; }
+.server-info-card ul li:nth-child(6),
+.news-feed-card ul li:nth-child(6) { animation-delay: 0.9s; }
+
+/* Verzögerungen für Buttons (max 4) */
+nav ul li a:nth-child(1),
+.game-button:nth-child(1),
+.cta:nth-child(1),
+.load-more-button:nth-child(1) { animation-delay: 0.3s; }
+nav ul li a:nth-child(2),
+.game-button:nth-child(2),
+.cta:nth-child(2),
+.load-more-button:nth-child(2) { animation-delay: 0.45s; }
+nav ul li a:nth-child(3),
+.game-button:nth-child(3),
+.cta:nth-child(3),
+.load-more-button:nth-child(3) { animation-delay: 0.6s; }
+nav ul li a:nth-child(4),
+.game-button:nth-child(4),
+.cta:nth-child(4),
+.load-more-button:nth-child(4) { animation-delay: 0.75s; }
+
+/* News-Items Fade-In gestaffelt */
+.news-item {
+    animation-delay: 0.2s;
+}
+
+/* Optional: Animation für Preloader */
+.loader {
+    /* ...existing code... */
+    animation: spin 1s linear infinite;
+}
 
 /* ==================== */
 /* VIII. Formular Stile */
