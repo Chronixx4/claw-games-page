@@ -26,5 +26,12 @@
         "webm": "",
         "date": "2025-07-01",
         "game": "Helldivers 2"
+    },
+    {
+        "id": "clip-5",
+        "mp4": "https://www.dropbox.com/scl/fi/4vubyt7cvltzaskdxyjqd/MedalTVREPO20250629002144-tr-edit.mp4?rlkey=r2uwi9kpobyc5242fii1ntacc&st=iimdbj2n&raw=1",
+        "webm": "",
+        "date": "2025-06-29",
+        "game": "REPO"
     }
 ]
