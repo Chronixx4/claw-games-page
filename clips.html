@@ -31,6 +31,7 @@
             <section class="clip-gallery-card server-info-card">
                 <h2>Momente, die wir nicht vergessen! ✨</h2>
                 <p>Von epischen Siegen bis zu den lustigsten Fails – hier siehst du die Highlights unserer Gaming-Sessions.</p>
+                <button id="sortByDateButton" class="load-more-button" style="margin-bottom:20px;">Nach Datum sortieren</button>
                 <div class="clip-grid" id="clipGrid">
                     </div>
                 <div id="clipsLoaderContainer" style="text-align: center; padding: 20px;">
@@ -53,6 +54,7 @@
         let displayedClipsCount = 0;
         const clipsPerLoad = 6; // Anzahl der Clips, die pro Ladung angezeigt werden
         let isLoadingClips = false; // Flag, um Mehrfachladungen zu verhindern
+        let isSortedDesc = true; // Standard: neueste zuerst
 
         // Funktion zum Hinzufügen von Clip-Elementen zum DOM
         function appendClipItems(clips) {
@@ -117,7 +119,7 @@
                 try {
                     const response = await fetch('clips.json');
                     allClipsData = await response.json();
-                    allClipsData.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sortiere nach Datum
+                    allClipsData.sort((a, b) => new Date(b.date) - new Date(a.date)); // Standard: neueste zuerst
                 } catch (error) {
                     console.error("Fehler beim Laden der Clips-Daten:", error);
                     clipGrid.innerHTML = '<p style="text-align: center; color: var(--clips-page-text);">Fehler beim Laden der Clips.</p>';
@@ -156,6 +158,27 @@
             }, 500); // Kurze Verzögerung für Lade-Spinner
         }
 
+        // Funktion zum Sortieren der Clips
+        function sortClipsByDate(desc = true) {
+            allClipsData.sort((a, b) => desc ? new Date(b.date) - new Date(a.date) : new Date(a.date) - new Date(b.date));
+            // Nach dem Sortieren: Grid leeren und neu befüllen
+            const clipGrid = document.getElementById('clipGrid');
+            clipGrid.innerHTML = '';
+            displayedClipsCount = 0;
+            appendClipItems(allClipsData.slice(0, displayedClipsCount + clipsPerLoad));
+            displayedClipsCount = Math.min(clipsPerLoad, allClipsData.length);
+            // Button/Ende aktualisieren
+            const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
+            const endOfClips = document.getElementById('endOfClips');
+            if (displayedClipsCount < allClipsData.length) {
+                loadMoreClipsButton.style.display = 'block';
+                endOfClips.style.display = 'none';
+            } else {
+                loadMoreClipsButton.style.display = 'none';
+                endOfClips.style.display = 'block';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Initialer Ladevorgang beim DOMContentLoaded
             loadClips(); // Lädt die erste Charge an Clips
@@ -164,6 +187,18 @@
             const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
             if (loadMoreClipsButton) {
                 loadMoreClipsButton.addEventListener('click', loadClips);
+            }
+
+            // Klick-Handler für den Sortier-Button
+            const sortByDateButton = document.getElementById('sortByDateButton');
+            if (sortByDateButton) {
+                sortByDateButton.addEventListener('click', function() {
+                    isSortedDesc = !isSortedDesc;
+                    sortByDateButton.textContent = isSortedDesc ? 'Nach Datum sortieren (neueste zuerst)' : 'Nach Datum sortieren (älteste zuerst)';
+                    sortClipsByDate(isSortedDesc);
+                });
+                // Initialer Button-Text
+                sortByDateButton.textContent = 'Nach Datum sortieren (neueste zuerst)';
             }
         });
     </script>
