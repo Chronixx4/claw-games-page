@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Willkommen bei Claw Games!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="homepage">
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <div class="container">
+            <h1>Willkommen bei Claw Games!</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="satisfactory.html">Satisfactory</a></li>
+                    <li><a href="minecraft.html">Minecraft</a></li>
+                    <li><a href="discord.html">Discord Server</a></li>
+                    <li><a href="contact.html">Kontakt ✉️</a></li>
+                    <li><a href="clips.html">Clips & Galerie</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container welcome-card">
+            <h2>Deine Anlaufstelle für Games! 🎮</h2>
+            <p>Schön, dass du hier bist! Auf dieser Seite findest du alle Informationen zu unseren Gaming-Servern und unserer Community.</p>
+            <p>Wähle einfach im Menü das Spiel aus, das dich interessiert, um die Serverdetails zu sehen:</p>
+            <div class="game-links">
+                <a href="satisfactory.html" class="game-button satisfactory-button">Satisfactory 🏭</a>
+                <a href="minecraft.html" class="game-button minecraft-button">Minecraft ⛏️</a>
+                <a href="discord.html" class="game-button discord-button">Discord 💬</a>
+            </div>
+            <p class="cta">Viel Spaß beim Spielen und Entdecken! 👋</p>
+
+            <section class="news-feed-card" id="newsFeed">
+                <h2>Neueste Updates! ✨</h2>
+                <div class="search-container">
+                    <input type="text" id="newsSearchInput" placeholder="News durchsuchen...">
+                    <button id="newsSearchButton" class="game-button discord-button">Suchen</button>
+                </div>
+                <div id="newsContent">
+                    </div>
+                <div id="newsLoaderContainer" style="text-align: center; padding: 20px;">
+                    <button id="loadMoreNewsButton" class="load-more-button">Mehr Nachrichten laden</button>
+                    <div id="newsLoadingSpinner" class="loader" style="display: none;"></div>
+                    <p id="endOfNews" style="display: none; color: #999;">Keine weiteren Nachrichten verfügbar.</p>
+                </div>
+            </section>
+
+            <section class="discord-widget-container">
+                <h2>Discord Server-Aktivität live! 📊</h2>
+                <iframe src="https://discord.com/widget?id=1033415051601780766&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" loading="lazy"></iframe>
+                <p class="cta">Sieh, wer gerade online ist und tritt dem Chat bei! 🗣️</p>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dein Name - Mit viel Gaming-Liebe gemacht.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        let allNewsArticles = [];
+        let displayedNewsCount = 0;
+        const newsItemsPerLoad = 3; // Anzahl der Artikel, die pro Ladung angezeigt werden
+        let isLoadingNews = false; // Flag, um Mehrfachladungen zu verhindern
+
+        // Funktion zum Hinzufügen von News-Artikeln zum DOM
+        function appendNewsItems(articles) {
+            const newsContentContainer = document.getElementById('newsContent');
+            articles.forEach(article => {
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+
+                const titleElement = document.createElement('h3');
+                titleElement.textContent = article.title;
+                newsItem.appendChild(titleElement);
+
+                const dateElement = document.createElement('p');
+                dateElement.className = 'news-date';
+                const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+                dateElement.textContent = new Date(article.date).toLocaleDateString('de-DE', dateOptions);
+                newsItem.appendChild(dateElement);
+
+                const contentDiv = document.createElement('div');
+                contentDiv.innerHTML = article.content;
+                newsItem.appendChild(contentDiv);
+
+                newsContentContainer.appendChild(newsItem);
+            });
+        }
+
+        // Funktion zum Laden und Filtern der News-Einträge
+        async function loadNewsFeed(searchTerm = '', initialLoad = false) {
+            if (isLoadingNews) return; // Verhindere doppeltes Laden
+            isLoadingNews = true;
+
+            const newsContentContainer = document.getElementById('newsContent');
+            const newsLoadingSpinner = document.getElementById('newsLoadingSpinner');
+            const endOfNews = document.getElementById('endOfNews');
+            const loadMoreNewsButton = document.getElementById('loadMoreNewsButton');
+
+            if (allNewsArticles.length === 0 || initialLoad) {
+                // Lade die News-Daten nur einmal oder bei initialer Suche
+                try {
+                    const response = await fetch('news.json');
+                    allNewsArticles = await response.json();
+                    allNewsArticles.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sortiere nach Datum
+                } catch (error) {
+                    console.error("Fehler beim Laden der News-Daten:", error);
+                    newsContentContainer.innerHTML = '<p style="text-align: center; color: var(--homepage-text);">Fehler beim Laden der Nachrichten.</p>';
+                    newsLoadingSpinner.style.display = 'none';
+                    loadMoreNewsButton.style.display = 'none';
+                    isLoadingNews = false;
+                    return;
+                }
+            }
+
+            // Filtern der Artikel basierend auf dem Suchbegriff
+            const lowerCaseSearchTerm = searchTerm.toLowerCase();
+            let filteredArticles = allNewsArticles.filter(article =>
+                article.title.toLowerCase().includes(lowerCaseSearchTerm) ||
+                article.content.toLowerCase().includes(lowerCaseSearchTerm)
+            );
+
+            // Wenn ein Suchbegriff vorhanden ist oder InitialLoad, Container leeren und neu befüllen
+            if (searchTerm !== '' || initialLoad) {
+                newsContentContainer.innerHTML = '';
+                displayedNewsCount = 0;
+            }
+
+            // Zeige Lade-Indikator, verstecke Button und "Ende"-Nachricht
+            newsLoadingSpinner.style.display = 'block';
+            loadMoreNewsButton.style.display = 'none';
+            endOfNews.style.display = 'none';
+
+            // Lade die nächsten Artikel
+            const articlesToAppend = filteredArticles.slice(displayedNewsCount, displayedNewsCount + newsItemsPerLoad);
+            
+            if (articlesToAppend.length > 0) {
+                appendNewsItems(articlesToAppend);
+                displayedNewsCount += articlesToAppend.length;
+            }
+
+            // Verstecke Lade-Indikator nach kurzer Zeit
+            setTimeout(() => {
+                newsLoadingSpinner.style.display = 'none';
+                isLoadingNews = false;
+
+                // Aktualisiere Button- und End-Nachricht-Sichtbarkeit
+                if (displayedNewsCount < filteredArticles.length) {
+                    loadMoreNewsButton.style.display = 'block';
+                } else {
+                    loadMoreNewsButton.style.display = 'none';
+                    endOfNews.style.display = 'block';
+                    if (filteredArticles.length === 0) {
+                        newsContentContainer.innerHTML = '<p style="text-align: center; color: var(--homepage-text);">Keine Ergebnisse gefunden.</p>';
+                    }
+                }
+            }, 500); // Kurze Verzögerung für Lade-Spinner
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialer Ladevorgang beim DOMContentLoaded
+            loadNewsFeed('', true); // true für initialLoad
+
+            // Klick-Handler für den "Mehr laden" Button
+            const loadMoreNewsButton = document.getElementById('loadMoreNewsButton');
+            if (loadMoreNewsButton) {
+                loadMoreNewsButton.addEventListener('click', () => {
+                    loadNewsFeed(document.getElementById('newsSearchInput').value);
+                });
+            }
+
+            // Suchfunktion initialisieren
+            const newsSearchInput = document.getElementById('newsSearchInput');
+            const newsSearchButton = document.getElementById('newsSearchButton');
+
+            if (newsSearchInput) {
+                newsSearchInput.addEventListener('input', (event) => {
+                    // Bei jeder Eingabe komplett neu filtern und laden
+                    loadNewsFeed(event.target.value, true);
+                });
+
+                if (newsSearchButton) {
+                    newsSearchButton.addEventListener('click', () => {
+                        loadNewsFeed(newsSearchInput.value, true);
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

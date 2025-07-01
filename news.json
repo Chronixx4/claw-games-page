@@ -1,0 +1,44 @@
+[
+    {
+        "id": "news-1",
+        "title": "All the Mods 10-3.0 ist da! 🎉",
+        "date": "2025-05-20",
+        "content": "<p>Ein großes Update für All the Mods 10 ist verfügbar: <strong>Version 3.0</strong>! Hier sind die wichtigsten Änderungen:</p><h4>Detaillierte Änderungen:</h4><ul><li><strong>Star Automation Rework:</strong> Modern Industrialization (MI) ist jetzt für Star Automation erforderlich, da es konstante Probleme mit MMR Multiblocks gab. Einige High-End-Hatches und Controller haben ein Rezept zur Konvertierung zu MI. Beachte, dass die Multiblock-Strukturmuster nicht mehr die gleichen sind wie zuvor in MMR; platziere den MI-Controller und verwende den MI-Schlüssel, um das Muster anzuzeigen. Bestehende MMR-Multiblocks behalten ihre Rezepte, aber es können keine neuen MMR-Controller mehr erstellt werden.</li></ul><h4>Neu hinzugefügte Mods:</h4><ul><li>Ars Elemancy (1.3)</li><li>Silent's Gems (5.0.3)</li><li>Starbunclemania (1.4.0.0)</li><li>Transfer Labels (0.1.2)</li></ul><p>Die Neoforge-Version wurde auf <strong>21.1.172</strong> aktualisiert.</p><h4>Bekannte Probleme:</h4><ul><li>Falls das Spiel beim Interagieren mit Ars Lectern abstürzt, einfach das Lectern abbauen und neu platzieren.</li></ul><p style=\"font-weight: bold; color: orange;\">WICHTIG: IMMER EIN BACKUP ERSTELLEN, BEVOR DU UPDATEST!</p>"
+    },
+    {
+        "id": "news-2",
+        "title": "Server-Wartung abgeschlossen! ✅",
+        "date": "2025-06-28",
+        "content": "<p>Die geplante Wartung unseres Minecraft-Servers ist erfolgreich abgeschlossen. Alles läuft wieder stabil! Viel Spaß beim Bauen!</p>"
+    },
+    {
+        "id": "news-3",
+        "title": "Neues Modpack für Minecraft geplant! 📦",
+        "date": "2025-06-25",
+        "content": "<p>Wir prüfen aktuell ein neues Modpack für unseren Minecraft-Server. Bleibt dran für weitere Infos!</p>"
+    },
+    {
+        "id": "news-4",
+        "title": "Satisfactory Update 9 ist da! 🚀",
+        "date": "2025-06-20",
+        "content": "<p>Das große Satisfactory Update 9 wurde veröffentlicht! Mehr Inhalte, mehr Fabrikwahnsinn!</p>"
+    },
+    {
+        "id": "news-5",
+        "title": "Neuer Discord-Kanal für Modding-Support! 💬",
+        "date": "2025-06-18",
+        "content": "<p>Wir haben einen neuen Discord-Kanal eröffnet, um euch besseren Support bei Modding-Fragen zu bieten. Schaut vorbei!</p>"
+    },
+    {
+        "id": "news-6",
+        "title": "Event: Bauwettbewerb auf dem Minecraft-Server! 🏆",
+        "date": "2025-06-10",
+        "content": "<p>Nehmt an unserem ersten Bauwettbewerb auf dem Minecraft-Server teil! Tolle Preise warten auf euch. Details findet ihr im Discord.</p>"
+    },
+    {
+        "id": "news-7",
+        "title": "Satisfactory Server-Upgrade! ⚡",
+        "date": "2025-06-05",
+        "content": "<p>Unser Satisfactory-Server hat ein Hardware-Upgrade erhalten, um eine noch stabilere und flüssigere Spielerfahrung zu gewährleisten.</p>"
+    }
+]

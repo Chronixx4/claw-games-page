@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unsere Gaming-Clips - Claw Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="clips-page">
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <div class="container">
+            <h1>Unsere besten Gaming-Clips! 🎬</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="satisfactory.html">Satisfactory</a></li>
+                    <li><a href="minecraft.html">Minecraft</a></li>
+                    <li><a href="discord.html">Discord Server</a></li>
+                    <li><a href="contact.html">Kontakt ✉️</a></li>
+                    <li><a href="clips.html">Clips & Galerie</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section class="clip-gallery-card server-info-card">
+                <h2>Momente, die wir nicht vergessen! ✨</h2>
+                <p>Von epischen Siegen bis zu den lustigsten Fails – hier siehst du die Highlights unserer Gaming-Sessions.</p>
+                <div class="clip-grid" id="clipGrid">
+                    </div>
+                <div id="clipsLoaderContainer" style="text-align: center; padding: 20px;">
+                    <button id="loadMoreClipsButton" class="load-more-button">Mehr Clips laden</button>
+                    <div id="clipsLoadingSpinner" class="loader" style="display: none;"></div>
+                    <p id="endOfClips" style="display: none; color: #999;">Keine weiteren Clips verfügbar.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dein Name - Gaming-Momente für immer festgehalten.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        let allClipsData = []; // Alle Clips aus der JSON-Datei
+        let displayedClipsCount = 0;
+        const clipsPerLoad = 6; // Anzahl der Clips, die pro Ladung angezeigt werden
+        let isLoadingClips = false; // Flag, um Mehrfachladungen zu verhindern
+
+        // Funktion zum Hinzufügen von Clip-Elementen zum DOM
+        function appendClipItems(clips) {
+            const clipGrid = document.getElementById('clipGrid');
+            clips.forEach(video => {
+                const clipItem = document.createElement('div');
+                clipItem.className = 'clip-item';
+                const innerDiv = document.createElement('div');
+                innerDiv.style.position = 'relative';
+                innerDiv.style.paddingBottom = '56.25%';
+                innerDiv.style.height = '0';
+                innerDiv.style.overflow = 'hidden';
+                innerDiv.style.backgroundColor = '#000';
+                const videoElement = document.createElement('video');
+                videoElement.controls = true;
+                videoElement.preload = 'metadata';
+                videoElement.style.position = 'absolute';
+                videoElement.style.top = '0';
+                videoElement.style.left = '0';
+                videoElement.style.width = '100%';
+                videoElement.style.height = '100%';
+                videoElement.style.display = 'block';
+                videoElement.loading = 'lazy'; // Lazy Loading für Video hinzufügen
+                const sourceMp4 = document.createElement('source');
+                sourceMp4.src = video.mp4;
+                sourceMp4.type = 'video/mp4';
+                videoElement.appendChild(sourceMp4);
+                if (video.webm) {
+                    const sourceWebm = document.createElement('source');
+                    sourceWebm.src = video.webm;
+                    sourceWebm.type = 'video/webm';
+                    videoElement.appendChild(sourceWebm);
+                }
+                const fallbackText = document.createTextNode('Dein Browser unterstützt das Video-Tag nicht. Bitte aktualisiere ihn.');
+                videoElement.appendChild(fallbackText);
+                innerDiv.appendChild(videoElement);
+                clipItem.appendChild(innerDiv);
+                clipGrid.appendChild(clipItem);
+
+                clipItem.addEventListener('mouseenter', () => {
+                    videoElement.play().catch(e => console.error("Fehler beim Abspielen des Videos:", e));
+                });
+                clipItem.addEventListener('mouseleave', () => {
+                    videoElement.pause();
+                    videoElement.currentTime = 0;
+                });
+            });
+        }
+
+        // Funktion zum Laden der Clips
+        async function loadClips() {
+            if (isLoadingClips) return; // Verhindere doppeltes Laden
+            isLoadingClips = true;
+
+            const clipGrid = document.getElementById('clipGrid');
+            const clipsLoadingSpinner = document.getElementById('clipsLoadingSpinner');
+            const endOfClips = document.getElementById('endOfClips');
+            const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
+
+            if (allClipsData.length === 0) {
+                // Lade die Clips-Daten nur einmal
+                try {
+                    const response = await fetch('clips.json');
+                    allClipsData = await response.json();
+                    allClipsData.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sortiere nach Datum
+                } catch (error) {
+                    console.error("Fehler beim Laden der Clips-Daten:", error);
+                    clipGrid.innerHTML = '<p style="text-align: center; color: var(--clips-page-text);">Fehler beim Laden der Clips.</p>';
+                    clipsLoadingSpinner.style.display = 'none';
+                    loadMoreClipsButton.style.display = 'none';
+                    isLoadingClips = false;
+                    return;
+                }
+            }
+
+            // Zeige Lade-Indikator, verstecke Button und "Ende"-Nachricht
+            clipsLoadingSpinner.style.display = 'block';
+            loadMoreClipsButton.style.display = 'none';
+            endOfClips.style.display = 'none';
+
+            // Lade die nächsten Clips
+            const clipsToAppend = allClipsData.slice(displayedClipsCount, displayedClipsCount + clipsPerLoad);
+            
+            if (clipsToAppend.length > 0) {
+                appendClipItems(clipsToAppend);
+                displayedClipsCount += clipsToAppend.length;
+            }
+
+            // Verstecke Lade-Indikator nach kurzer Zeit
+            setTimeout(() => {
+                clipsLoadingSpinner.style.display = 'none';
+                isLoadingClips = false;
+
+                // Aktualisiere Button- und End-Nachricht-Sichtbarkeit
+                if (displayedClipsCount < allClipsData.length) {
+                    loadMoreClipsButton.style.display = 'block';
+                } else {
+                    loadMoreClipsButton.style.display = 'none';
+                    endOfClips.style.display = 'block';
+                }
+            }, 500); // Kurze Verzögerung für Lade-Spinner
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialer Ladevorgang beim DOMContentLoaded
+            loadClips(); // Lädt die erste Charge an Clips
+
+            // Klick-Handler für den "Mehr laden" Button
+            const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
+            if (loadMoreClipsButton) {
+                loadMoreClipsButton.addEventListener('click', loadClips);
+            }
+        });
+    </script>
+</body>
+</html>

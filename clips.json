@@ -1,0 +1,51 @@
+[
+    {
+        "id": "clip-1",
+        "mp4": "clips/MedalTVREPO20250629003859-tr-edit.mp4",
+        "webm": "clips/MedalTVREPO20250629003859-tr-edit.webm",
+        "title": "Epischer Moment (29. Juni)",
+        "date": "2025-06-29"
+    },
+    {
+        "id": "clip-2",
+        "mp4": "clips/14813553.6_2C54388F94DA0C53.mp4",
+        "webm": "clips/epischer_moment.webm",
+        "title": "Noch ein ep. Moment (20. Juni)",
+        "date": "2025-06-20"
+    },
+    {
+        "id": "clip-3",
+        "mp4": "clips/lustiger_fail.mp4",
+        "webm": "clips/lustiger_fail.webm",
+        "title": "Lustiger Fail (15. Juni)",
+        "date": "2025-06-15"
+    },
+    {
+        "id": "clip-4",
+        "mp4": "clips/anderes_video_aelter.mp4",
+        "webm": "clips/anderes_video_aelter.webm",
+        "title": "Älteres Video (10. Juni)",
+        "date": "2025-06-10"
+    },
+    {
+        "id": "clip-5",
+        "mp4": "clips/gaming_clip_5.mp4",
+        "webm": "clips/gaming_clip_5.webm",
+        "title": "Taktischer Rückzug (08. Juni)",
+        "date": "2025-06-08"
+    },
+    {
+        "id": "clip-6",
+        "mp4": "clips/gaming_clip_6.mp4",
+        "webm": "clips/gaming_clip_6.webm",
+        "title": "Headshot-Glanz (02. Juni)",
+        "date": "2025-06-02"
+    },
+    {
+        "id": "clip-7",
+        "mp4": "clips/gaming_clip_7.mp4",
+        "webm": "clips/gaming_clip_7.webm",
+        "title": "Unerwarteter Sieg (28. Mai)",
+        "date": "2025-05-28"
+    }
+]

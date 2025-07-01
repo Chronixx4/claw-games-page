@@ -1,0 +1,1036 @@
+/* ========================================= */
+/* I. Globale Variablen & Grundkonfiguration */
+/* ========================================= */
+
+:root {
+    /* Farben: Themabasiert */
+    /* FICSIT Farben (für Satisfactory) */
+    --ficsit-orange: #FF6B00; /* Hauptakzentfarbe (FICSIT Orange) */
+    --ficsit-dark: #2C3E50; /* Dunkles Blau/Grau für Hintergrund/Text */
+    --ficsit-medium: #34495E; /* Etwas helleres Dunkelblau */
+    --ficsit-light: #ECF0F1; /* Helles Grau für Text/Hintergrundelemente */
+    --ficsit-green: #2ECC71; /* Akzentgrün für Erfolge/Links */
+    --ficsit-border: #1ABC9C; /* Cyan-ähnlicher Rand für Elemente */
+
+    /* Allgemeine Farben für die Startseite */
+    --homepage-bg: #1F2833; /* Dunkler, neutraler Hintergrund */
+    --homepage-accent: #66FCF1; /* Helle Akzentfarbe */
+    --homepage-text: #C5C6C7; /* Heller Text */
+    --homepage-card-bg: #2C3E50; /* Kartenhintergrund */
+
+    /* Minecraft Farben */
+    --minecraft-dark-green: #2E7D32; /* Dunkles Waldgrün für Hintergründe */
+    --minecraft-medium-green: #4CAF50; /* Klassisches Minecraft-Grasgrün für Kartenhintergründe */
+    --minecraft-light-green: #8BC34A; /* Helleres Grün für Akzente wie Ränder, Buttons */
+    --minecraft-dirt-brown: #795548; /* Dunkles Braun für Text oder Akzente */
+    --minecraft-stone-gray: #9E9E9E; /* Neutrales Grau für sekundären Text */
+    --minecraft-sand-yellow: #FFEB3B; /* Helles Gelb für Akzente wie Server-Werte, Online-Status */
+    --minecraft-wood-orange: #BF360C; /* Ein kräftiges Orange/Braun für Buttons im Hover-Zustand */
+
+    /* Allgemeine Abstände und Schatten-Variablen */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 30px;
+    --spacing-xl: 40px;
+
+    --border-radius-sm: 5px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 10px;
+
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.4);
+
+    --transition-speed: 0.3s;
+    --transition-timing: ease-in-out;
+}
+
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--ficsit-dark); /* Standard-Hintergrund, wird thematisch überschrieben */
+    color: var(--ficsit-light); /* Standard-Textfarbe, wird thematisch überschrieben */
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+}
+
+/* Liquid Glass Basis Stil */
+.liquid-glass-card {
+    background-color: rgba(44, 62, 80, 0.7); /* Standard Liquid Glass Farbe */
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+/* ============================ */
+/* II. Header & Navigation Stile */
+/* ============================ */
+
+header {
+    background-color: rgba(44, 62, 80, 0.7);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all var(--transition-speed) var(--transition-timing);
+    color: var(--ficsit-light); /* Standard, wird thematisch überschrieben */
+    padding: var(--spacing-md) 0;
+    text-align: center;
+    border-bottom: 3px solid var(--ficsit-orange); /* Standard, wird thematisch überschrieben */
+}
+
+header.scrolled {
+    padding: var(--spacing-sm) 0;
+    font-size: 0.9em;
+    box-shadow: var(--shadow-sm);
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px; /* Anpassbar mit Variable, wenn nötig */
+    transition: font-size var(--transition-speed) var(--transition-timing), margin-bottom var(--transition-speed) var(--transition-timing);
+}
+
+header.scrolled h1 {
+    font-size: 1.8em;
+    margin-bottom: var(--spacing-sm);
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+nav ul li a {
+    color: var(--ficsit-light);
+    text-decoration: none;
+    padding: var(--spacing-sm) 15px;
+    border-radius: var(--border-radius-md);
+    background-color: var(--ficsit-orange); /* Standard, wird thematisch überschrieben */
+    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    box-shadow: var(--shadow-md);
+    font-weight: bold;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: block;
+}
+
+header.scrolled nav ul li a {
+    padding: 8px 12px;
+    font-size: 0.8em;
+}
+
+nav ul li a:hover {
+    background-color: #E65A00; /* Dunkleres Orange beim Hover, wird thematisch überschrieben */
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Könnte auch eine Variable werden */
+}
+
+/* Stile für den aktiven Navigationslink (allgemein) */
+nav ul li a.active {
+    background-color: var(--ficsit-dark); /* Hintergrundfarbe des aktiven Links */
+    color: var(--ficsit-orange); /* Textfarbe des aktiven Links */
+    border: 2px solid var(--ficsit-orange); /* Rand für Hervorhebung */
+    cursor: default; /* Zeiger ändern, da es die aktuelle Seite ist */
+    transform: translateY(0); /* Keine Hover-Animation für aktiven Link */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4); /* Leichter innerer Schatten */
+}
+
+nav ul li a.active:hover {
+    background-color: var(--ficsit-dark); /* Auch beim Hover bleibt die Farbe gleich */
+    transform: translateY(0); /* Keine Animation beim Hover */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+
+/* ============================ */
+/* III. Main Content & Cards   */
+/* ============================ */
+
+main {
+    padding: var(--spacing-xl) 0;
+    min-height: calc(100vh - 180px); /* Damit der Footer unten bleibt */
+}
+
+/* Allgemeine Karten-Stile (server-info-card, welcome-card, news-feed-card) */
+.server-info-card { /* Wird als Basis für andere Karten wiederverwendet */
+    background-color: rgba(44, 62, 80, 0.7);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    border: 2px solid var(--ficsit-border); /* Standard, wird thematisch überschrieben */
+    margin-bottom: var(--spacing-lg);
+    animation: fadeInScale 0.8s ease-out forwards;
+}
+
+.server-info-card h2 {
+    color: var(--ficsit-orange); /* Standard, wird thematisch überschrieben */
+    text-align: center;
+    margin-bottom: 25px; /* Anpassbar mit Variable */
+    font-size: 2.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.server-info-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 25px; /* Anpassbar mit Variable */
+}
+
+.server-info-card ul li {
+    background-color: rgba(44, 62, 80, 0.5); /* Liquid Glass Optik */
+    border-left: 5px solid rgba(46, 204, 113, 0.7); /* Akzentstreifen, wird thematisch überschrieben */
+    padding: 15px var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1em;
+    /* Hier die initialen Eigenschaften für die Animation setzen */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.5s ease-out forwards;
+}
+
+/* Verzögerung für jeden Listeneintrag (könnte auch über JS gesteuert werden) */
+.server-info-card ul li:nth-child(1) { animation-delay: 0.2s; }
+.server-info-card ul li:nth-child(2) { animation-delay: 0.4s; }
+.server-info-card ul li:nth-child(3) { animation-delay: 0.6s; }
+.server-info-card ul li:nth-child(4) { animation-delay: 0.8s; }
+.server-info-card ul li:nth-child(5) { animation-delay: 1.0s; }
+
+
+.server-info-card ul li strong {
+    color: var(--ficsit-light);
+}
+
+.info-value {
+    color: var(--ficsit-orange); /* Standard, wird thematisch überschrieben */
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.cta {
+    text-align: center;
+    margin-top: var(--spacing-lg);
+    font-size: 1.3em;
+    font-style: italic;
+    color: var(--ficsit-green); /* Standard, wird thematisch überschrieben */
+}
+
+/* ================ */
+/* IV. Footer Stile */
+/* ================ */
+
+footer {
+    text-align: center;
+    padding: var(--spacing-md) 0;
+    background-color: rgba(44, 62, 80, 0.7);
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.125);
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.25); /* Schatten nach oben */
+    color: var(--ficsit-light);
+    border-top: 3px solid var(--ficsit-border); /* Standard, wird thematisch überschrieben */
+}
+
+/* ================================== */
+/* V. Themabasierten Stile (body-Klassen) */
+/* ================================== */
+
+/* --- Homepage (index.html) Stile --- */
+.homepage body {
+    background-color: var(--homepage-bg);
+    color: var(--homepage-text);
+}
+.homepage header {
+    background-color: rgba(44, 62, 80, 0.7);
+    border-bottom: 3px solid var(--homepage-accent);
+    color: #fff;
+}
+.homepage nav ul li a {
+    background-color: var(--homepage-accent);
+    color: var(--homepage-bg);
+}
+.homepage nav ul li a:hover {
+    background-color: #4AD9E8;
+}
+/* Anpassung für aktiven Navigationslink auf Homepage */
+.homepage nav ul li a.active {
+    background-color: var(--homepage-bg); /* Dunkler Hintergrund */
+    color: var(--homepage-accent); /* Akzentfarbe als Textfarbe */
+    border-color: var(--homepage-accent);
+}
+.homepage nav ul li a.active:hover {
+    background-color: var(--homepage-bg);
+}
+
+
+.homepage .welcome-card {
+    background-color: rgba(44, 62, 80, 0.7);
+    border: 1px solid rgba(102, 252, 241, 0.3);
+    color: var(--homepage-text);
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+.homepage .welcome-card h2 {
+    color: var(--homepage-accent);
+    margin-bottom: 25px; /* Anpassbar mit Variable */
+}
+.homepage .welcome-card p {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.1em;
+}
+.homepage footer {
+    background-color: rgba(44, 62, 80, 0.7);
+    border-top: 3px solid var(--homepage-accent);
+    color: var(--homepage-text);
+}
+
+/* Game Links / Buttons (auf Homepage) */
+.game-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.game-button {
+    text-decoration: none;
+    padding: 15px var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, background-color var(--transition-speed) ease;
+    box-shadow: var(--shadow-md);
+    /* Hier die initialen Eigenschaften für die Animation setzen */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.game-button:nth-child(1) { animation-delay: 0.5s; }
+.game-button:nth-child(2) { animation-delay: 0.7s; }
+.game-button:nth-child(3) { animation-delay: 0.9s; }
+
+.game-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Könnte auch eine Variable werden */
+}
+
+/* Spezifische Button-Farben */
+.satisfactory-button {
+    background-color: var(--ficsit-orange);
+    color: var(--ficsit-light);
+}
+.satisfactory-button:hover {
+    background-color: #E65A00;
+}
+
+.minecraft-button {
+    background-color: var(--minecraft-light-green);
+    color: #333;
+}
+.minecraft-button:hover {
+    background-color: #689F38;
+}
+
+.discord-button {
+    background-color: #7289DA;
+    color: #fff;
+}
+.discord-button:hover {
+    background-color: #5865F2;
+}
+
+/* News Feed Stile (für Startseite) */
+.news-feed-card { /* Nutzt .server-info-card als Basis */
+    margin-top: var(--spacing-xl);
+    animation-delay: 1.2s; /* Verzögerung für die fadeInScale Animation der Karte selbst */
+    /* Spezifische Anpassungen für News-Feed */
+    border: 1px solid rgba(102, 252, 241, 0.3); /* Homepage-Accent als Rand */
+}
+
+.news-feed-card h2 {
+    color: var(--homepage-accent);
+    margin-bottom: var(--spacing-lg);
+    font-size: 2em;
+}
+
+.news-item {
+    background-color: rgba(31, 40, 51, 0.6); /* Liquid Glass Optik */
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-md);
+    border-left: 5px solid rgba(102, 252, 241, 0.7); /* Homepage-Accent als Streifen */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Hier die initialen Eigenschaften für die Animation setzen */
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.news-item h3 {
+    color: var(--homepage-accent);
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+    font-size: 1.5em;
+}
+
+.news-item .news-date {
+    font-size: 0.9em;
+    color: #999;
+    margin-bottom: 15px; /* Anpassbar */
+    font-style: italic;
+}
+
+.news-item p {
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+/* Suchfeld-Stile (eingebettet in styles.css) */
+.search-container {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.search-container input[type="text"] {
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--homepage-accent);
+    background-color: var(--homepage-bg);
+    color: var(--homepage-text);
+    width: 80%;
+    max-width: 400px;
+    box-sizing: border-box; /* Wichtig für korrekte Breitenberechnung mit Padding */
+}
+
+.search-container input[type="text"]:focus {
+    outline: none;
+    border-color: #66FCF1;
+    box-shadow: 0 0 8px rgba(102, 252, 241, 0.5);
+}
+
+.search-container .game-button {
+    margin-left: var(--spacing-sm);
+    padding: var(--spacing-sm) 15px;
+    font-size: 1em;
+    width: auto;
+    display: inline-block; /* Stellt sicher, dass es neben dem Inputfeld bleibt */
+    vertical-align: middle; /* Vertikale Ausrichtung */
+}
+
+/* Stil für den "Mehr laden" Button (allgemein) */
+.load-more-button {
+    /* display: block; -- Bereits definiert und gut so */
+    width: fit-content; /* Passt die Breite an den Inhalt an */
+    margin: var(--spacing-lg) auto; /* Zentriert den Button horizontal */
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: 1.1em;
+    cursor: pointer;
+    /* Angepasste Farben für Konsistenz mit dem aktuellen Thema */
+    background-color: var(--homepage-accent); /* Standard für Homepage/allgemein */
+    color: var(--homepage-bg); /* Textfarbe, die auf dem Akzent gut lesbar ist */
+    border: none;
+    border-radius: var(--border-radius-md);
+    transition: background-color var(--transition-speed) ease, transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    box-shadow: var(--shadow-md);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.load-more-button:hover {
+    background-color: #4AD9E8; /* Dunklerer Ton des homepage-accents beim Hover */
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Spezifische Anpassungen für den Clips-Seiten-Button */
+.clips-page .load-more-button {
+    background-color: #FFD700; /* Gold-Ton für Clips-Seite */
+    color: #333; /* Dunkler Text auf Gold */
+}
+
+.clips-page .load-more-button:hover {
+    background-color: #E6C200; /* Dunklerer Gold-Ton beim Hover */
+}
+
+
+/* --- Satisfactory Stile (satisfactory.html) --- */
+.satisfactory body {
+    background-color: var(--ficsit-dark);
+    color: var(--ficsit-light);
+}
+.satisfactory header {
+    background-color: rgba(44, 62, 80, 0.7);
+    border-bottom: 3px solid var(--ficsit-orange);
+}
+.satisfactory nav ul li a {
+    background-color: var(--ficsit-orange);
+}
+.satisfactory nav ul li a:hover {
+    background-color: #E65A00;
+}
+/* Anpassung für aktiven Navigationslink auf Satisfactory-Seite */
+.satisfactory nav ul li a.active {
+    background-color: var(--ficsit-dark); /* Dunklerer Hintergrund */
+    color: var(--ficsit-orange); /* Orange Textfarbe */
+    border-color: var(--ficsit-orange);
+}
+.satisfactory nav ul li a.active:hover {
+    background-color: var(--ficsit-dark);
+}
+
+
+.satisfactory .server-info-card {
+    background-color: rgba(44, 62, 80, 0.7);
+    border: 1px solid rgba(26, 188, 156, 0.3);
+    border-color: var(--ficsit-border);
+}
+.satisfactory .server-info-card h2 {
+    color: var(--ficsit-orange);
+}
+.satisfactory .server-info-card ul li {
+    background-color: rgba(44, 62, 80, 0.5);
+    border-left-color: rgba(46, 204, 113, 0.7);
+}
+.satisfactory .info-value {
+    color: var(--ficsit-orange);
+}
+.satisfactory .cta {
+    color: var(--ficsit-green);
+}
+.satisfactory footer {
+    background-color: rgba(44, 62, 80, 0.7);
+    border-top: 3px solid var(--ficsit-border);
+}
+
+/* --- Minecraft Stile (minecraft.html) --- */
+.minecraft body {
+    background-color: var(--minecraft-dark-green);
+    color: var(--minecraft-stone-gray);
+}
+.minecraft header, .minecraft footer {
+    background-color: rgba(76, 175, 80, 0.7);
+    border-color: var(--minecraft-light-green);
+    color: #fff;
+}
+.minecraft header {
+    border-bottom: 3px solid var(--minecraft-light-green);
+}
+.minecraft footer {
+    border-top: 3px solid var(--minecraft-light-green);
+}
+.minecraft nav ul li a {
+    background-color: var(--minecraft-light-green);
+    color: var(--minecraft-dirt-brown);
+}
+.minecraft nav ul li a:hover {
+    background-color: var(--minecraft-wood-orange);
+    color: #fff;
+}
+/* Anpassung für aktiven Navigationslink auf Minecraft-Seite */
+.minecraft nav ul li a.active {
+    background-color: var(--minecraft-dark-green); /* Dunkleres Grün */
+    color: var(--minecraft-sand-yellow); /* Gelber Text */
+    border-color: var(--minecraft-light-green);
+}
+.minecraft nav ul li a.active:hover {
+    background-color: var(--minecraft-dark-green);
+}
+
+
+.minecraft .server-info-card {
+    background-color: rgba(76, 175, 80, 0.8);
+    backdrop-filter: blur(8px) saturate(150%);
+    -webkit-backdrop-filter: blur(8px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-color: var(--minecraft-light-green);
+    color: var(--minecraft-stone-gray);
+}
+.minecraft .server-info-card h2 {
+    color: var(--minecraft-dirt-brown);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+.minecraft .server-info-card p {
+    color: var(--minecraft-sand-yellow);
+}
+.minecraft .server-info-card ul li {
+    background-color: rgba(46, 125, 50, 0.6);
+    border-left-color: rgba(139, 195, 74, 0.8);
+    color: var(--minecraft-stone-gray);
+}
+.minecraft .server-info-card ul li strong {
+    color: var(--minecraft-sand-yellow);
+}
+.minecraft .info-value {
+    color: var(--minecraft-sand-yellow);
+    font-weight: bold;
+}
+.minecraft .cta {
+    color: var(--minecraft-sand-yellow);
+}
+.minecraft header h1 {
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Discord Stile (discord.html) --- */
+.discord body {
+    background-color: #36393F;
+    color: #DCDDDE;
+}
+.discord header, .discord footer {
+    background-color: rgba(54, 57, 63, 0.7);
+    border-color: #7289DA;
+    color: #fff;
+}
+.discord header {
+    border-bottom: 3px solid #7289DA;
+}
+.discord footer {
+    border-top: 3px solid #7289DA;
+}
+.discord nav ul li a {
+    background-color: #7289DA;
+    color: #fff;
+}
+.discord nav ul li a:hover {
+    background-color: #6A7FD4;
+}
+/* Anpassung für aktiven Navigationslink auf Discord-Seite */
+.discord nav ul li a.active {
+    background-color: #424549; /* Discord Mittelgrau */
+    color: #7289DA; /* Discord Blau */
+    border-color: #7289DA;
+}
+.discord nav ul li a.active:hover {
+    background-color: #424549;
+}
+
+
+.discord .server-info-card {
+    background-color: rgba(54, 57, 63, 0.7);
+    border-color: #5865F2;
+    color: #DCDDDE;
+    border: 1px solid rgba(88, 101, 242, 0.3); /* Border kann hier spezifiziert werden, um die liquid-glass-card zu überschreiben */
+}
+.discord .server-info-card h2 {
+    color: #5865F2;
+}
+.discord .server-info-card ul li {
+    background-color: rgba(79, 84, 92, 0.5);
+    border-left-color: rgba(114, 137, 218, 0.7);
+    color: #DCDDDE;
+}
+.discord .server-info-card ul li strong {
+    color: #DCDDDE;
+}
+.discord .info-value {
+    color: #7289DA;
+}
+.discord .cta {
+    color: #7289DA;
+}
+/* Anpassung für Game-Buttons innerhalb von Info-Karten (für Discord-Link) */
+.server-info-card .game-button {
+    display: inline-block;
+    text-align: center;
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto; /* Zentriert den Button, wenn er block- oder inline-block ist und width begrenzt ist */
+}
+
+
+/* --- Clips Seite Stile (clips.html) --- */
+.clips-page body {
+    background-color: #222;
+    color: #eee;
+}
+.clips-page header, .clips-page footer {
+    background-color: rgba(51, 51, 51, 0.7);
+    border-color: #FFD700;
+    color: #fff;
+}
+.clips-page header {
+    border-bottom: 3px solid #FFD700;
+}
+.clips-page footer {
+    border-top: 3px solid #FFD700;
+}
+.clips-page nav ul li a {
+    background-color: #FFD700;
+    color: #333;
+}
+.clips-page nav ul li a:hover {
+    background-color: #E6C200;
+}
+/* Anpassung für aktiven Navigationslink auf Clips-Seite */
+.clips-page nav ul li a.active {
+    background-color: #333; /* Dunkler Hintergrund */
+    color: #FFD700; /* Goldener Text */
+    border-color: #FFD700;
+}
+.clips-page nav ul li a.active:hover {
+    background-color: #333;
+}
+
+
+.clips-page .server-info-card { /* Wiederverwendet die Styling-Klasse */
+    background-color: rgba(68, 68, 68, 0.7);
+    border-color: #FFD700;
+    color: #eee;
+    border: 1px solid rgba(255, 215, 0, 0.3); /* Border kann hier spezifiziert werden, um die liquid-glass-card zu überschreiben */
+}
+.clips-page .server-info-card h2 {
+    color: #FFD700;
+}
+.clips-page .cta {
+    color: #FFD700;
+}
+.clips-page .server-info-card ul li {
+    background-color: rgba(51, 51, 51, 0.5);
+    border-left-color: rgba(255, 215, 0, 0.7);
+}
+.clips-page .info-value {
+    color: #FFD700;
+}
+
+
+/* =========================== */
+/* VI. Status & Preloader Stile */
+/* =========================== */
+
+/* Stile für den Serverstatus (Minecraft-Seite) */
+.status-loading {
+    color: #FFC107;
+    font-weight: bold;
+}
+
+.status-online {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.status-offline {
+    color: #F44336;
+    font-weight: bold;
+}
+
+.status-error {
+    color: #FF9800;
+    font-weight: bold;
+}
+
+/* Preloader Stile */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--ficsit-dark);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader {
+    border: 8px solid var(--ficsit-medium);
+    border-top: 8px solid var(--ficsit-orange);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ================== */
+/* VII. Animationen */
+/* ================== */
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==================== */
+/* VIII. Formular Stile */
+/* ==================== */
+
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px; /* Anpassbar */
+    font-weight: bold;
+    color: var(--homepage-text);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: calc(100% - 20px); /* 100% Breite minus Padding */
+    padding: var(--spacing-sm);
+    border: 1px solid var(--homepage-accent);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--homepage-bg);
+    color: var(--homepage-text);
+    font-size: 1em;
+    box-sizing: border-box;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #66FCF1;
+    box-shadow: 0 0 8px rgba(102, 252, 241, 0.5);
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px 0; /* Anpassbar */
+    margin-top: var(--spacing-md);
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+/* ============================== */
+/* IX. Clips & Galerie Stile */
+/* ============================== */
+
+.clip-gallery-card .clip-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.clip-gallery-card .clip-item {
+    flex: 0 1 calc(33.333% - var(--spacing-sm)); /* 3 Clips pro Reihe */
+    max-width: 350px;
+    min-width: 280px;
+    
+    transition: transform var(--transition-speed) var(--transition-timing), box-shadow var(--transition-speed) var(--transition-timing);
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+}
+
+.clip-gallery-card .clip-item:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.clip-gallery-card .clip-item > div {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Seitenverhältnis */
+    height: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.clip-gallery-card .clip-item video,
+.clip-gallery-card .clip-item iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+
+/* ========================== */
+/* X. Responsive Design (Media Queries) */
+/* ========================== */
+
+/* Für Bildschirme bis 768px Breite (typisch für Tablets im Hochformat und kleinere Bildschirme) */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    header.scrolled h1 {
+        font-size: 1.5em;
+    }
+
+    nav ul {
+        gap: 8px; /* Kleinerer Abstand */
+    }
+    nav ul li a {
+        padding: 7px 12px;
+        font-size: 0.85em;
+    }
+
+    .server-info-card,
+    .welcome-card,
+    .news-feed-card {
+        padding: var(--spacing-md);
+    }
+
+    .server-info-card h2,
+    .welcome-card h2,
+    .news-feed-card h2 {
+        font-size: 1.8em;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .server-info-card ul li {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--spacing-sm) 15px;
+        font-size: 1em;
+    }
+
+    .server-info-card ul li strong {
+        margin-bottom: 5px; /* Anpassbar */
+    }
+
+    .info-value {
+        font-size: 1.1em;
+    }
+
+    .cta {
+        font-size: 1em;
+    }
+
+    .game-links {
+        flex-direction: column;
+        gap: 15px; /* Anpassbar */
+    }
+
+    .game-button {
+        width: 100%;
+        padding: 12px var(--spacing-md);
+        font-size: 1em;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group textarea,
+    button[type="submit"] {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .clip-gallery-card .clip-item {
+        flex: 0 1 calc(50% - var(--spacing-sm)); /* 2 Spalten auf Tablets */
+        max-width: unset;
+        min-width: 250px;
+    }
+}
+
+/* Für Bildschirme bis 480px Breite (typisch für Smartphones) */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    header.scrolled h1 {
+        font-size: 1.2em;
+    }
+
+    nav ul li a {
+        padding: 6px var(--spacing-sm);
+        font-size: 0.8em;
+    }
+
+    .server-info-card h2,
+    .welcome-card h2,
+    .news-feed-card h2 {
+        font-size: 1.5em;
+    }
+
+    .news-item h3 {
+        font-size: 1.2em;
+    }
+
+    .news-item .news-date,
+    .news-item p {
+        font-size: 0.9em;
+    }
+
+    .cta {
+        font-size: 1em;
+    }
+
+    .clip-gallery-card .clip-item {
+        flex: 0 1 100%; /* 1 Spalte auf Smartphones */
+        max-width: unset;
+        min-width: unset;
+    }
+    .clip-gallery-card .clip-grid {
+        gap: 15px; /* Anpassbar */
+    }
+}

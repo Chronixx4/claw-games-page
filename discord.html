@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Server - Tritt unserer Community bei!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="discord">
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <div class="container">
+            <h1>Discord Server</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="satisfactory.html">Satisfactory</a></li>
+                    <li><a href="minecraft.html">Minecraft</a></li>
+                    <li><a href="discord.html">Discord Server</a></li>
+                    <li><a href="contact.html">Kontakt ✉️</a></li>
+                    <li><a href="clips.html">Clips & Galerie</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section class="server-info-card">
+                <h2>Discord Community 🤝</h2>
+                <p>Trete unserem Discord Server bei, um mit anderen Spielern zu chatten, dich zu organisieren und immer auf dem Laufenden zu bleiben!</p>
+
+                <div style="text-align: center; margin-top: 25px; margin-bottom: 25px;">
+                    <a href="https://discord.gg/uPBasXs8gt" target="_blank" rel="noopener noreferrer" class="game-button discord-button">
+                        Dem Discord beitreten! 👋
+                    </a>
+                </div>
+
+                <p class="cta">Komm vorbei und sag Hallo! Wir freuen uns auf dich! 👋</p>
+            </section>
+
+            <section class="discord-widget-container" style="text-align: center; margin-top: 40px;">
+                <h2>Server-Aktivität live! 📊</h2>
+                <iframe src="https://discord.com/widget?id=1033415051601780766&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" loading="lazy"></iframe>
+                <p class="cta" style="margin-top: 20px;">Sieh, wer gerade online ist und tritt dem Chat bei! 🗣️</p>
+            </section>
+
+            <section class="clip-gallery-card server-info-card" style="margin-top: 40px;">
+                <h2>Unsere neuesten Clips! 🎬</h2>
+                <p>Hier siehst du einige unserer lustigsten und epischsten Gaming-Momente.</p>
+                <div class="clip-grid" id="discordClipGrid">
+                    </div>
+            </section>
+
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dein Name - Verbinde dich mit uns!</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Funktion zum dynamischen Laden der 3 neuesten Videos
+        async function loadLatestDiscordClips() {
+            const discordClipGrid = document.getElementById('discordClipGrid');
+            if (!discordClipGrid) {
+                console.error("Element mit ID 'discordClipGrid' nicht gefunden.");
+                return;
+            }
+
+            let allClips = [];
+            try {
+                const response = await fetch('clips.json'); // Lade von clips.json
+                allClips = await response.json();
+                // Sortiere die Clips nach Datum (neuestes zuerst)
+                allClips.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } catch (error) {
+                console.error("Fehler beim Laden der Clips-Daten für Discord:", error);
+                discordClipGrid.innerHTML = '<p style="text-align: center; color: var(--discord-text);">Fehler beim Laden der Clips.</p>';
+                return;
+            }
+            
+            const latest3Clips = allClips.slice(0, 3);
+            discordClipGrid.innerHTML = ''; // Inhalt leeren
+
+            latest3Clips.forEach(video => {
+                const clipItem = document.createElement('div');
+                clipItem.className = 'clip-item';
+                const innerDiv = document.createElement('div');
+                innerDiv.style.position = 'relative';
+                innerDiv.style.paddingBottom = '56.25%';
+                innerDiv.style.height = '0';
+                innerDiv.style.overflow = 'hidden';
+                innerDiv.style.backgroundColor = '#000';
+                const videoElement = document.createElement('video');
+                videoElement.controls = true;
+                videoElement.preload = 'metadata';
+                videoElement.style.position = 'absolute';
+                videoElement.style.top = '0';
+                videoElement.style.left = '0';
+                videoElement.style.width = '100%';
+                videoElement.style.height = '100%';
+                videoElement.style.display = 'block';
+                videoElement.loading = 'lazy'; // Lazy Loading für Video hinzufügen
+                const sourceMp4 = document.createElement('source');
+                sourceMp4.src = video.mp4;
+                sourceMp4.type = 'video/mp4';
+                videoElement.appendChild(sourceMp4);
+                if (video.webm) {
+                    const sourceWebm = document.createElement('source');
+                    sourceWebm.src = video.webm;
+                    sourceWebm.type = 'video/webm';
+                    videoElement.appendChild(sourceWebm);
+                }
+                const fallbackText = document.createTextNode('Dein Browser unterstützt das Video-Tag nicht. Bitte aktualisiere ihn.');
+                videoElement.appendChild(fallbackText);
+                innerDiv.appendChild(videoElement);
+                clipItem.appendChild(innerDiv);
+                discordClipGrid.appendChild(clipItem);
+
+                clipItem.addEventListener('mouseenter', () => {
+                    videoElement.play().catch(e => console.error("Fehler beim Abspielen des Videos:", e));
+                });
+                clipItem.addEventListener('mouseleave', () => {
+                    videoElement.pause();
+                    videoElement.currentTime = 0;
+                });
+            });
+        }
+
+        // Lade die Discord Clips nach DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            loadLatestDiscordClips();
+        });
+    </script>
+</body>
+</html>

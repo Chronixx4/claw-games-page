@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - Claw Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="homepage">
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <div class="container">
+            <h1>Kontakt zu Claw Games! 💬</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="satisfactory.html">Satisfactory</a></li>
+                    <li><a href="minecraft.html">Minecraft</a></li>
+                    <li><a href="discord.html">Discord Server</a></li>
+                    <li><a href="contact.html">Kontakt ✉️</a></li>
+                    <li><a href="clips.html">Clips & Galerie</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container welcome-card">
+            <h2>Schreib uns eine Nachricht! 📧</h2>
+            <p>Hast du Fragen, Anregungen oder möchtest einfach nur Hallo sagen? Nutze das Formular unten, um uns eine E-Mail zu senden. Wir freuen uns auf deine Nachricht!</p>
+
+            <form id="contactForm" action="mailto:Chronixx.ghg@proton.me" method="post" enctype="text/plain">
+                <div class="form-group">
+                    <label for="name">Dein Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Deine E-Mail:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Betreff:</label>
+                    <input type="text" id="subject" name="subject" value="Anfrage von der Claw Games Website" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Deine Nachricht:</label>
+                    <textarea id="message" name="message" rows="8" required></textarea>
+                </div>
+                <button type="submit" class="game-button discord-button">Nachricht senden! 🚀</button>
+            </form>
+
+            <p class="cta">Wir melden uns so schnell wie möglich bei dir! 👋</p>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dein Name - Wir verbinden Gamer!</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Optional: Bestätigungsnachricht, da es kein echtes Formular ist
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            alert('Dein E-Mail-Programm wird geöffnet, um die Nachricht zu senden. Bitte bestätige dort den Versand!');
+        });
+    </script>
+</body>
+</html>

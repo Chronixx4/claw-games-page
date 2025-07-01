@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Server - Baue deine Welt!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="minecraft">
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <header>
+        <div class="container">
+            <h1>Minecraft Server</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Startseite</a></li>
+                    <li><a href="satisfactory.html">Satisfactory</a></li>
+                    <li><a href="minecraft.html">Minecraft</a></li>
+                    <li><a href="discord.html">Discord Server</a></li>
+                    <li><a href="contact.html">Kontakt ✉️</a></li>
+                    <li><a href="clips.html">Clips & Galerie</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <section class="server-info-card">
+                <h2>Server-Informationen 🌳</h2>
+                <p>Begib dich in eine Welt voller Abenteuer und Kreativität auf meinem Minecraft Server!</p>
+                <ul>
+                    <li><strong>Server-IP:</strong> <span class="info-value">claw-games.ddns.net</span></li>
+                    <li><strong>Port:</strong> <span class="info-value">25565</span></li>
+                    <li><strong>Modpack/Version:</strong> <span class="info-value">AllTheMods 10</span></li>
+                    <li id="serverStatus">
+                        <strong>Status:</strong>
+                        <span id="onlineStatus" class="status-loading">Wird geladen...</span>
+                    </li>
+                    <li>
+                        <strong>Spieler:</strong>
+                        <span id="playerCount" class="status-loading">Wird geladen...</span>
+                    </li>
+                </ul>
+                <p class="cta">Hol deine Spitzhacke raus und baue mit uns! 🏞️</p>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dein Name - Erschaffe, Entdecke, Überlebe.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Funktion zum Abrufen und Anzeigen des Serverstatus
+        async function fetchMinecraftServerStatus() {
+            const serverAddress = "claw-games.ddns.net"; // Deine Server-IP
+            const serverPort = "25565"; // Dein Server-Port (Standard ist 25565)
+            const apiUrl = `https://api.mcstatus.io/v2/status/java/${serverAddress}:${serverPort}`;
+
+            const onlineStatusElement = document.getElementById('onlineStatus');
+            const playerCountElement = document.getElementById('playerCount');
+
+            // Setze Ladezustand
+            onlineStatusElement.textContent = 'Wird geladen...';
+            onlineStatusElement.className = 'status-loading';
+            playerCountElement.textContent = 'Wird geladen...';
+            playerCountElement.className = 'status-loading';
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.online) {
+                    onlineStatusElement.textContent = 'Online ✅';
+                    onlineStatusElement.className = 'status-online';
+                    const onlinePlayers = data.players.online || 0;
+                    const maxPlayers = data.players.max || 0;
+                    playerCountElement.textContent = `${onlinePlayers} / ${maxPlayers}`;
+                    playerCountElement.className = 'status-online';
+                } else {
+                    onlineStatusElement.textContent = 'Offline ❌';
+                    onlineStatusElement.className = 'status-offline';
+                    playerCountElement.textContent = 'N/A';
+                    playerCountElement.className = 'status-offline';
+                }
+            } catch (error) {
+                console.error("Fehler beim Abrufen des Minecraft-Serverstatus:", error);
+                onlineStatusElement.textContent = 'Fehler ⚠️';
+                onlineStatusElement.className = 'status-error';
+                playerCountElement.textContent = 'Fehler ⚠️';
+                playerCountElement.className = 'status-error';
+            }
+        }
+
+        // Lade den Minecraft Server Status nach DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchMinecraftServerStatus();
+        });
+    </script>
+</body>
+</html>
