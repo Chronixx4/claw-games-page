@@ -206,6 +206,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             // Initialer Ladevorgang beim DOMContentLoaded
+            displayedClipsCount = 0;
             loadClips(); // Lädt die erste Charge an Clips
 
             // Klick-Handler für den "Mehr laden" Button
@@ -231,23 +232,11 @@
             if (gameFilter) {
                 gameFilter.addEventListener('change', function() {
                     currentGameFilter = gameFilter.value;
+                    displayedClipsCount = 0;
                     // Nach Filterwechsel: Grid leeren und neu befüllen
                     const clipGrid = document.getElementById('clipGrid');
                     clipGrid.innerHTML = '';
-                    displayedClipsCount = 0;
-                    const filteredClips = getFilteredClips();
-                    appendClipItems(filteredClips.slice(0, clipsPerLoad));
-                    displayedClipsCount = Math.min(clipsPerLoad, filteredClips.length);
-                    // Button/Ende aktualisieren
-                    const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
-                    const endOfClips = document.getElementById('endOfClips');
-                    if (displayedClipsCount < filteredClips.length) {
-                        loadMoreClipsButton.style.display = 'block';
-                        endOfClips.style.display = 'none';
-                    } else {
-                        loadMoreClipsButton.style.display = 'none';
-                        endOfClips.style.display = 'block';
-                    }
+                    loadClips();
                 });
             }
         });
