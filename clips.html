@@ -77,12 +77,24 @@
             if (clipDateSearchTerm.trim() !== "") {
                 const term = clipDateSearchTerm.trim().toLowerCase();
                 filtered = filtered.filter(clip => {
-                    // Suche im ISO-Datum (2025-06-29), im deutschen Datum und im Monatsnamen
                     const dateObj = new Date(clip.date);
                     const iso = clip.date.toLowerCase();
                     const de = dateObj.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }).toLowerCase();
                     const month = dateObj.toLocaleDateString('de-DE', { month: 'long' }).toLowerCase();
-                    return iso.includes(term) || de.includes(term) || month.includes(term);
+
+                    // Tag und Monat als Zahl (z.B. 20.6 oder 20.06)
+                    const day = dateObj.getDate();
+                    const monthNum = dateObj.getMonth() + 1;
+                    const dayMonth1 = `${day}.${monthNum}`; // 20.6
+                    const dayMonth2 = `${day.toString().padStart(2, '0')}.${monthNum.toString().padStart(2, '0')}`; // 20.06
+
+                    return (
+                        iso.includes(term) ||
+                        de.includes(term) ||
+                        month.includes(term) ||
+                        dayMonth1.includes(term) ||
+                        dayMonth2.includes(term)
+                    );
                 });
             }
             return filtered;
