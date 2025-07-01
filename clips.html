@@ -28,11 +28,13 @@
     </header>
     <main>
         <div class="container">
-            <!-- Neuer Bereich für das Hinzufügen von Dropbox-Links -->
+            <!-- Bereich für das Hinzufügen von Clips (Link oder Upload) -->
             <section class="add-clip-card server-info-card">
                 <h2>Neuen Clip hinzufügen</h2>
                 <form id="addClipForm" autocomplete="off" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-                    <input type="url" id="clipUrlInput" placeholder="Dropbox-Link einfügen..." required style="flex:1; min-width:200px;">
+                    <input type="url" id="clipUrlInput" placeholder="Dropbox-Link einfügen..." style="flex:1; min-width:200px;">
+                    <span style="display:block; text-align:center; width:100%; margin: 5px 0; color:#ccc; font-weight: bold;">ODER</span>
+                    <input type="file" id="clipFileInput" accept="video/mp4,video/webm" style="flex:1; min-width:200px;">
                     <select id="clipGameInput" required style="width:140px;">
                         <option value="" disabled selected>Spiel wählen</option>
                         <option value="Helldivers 2">Helldivers 2</option>
@@ -43,6 +45,9 @@
                     <button type="submit" class="game-button satisfactory-button" style="min-width:120px;">Clip hinzufügen</button>
                 </form>
                 <p id="addClipMsg" style="margin-top:10px; color:var(--ficsit-green); display:none;"></p>
+                <div id="uploadProgressBarContainer" style="width:100%; background-color:#f3f3f3; border-radius:5px; margin-top:10px; display:none;">
+                    <div id="uploadProgressBar" style="width:0%; height:20px; background-color:#4CAF50; text-align:center; line-height:20px; color:white; border-radius:5px;">0%</div>
+                </div>
             </section>
 
             <section class="clip-gallery-card server-info-card">
@@ -54,6 +59,8 @@
                         <option value="all">Alle Spiele</option>
                         <option value="Helldivers 2">Helldivers 2</option>
                         <option value="REPO">REPO</option>
+                        <option value="Satisfactory">Satisfactory</option>
+                        <option value="Minecraft">Minecraft</option>
                     </select>
                 </div>
                 <div class="search-container" style="text-align:center; margin-bottom:18px;">
@@ -89,8 +96,28 @@
     </footer>
 
     <script src="scripts.js"></script>
-    <script>
-        let allClipsData = []; // Alle Clips aus der JSON-Datei
+    <script type="module">
+        // Firebase SDKs importieren
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+
+        // Deine Firebase-Konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBUHMiznYYNo7z_4aVnbue--6L8XnG5eII",
+            authDomain: "clawgamesclips.firebaseapp.com",
+            projectId: "clawgamesclips",
+            storageBucket: "clawgamesclips.firebasestorage.app",
+            messagingSenderId: "554433482503",
+            appId: "1:554433482503:web:5b001d9eca5b6fe7d8ffa2"
+        };
+
+        // Firebase initialisieren und Firestore & Storage instanziieren
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app); // Firestore-Instanz
+        const storage = getStorage(app); // Storage-Instanz
+
+        let allClipsData = []; // Alle Clips, die von Firestore geladen werden
         let displayedClipsCount = 0;
         const clipsPerLoad = 6; // Anzahl der Clips, die pro Ladung angezeigt werden
         let isLoadingClips = false; // Flag, um Mehrfachladungen zu verhindern
@@ -133,8 +160,11 @@
         // Funktion zum Hinzufügen von Clip-Elementen zum DOM
         function appendClipItems(clips) {
             const clipGrid = document.getElementById('clipGrid');
-            clipGrid.innerHTML = '';
-            if (clips.length === 0) {
+            // Wenn der Zähler 0 ist, leeren wir das Grid, um neue Filter/Suchergebnisse anzuzeigen
+            if (displayedClipsCount === 0) {
+                clipGrid.innerHTML = '';
+            }
+            if (clips.length === 0 && displayedClipsCount === 0) { // Nur wenn keine Clips gefunden wurden UND noch keine angezeigt werden
                 clipGrid.innerHTML = '<p style="text-align:center;color:#FFD700;margin:30px 0;">Keine Clips gefunden.</p>';
                 return;
             }
@@ -199,8 +229,8 @@
             });
         }
 
-        // Funktion zum Laden der Clips
-        async function loadClips() {
+        // Funktion zum Laden der Clips von Firestore
+        async function loadClipsFromFirestore(resetDisplay = false) {
             if (isLoadingClips) return; // Verhindere doppeltes Laden
             isLoadingClips = true;
 
@@ -209,31 +239,41 @@
             const endOfClips = document.getElementById('endOfClips');
             const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
 
-            if (allClipsData.length === 0) {
-                // Lade die Clips-Daten nur einmal
-                try {
-                    const response = await fetch('clips.json');
-                    allClipsData = await response.json();
-                    allClipsData.sort((a, b) => new Date(b.date) - new Date(a.date)); // Standard: neueste zuerst
-                } catch (error) {
-                    console.error("Fehler beim Laden der Clips-Daten:", error);
-                    clipGrid.innerHTML = '<p style="text-align: center; color: var(--clips-page-text);">Fehler beim Laden der Clips.</p>';
-                    clipsLoadingSpinner.style.display = 'none';
-                    loadMoreClipsButton.style.display = 'none';
-                    isLoadingClips = false;
-                    return;
-                }
-            }
-
-            // Zeige Lade-Indikator, verstecke Button und "Ende"-Nachricht
+            // Setze Lade-Indikator, verstecke Button und "Ende"-Nachricht
             clipsLoadingSpinner.style.display = 'block';
             loadMoreClipsButton.style.display = 'none';
             endOfClips.style.display = 'none';
 
-            // Lade die nächsten Clips
+            if (resetDisplay) {
+                displayedClipsCount = 0;
+                clipGrid.innerHTML = ''; // Leere das Grid bei Reset
+            }
+
+            try {
+                // Lade alle Clips von Firestore
+                const clipsCol = collection(db, 'clips');
+                const q = query(clipsCol, orderBy('date', 'desc')); // Standardmäßig nach Datum absteigend sortieren
+                const snapshot = await getDocs(q);
+                allClipsData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Wende die aktuelle Sortierung an (falls nicht schon durch orderBy geschehen)
+                if (!isSortedDesc) { // Wenn aufsteigend sortiert werden soll
+                    allClipsData.sort((a, b) => new Date(a.date) - new Date(b.date));
+                }
+
+            } catch (error) {
+                console.error("Fehler beim Laden der Clips von Firestore:", error);
+                clipGrid.innerHTML = '<p style="text-align: center; color: var(--clips-page-text);">Fehler beim Laden der Clips.</p>';
+                clipsLoadingSpinner.style.display = 'none';
+                loadMoreClipsButton.style.display = 'none';
+                isLoadingClips = false;
+                return;
+            }
+
+            // Filtern und Anzeigen der Clips
             const filteredClips = getFilteredClips();
             const clipsToAppend = filteredClips.slice(displayedClipsCount, displayedClipsCount + clipsPerLoad);
-            appendClipItems(clipsToAppend);
+            appendClipItems(clipsToAppend); // Füge die neuen Clips hinzu
             displayedClipsCount += clipsToAppend.length;
 
             // Verstecke Lade-Indikator nach kurzer Zeit
@@ -241,25 +281,27 @@
                 clipsLoadingSpinner.style.display = 'none';
                 isLoadingClips = false;
 
-                // Aktualisiere Button- und End-Nachricht-Sichtbarkeit
-                const filteredClips = getFilteredClips();
-                if (displayedClipsCount < filteredClips.length) {
+                const currentFilteredClips = getFilteredClips(); // Nochmal filtern für korrekte Zählung
+                if (displayedClipsCount < currentFilteredClips.length) {
                     loadMoreClipsButton.style.display = 'block';
                 } else {
                     loadMoreClipsButton.style.display = 'none';
                     endOfClips.style.display = 'block';
+                    if (currentFilteredClips.length === 0) {
+                        clipGrid.innerHTML = '<p style="text-align:center;color:#FFD700;margin:30px 0;">Keine Clips gefunden.</p>';
+                    }
                 }
             }, 500); // Kurze Verzögerung für Lade-Spinner
         }
 
-        // Funktion zum Sortieren der Clips
+        // Funktion zum Sortieren der Clips (sortiert das `allClipsData` Array im Speicher)
         function sortClipsByDate(desc = true) {
             allClipsData.sort((a, b) => desc ? new Date(b.date) - new Date(a.date) : new Date(a.date) - new Date(b.date));
             const filteredClips = getFilteredClips();
-            displayedClipsCount = 0;
+            displayedClipsCount = 0; // Setze Zähler zurück, um neu anzuzeigen
             appendClipItems(filteredClips.slice(0, clipsPerLoad));
             displayedClipsCount = Math.min(clipsPerLoad, filteredClips.length);
-            // Button/Ende aktualisieren
+
             const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
             const endOfClips = document.getElementById('endOfClips');
             if (displayedClipsCount < filteredClips.length) {
@@ -271,15 +313,20 @@
             }
         }
 
+        // Exponiere die Ladefunktion für das globale window-Objekt, falls externe Skripte sie aufrufen
+        window.loadClips = function() {
+            loadClipsFromFirestore(true); // Initialer Ladevorgang oder bei Filter/Suche
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialer Ladevorgang beim DOMContentLoaded
-            displayedClipsCount = 0;
-            loadClips(); // Lädt die erste Charge an Clips
+            window.loadClips(); // Initialer Ladevorgang beim DOMContentLoaded
 
             // Klick-Handler für den "Mehr laden" Button
             const loadMoreClipsButton = document.getElementById('loadMoreClipsButton');
             if (loadMoreClipsButton) {
-                loadMoreClipsButton.addEventListener('click', loadClips);
+                loadMoreClipsButton.addEventListener('click', () => {
+                    loadClipsFromFirestore(false); // Nicht zurücksetzen, nur mehr laden
+                });
             }
 
             // Klick-Handler für den Sortier-Button
@@ -290,8 +337,7 @@
                     sortByDateButton.textContent = isSortedDesc ? 'Sortieren: Neu' : 'Sortieren: Alt';
                     sortClipsByDate(isSortedDesc);
                 });
-                // Initialer Button-Text
-                sortByDateButton.textContent = 'Sortieren: Neu';
+                sortByDateButton.textContent = 'Sortieren: Neu'; // Initialer Text
             }
 
             // Game-Filter Dropdown
@@ -299,11 +345,7 @@
             if (gameFilter) {
                 gameFilter.addEventListener('change', function() {
                     currentGameFilter = gameFilter.value;
-                    displayedClipsCount = 0;
-                    // Nach Filterwechsel: Grid leeren und neu befüllen
-                    const clipGrid = document.getElementById('clipGrid');
-                    clipGrid.innerHTML = '';
-                    loadClips();
+                    loadClipsFromFirestore(true); // Setze Display zurück und lade neu
                 });
             }
 
@@ -312,16 +354,17 @@
             const clipDateSearchButton = document.getElementById('clipDateSearchButton');
             function triggerClipDateSearch() {
                 clipDateSearchTerm = clipDateSearchInput.value;
-                displayedClipsCount = 0;
-                loadClips();
+                loadClipsFromFirestore(true); // Setze Display zurück und lade neu
             }
             if (clipDateSearchInput) {
                 clipDateSearchInput.addEventListener('input', function(e) {
+                    // Optional: Man könnte hier eine kleine Verzögerung einbauen (debounce),
+                    // damit nicht bei jedem Tastendruck neu geladen wird.
                     triggerClipDateSearch();
                 });
                 clipDateSearchInput.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') {
-                        e.preventDefault();
+                        e.preventDefault(); // Verhindert Formular-Submit
                         triggerClipDateSearch();
                     }
                 });
@@ -331,15 +374,158 @@
                     triggerClipDateSearch();
                 });
             }
+
+            // Anpassung des Formulars zum Hinzufügen von Clips zu Firestore
+            const form = document.getElementById('addClipForm');
+            const urlInput = document.getElementById('clipUrlInput');
+            const fileInput = document.getElementById('clipFileInput'); // Neues File-Input
+            const gameInput = document.getElementById('clipGameInput');
+            const msg = document.getElementById('addClipMsg');
+            const uploadProgressBarContainer = document.getElementById('uploadProgressBarContainer');
+            const uploadProgressBar = document.getElementById('uploadProgressBar');
+
+            function isDropboxLink(url) {
+                return /^https:\/\/www\.dropbox\.com\/.+/.test(url);
+            }
+            function toRawDropbox(url) {
+                if (url.includes('?')) {
+                    return url.replace(/\?.*$/, '') + '?raw=1';
+                }
+                return url + '?raw=1';
+            }
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const url = urlInput.value.trim();
+                const file = fileInput.files[0]; // Das ausgewählte File-Objekt
+                const game = gameInput.value;
+
+                // Validierung: Entweder URL ODER Datei muss vorhanden sein, nicht beides oder keines
+                if (!url && !file) {
+                    msg.textContent = "Bitte einen Dropbox-Link ODER eine Datei zum Hochladen auswählen!";
+                    msg.style.color = "#F44336";
+                    msg.style.display = "block";
+                    setTimeout(() => { msg.style.display = "none" }, 3000);
+                    return;
+                }
+                if (url && file) {
+                    msg.textContent = "Bitte entweder einen Link ODER eine Datei hochladen, nicht beides!";
+                    msg.style.color = "#F44336";
+                    msg.style.display = "block";
+                    setTimeout(() => { msg.style.display = "none" }, 3000);
+                    return;
+                }
+                if (!game) {
+                    msg.textContent = "Bitte ein Spiel auswählen!";
+                    msg.style.color = "#F44336";
+                    msg.style.display = "block";
+                    setTimeout(() => { msg.style.display = "none" }, 3000);
+                    return;
+                }
+
+                let clipUrlToSave = ''; // Der Link, der in Firestore gespeichert wird
+
+                try {
+                    if (file) {
+                        // Dateiupload zu Firebase Storage
+                        msg.textContent = "Upload startet...";
+                        msg.style.color = "var(--ficsit-green)";
+                        msg.style.display = "block";
+                        uploadProgressBarContainer.style.display = 'block';
+                        uploadProgressBar.style.width = '0%';
+                        uploadProgressBar.textContent = '0%';
+
+                        const storageRef = ref(storage, `clips/${Date.now()}_${file.name}`);
+                        const uploadTask = uploadBytesResumable(storageRef, file);
+
+                        // Überwache den Upload-Fortschritt
+                        uploadTask.on('state_changed',
+                            (snapshot) => {
+                                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                                uploadProgressBar.style.width = progress + '%';
+                                uploadProgressBar.textContent = Math.round(progress) + '%';
+                                msg.textContent = `Upload: ${Math.round(progress)}%`;
+                            },
+                            (error) => {
+                                // Fehlerbehandlung beim Upload
+                                console.error("Fehler beim Upload:", error);
+                                msg.textContent = "Upload fehlgeschlagen! 😔";
+                                msg.style.color = "#F44336";
+                                uploadProgressBarContainer.style.display = 'none';
+                                setTimeout(() => { msg.style.display = "none" }, 5000);
+                            },
+                            async () => {
+                                // Upload erfolgreich abgeschlossen
+                                clipUrlToSave = await getDownloadURL(uploadTask.snapshot.ref);
+                                console.log("Datei hochgeladen, Download-URL:", clipUrlToSave);
+
+                                // Speichere Metadaten in Firestore
+                                const newClipData = {
+                                    mp4: clipUrlToSave,
+                                    webm: "", // Optional: Wenn du WebM-Versionen hast, hier hinzufügen
+                                    date: new Date().toISOString().slice(0, 10),
+                                    game: game
+                                };
+                                await addDoc(collection(db, 'clips'), newClipData);
+
+                                // UI aktualisieren
+                                msg.textContent = "Clip erfolgreich hinzugefügt! 🎉";
+                                msg.style.color = "var(--ficsit-green)";
+                                uploadProgressBarContainer.style.display = 'none';
+                                form.reset();
+                                setTimeout(() => { msg.style.display = "none" }, 3000);
+
+                                // Clips neu laden, um den neuen Clip anzuzeigen
+                                loadClipsFromFirestore(true);
+                            }
+                        );
+
+                    } else if (url) {
+                        // Dropbox-Link-Verarbeitung (bestehende Logik)
+                        if (!isDropboxLink(url)) {
+                            msg.textContent = "Bitte einen gültigen Dropbox-Link einfügen!";
+                            msg.style.color = "#F44336";
+                            msg.style.display = "block";
+                            setTimeout(() => { msg.style.display = "none" }, 3000);
+                            return;
+                        }
+                        clipUrlToSave = toRawDropbox(url);
+
+                        const newClipData = {
+                            mp4: clipUrlToSave,
+                            webm: "",
+                            date: new Date().toISOString().slice(0, 10),
+                            game: game
+                        };
+
+                        await addDoc(collection(db, 'clips'), newClipData);
+
+                        msg.textContent = "Clip erfolgreich hinzugefügt! 🎉";
+                        msg.style.color = "var(--ficsit-green)";
+                        msg.style.display = "block";
+                        form.reset();
+                        setTimeout(() => { msg.style.display = "none" }, 3000);
+
+                        loadClipsFromFirestore(true);
+                    }
+
+                } catch (error) {
+                    console.error("Fehler beim Hinzufügen des Clips:", error);
+                    msg.textContent = "Fehler beim Hinzufügen des Clips. 😔";
+                    msg.style.color = "#F44336";
+                    msg.style.display = "block";
+                    uploadProgressBarContainer.style.display = 'none';
+                    setTimeout(() => { msg.style.display = "none" }, 5000);
+                }
+            });
         });
 
+        // Die Funktionen für die Clip-Vorschau bleiben unverändert, da sie keine Datenbankinteraktion haben
         function getGoogleDriveEmbedUrl(url) {
-            // Unterstützt Links wie https://drive.google.com/file/d/FILEID/view?usp=sharing
             const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)\//);
             if (match) {
                 return "https://drive.google.com/file/d/" + match[1] + "/preview";
             }
-            // Unterstützt Links wie https://drive.google.com/open?id=FILEID
             const match2 = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
             if (match2) {
                 return "https://drive.google.com/file/d/" + match2[1] + "/preview";
@@ -348,7 +534,6 @@
         }
 
         function getYouTubeEmbedUrl(url) {
-            // Unterstützt verschiedene YouTube-Links
             const yt = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([a-zA-Z0-9_-]{11})/);
             if (yt) {
                 return "https://www.youtube.com/embed/" + yt[1];
@@ -409,63 +594,6 @@
             // Unbekannter Link
             preview.innerHTML = "<div style='color:#FFD700'>Dieser Link kann nicht direkt eingebettet werden.</div>";
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('addClipForm');
-            const urlInput = document.getElementById('clipUrlInput');
-            const gameInput = document.getElementById('clipGameInput');
-            const msg = document.getElementById('addClipMsg');
-            const gallery = document.querySelector('.clip-gallery-card .clip-grid') || document.createElement('div');
-
-            function isDropboxLink(url) {
-                return /^https:\/\/www\.dropbox\.com\/.+/.test(url);
-            }
-            function toRawDropbox(url) {
-                if (url.includes('?')) {
-                    return url.replace(/\?.*$/, '') + '?raw=1';
-                }
-                return url + '?raw=1';
-            }
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                const url = urlInput.value.trim();
-                const game = gameInput.value;
-                if (!isDropboxLink(url)) {
-                    msg.textContent = "Bitte einen gültigen Dropbox-Link einfügen!";
-                    msg.style.color = "#F44336";
-                    msg.style.display = "block";
-                    return;
-                }
-                if (!game) {
-                    msg.textContent = "Bitte ein Spiel auswählen!";
-                    msg.style.color = "#F44336";
-                    msg.style.display = "block";
-                    return;
-                }
-                const rawUrl = toRawDropbox(url);
-                // Neuen Clip als Objekt anlegen
-                const newClip = {
-                    id: "clip-" + (allClipsData.length + 1),
-                    mp4: rawUrl,
-                    webm: "",
-                    date: new Date().toISOString().slice(0, 10),
-                    game: game
-                };
-                // Clip am Anfang der Daten einfügen
-                allClipsData.unshift(newClip);
-                // Galerie neu anzeigen (nur die ersten Clips)
-                displayedClipsCount = 0;
-                const filteredClips = getFilteredClips();
-                appendClipItems(filteredClips.slice(0, clipsPerLoad));
-                displayedClipsCount = Math.min(clipsPerLoad, filteredClips.length);
-
-                msg.textContent = "Clip hinzugefügt!";
-                msg.style.color = "var(--ficsit-green)";
-                msg.style.display = "block";
-                form.reset();
-                setTimeout(()=>{msg.style.display="none"},2000);
-            });
-        });
     </script>
 </body>
 </html>
