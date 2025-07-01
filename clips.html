@@ -32,15 +32,18 @@
                 <h2>Momente, die wir nicht vergessen! ✨</h2>
                 <p>Von epischen Siegen bis zu den lustigsten Fails – hier siehst du die Highlights unserer Gaming-Sessions.</p>
                 <button id="sortByDateButton" class="load-more-button" style="margin: 0 auto 10px auto; display: block; font-size: 0.92em; padding: 5px 12px; min-width: unset; width: auto; max-width: 120px;">Sortieren: Neu</button>
-                <div style="text-align:center; margin-bottom:18px;">
+                <div style="text-align:center; margin-bottom:10px;">
                     <select id="gameFilter" style="font-size:0.92em; padding:4px 10px; border-radius:6px; border:1px solid #FFD700; background:#222; color:#FFD700; max-width:140px;">
                         <option value="all">Alle Spiele</option>
                         <option value="Helldivers 2">Helldivers 2</option>
                         <option value="REPO">REPO</option>
                     </select>
                 </div>
-                <div class="clip-grid" id="clipGrid">
-                    </div>
+                <div class="search-container" style="text-align:center; margin-bottom:18px;">
+                    <input type="text" id="clipDateSearchInput" placeholder="Nach Datum suchen..." style="font-size:0.92em; padding:4px 10px; border-radius:6px; border:1px solid #FFD700; background:#222; color:#FFD700; max-width:160px;">
+                    <button id="clipDateSearchButton" class="load-more-button" style="font-size:0.92em; padding:4px 10px; min-width:unset; width:auto; max-width:90px; margin-left:6px;">Suchen</button>
+                </div>
+                <div class="clip-grid" id="clipGrid"></div>
                 <div id="clipsLoaderContainer" style="text-align: center; padding: 20px;">
                     <button id="loadMoreClipsButton" class="load-more-button">Mehr Clips laden</button>
                     <div id="clipsLoadingSpinner" class="loader" style="display: none;"></div>
@@ -63,16 +66,36 @@
         let isLoadingClips = false; // Flag, um Mehrfachladungen zu verhindern
         let isSortedDesc = true; // Standard: neueste zuerst
         let currentGameFilter = "all";
+        let clipDateSearchTerm = "";
 
-        // Funktion zum Filtern der Clips nach Spiel
+        // Filtert nach Spiel UND Datumssuche
         function getFilteredClips() {
-            if (currentGameFilter === "all") return allClipsData;
-            return allClipsData.filter(clip => (clip.game || "").toLowerCase() === currentGameFilter.toLowerCase());
+            let filtered = allClipsData;
+            if (currentGameFilter !== "all") {
+                filtered = filtered.filter(clip => (clip.game || "").toLowerCase() === currentGameFilter.toLowerCase());
+            }
+            if (clipDateSearchTerm.trim() !== "") {
+                const term = clipDateSearchTerm.trim().toLowerCase();
+                filtered = filtered.filter(clip => {
+                    // Suche im ISO-Datum (2025-06-29), im deutschen Datum und im Monatsnamen
+                    const dateObj = new Date(clip.date);
+                    const iso = clip.date.toLowerCase();
+                    const de = dateObj.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' }).toLowerCase();
+                    const month = dateObj.toLocaleDateString('de-DE', { month: 'long' }).toLowerCase();
+                    return iso.includes(term) || de.includes(term) || month.includes(term);
+                });
+            }
+            return filtered;
         }
 
         // Funktion zum Hinzufügen von Clip-Elementen zum DOM
         function appendClipItems(clips) {
             const clipGrid = document.getElementById('clipGrid');
+            clipGrid.innerHTML = '';
+            if (clips.length === 0) {
+                clipGrid.innerHTML = '<p style="text-align:center;color:#FFD700;margin:30px 0;">Keine Clips gefunden.</p>';
+                return;
+            }
             clips.forEach(video => {
                 const clipItem = document.createElement('div');
                 clipItem.className = 'clip-item';
@@ -91,7 +114,7 @@
                 videoElement.style.width = '100%';
                 videoElement.style.height = '100%';
                 videoElement.style.display = 'block';
-                videoElement.loading = 'lazy'; // Lazy Loading für Video hinzufügen
+                videoElement.loading = 'lazy';
                 const sourceMp4 = document.createElement('source');
                 sourceMp4.src = video.mp4;
                 sourceMp4.type = 'video/mp4';
@@ -106,6 +129,14 @@
                 videoElement.appendChild(fallbackText);
                 innerDiv.appendChild(videoElement);
                 clipItem.appendChild(innerDiv);
+
+                // Nur Game-Name als Badge anzeigen
+                if (video.game) {
+                    const badge = document.createElement('span');
+                    badge.className = 'clip-game-badge';
+                    badge.textContent = video.game;
+                    clipItem.appendChild(badge);
+                }
 
                 // Datum als kleinen, dezenten Text unter das Video setzen
                 const dateElement = document.createElement('span');
@@ -160,11 +191,8 @@
             // Lade die nächsten Clips
             const filteredClips = getFilteredClips();
             const clipsToAppend = filteredClips.slice(displayedClipsCount, displayedClipsCount + clipsPerLoad);
-            
-            if (clipsToAppend.length > 0) {
-                appendClipItems(clipsToAppend);
-                displayedClipsCount += clipsToAppend.length;
-            }
+            appendClipItems(clipsToAppend);
+            displayedClipsCount += clipsToAppend.length;
 
             // Verstecke Lade-Indikator nach kurzer Zeit
             setTimeout(() => {
@@ -185,11 +213,8 @@
         // Funktion zum Sortieren der Clips
         function sortClipsByDate(desc = true) {
             allClipsData.sort((a, b) => desc ? new Date(b.date) - new Date(a.date) : new Date(a.date) - new Date(b.date));
-            // Nach dem Sortieren: Grid leeren und neu befüllen
-            const clipGrid = document.getElementById('clipGrid');
-            clipGrid.innerHTML = '';
-            displayedClipsCount = 0;
             const filteredClips = getFilteredClips();
+            displayedClipsCount = 0;
             appendClipItems(filteredClips.slice(0, clipsPerLoad));
             displayedClipsCount = Math.min(clipsPerLoad, filteredClips.length);
             // Button/Ende aktualisieren
@@ -237,6 +262,25 @@
                     const clipGrid = document.getElementById('clipGrid');
                     clipGrid.innerHTML = '';
                     loadClips();
+                });
+            }
+
+            // Suche nach Datum
+            const clipDateSearchInput = document.getElementById('clipDateSearchInput');
+            const clipDateSearchButton = document.getElementById('clipDateSearchButton');
+            function triggerClipDateSearch() {
+                clipDateSearchTerm = clipDateSearchInput.value;
+                displayedClipsCount = 0;
+                loadClips();
+            }
+            if (clipDateSearchInput) {
+                clipDateSearchInput.addEventListener('input', function(e) {
+                    triggerClipDateSearch();
+                });
+            }
+            if (clipDateSearchButton) {
+                clipDateSearchButton.addEventListener('click', function() {
+                    triggerClipDateSearch();
                 });
             }
         });
