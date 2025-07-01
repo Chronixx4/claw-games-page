@@ -906,6 +906,19 @@ button[type="submit"] {
     display: block;
 }
 
+.clip-gallery-card .clip-date {
+    display: block;
+    text-align: center;
+    margin-top: 6px;
+    font-size: 0.97em;
+    color: #FFD700;
+    opacity: 0.8;
+    font-weight: 400;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+}
+
 
 /* ========================== */
 /* X. Responsive Design (Media Queries) */

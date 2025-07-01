@@ -93,12 +93,9 @@
                 innerDiv.appendChild(videoElement);
                 clipItem.appendChild(innerDiv);
 
-                // Datum unter dem Video anzeigen
-                const dateElement = document.createElement('div');
-                dateElement.style.textAlign = 'center';
-                dateElement.style.marginTop = '8px';
-                dateElement.style.fontSize = '0.95em';
-                dateElement.style.color = '#FFD700';
+                // Datum als kleinen, dezenten Text unter das Video setzen
+                const dateElement = document.createElement('span');
+                dateElement.className = 'clip-date';
                 const date = new Date(video.date);
                 dateElement.textContent = date.toLocaleDateString('de-DE', { year: 'numeric', month: 'long', day: 'numeric' });
                 clipItem.appendChild(dateElement);
