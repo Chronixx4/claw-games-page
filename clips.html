@@ -28,6 +28,17 @@
     </header>
     <main>
         <div class="container">
+            <!-- Neuer Bereich für das Hinzufügen von Dropbox-Links -->
+            <section class="add-clip-card server-info-card">
+                <h2>Neuen Clip hinzufügen</h2>
+                <form id="addClipForm" autocomplete="off" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                    <input type="url" id="clipUrlInput" placeholder="Dropbox-Link einfügen..." required style="flex:1; min-width:200px;">
+                    <input type="text" id="clipGameInput" placeholder="Spiel (optional)" style="width:140px;">
+                    <button type="submit" class="game-button satisfactory-button" style="min-width:120px;">Clip hinzufügen</button>
+                </form>
+                <p id="addClipMsg" style="margin-top:10px; color:var(--ficsit-green); display:none;"></p>
+            </section>
+
             <section class="clip-gallery-card server-info-card">
                 <h2>Momente, die wir nicht vergessen! ✨</h2>
                 <p>Von epischen Siegen bis zu den lustigsten Fails – hier siehst du die Highlights unserer Gaming-Sessions.</p>
@@ -392,6 +403,54 @@
             // Unbekannter Link
             preview.innerHTML = "<div style='color:#FFD700'>Dieser Link kann nicht direkt eingebettet werden.</div>";
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('addClipForm');
+            const urlInput = document.getElementById('clipUrlInput');
+            const gameInput = document.getElementById('clipGameInput');
+            const msg = document.getElementById('addClipMsg');
+            // Passe dies ggf. an deine Galerie-Logik an:
+            const gallery = document.querySelector('.clip-gallery-card .clip-grid') || document.createElement('div');
+
+            function isDropboxLink(url) {
+                return /^https:\/\/www\.dropbox\.com\/.+/.test(url);
+            }
+            function toRawDropbox(url) {
+                // Ersetze ?dl=0 oder ?dl=1 oder ?dl= für ?raw=1
+                if (url.includes('?')) {
+                    return url.replace(/\?.*$/, '') + '?raw=1';
+                }
+                return url + '?raw=1';
+            }
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const url = urlInput.value.trim();
+                if (!isDropboxLink(url)) {
+                    msg.textContent = "Bitte einen gültigen Dropbox-Link einfügen!";
+                    msg.style.color = "#F44336";
+                    msg.style.display = "block";
+                    return;
+                }
+                const rawUrl = toRawDropbox(url);
+                const game = gameInput.value.trim() || "Unbekannt";
+                // Clip-Element erzeugen
+                const clipDiv = document.createElement('div');
+                clipDiv.className = 'clip-item';
+                clipDiv.innerHTML = `
+                    <div>
+                        <video src="${rawUrl}" controls preload="none" poster="" style="width:100%;height:100%;"></video>
+                    </div>
+                    <span class="clip-game-badge">${game}</span>
+                    <span class="clip-date">${new Date().toLocaleDateString()}</span>
+                `;
+                gallery.prepend(clipDiv);
+                msg.textContent = "Clip hinzugefügt!";
+                msg.style.color = "var(--ficsit-green)";
+                msg.style.display = "block";
+                form.reset();
+                setTimeout(()=>{msg.style.display="none"},2000);
+            });
+        });
     </script>
 </body>
 </html>
